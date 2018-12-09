@@ -29,10 +29,20 @@ int main(int argc, char* argv[])
 	uint16_t oldX = 0;
 	uint16_t oldY = 0;
 
+	FMGL_ColorStruct OffColor;
+	OffColor.R = 0;
+	OffColor.G = 0;
+	OffColor.B = 0;
+
+	FMGL_ColorStruct OnColor;
+	OnColor.R = 0xFF;
+	OnColor.G = 0xFF;
+	OnColor.B = 0xFF;
+
 	while(1)
 	{
 		// Turning off old pixel
-		L2HAL_SSD1306_SetActiveColor(&L2HAL_SSD1306_Context, FMGL_MONOCHROME_COLOR_OFF);
+		L2HAL_SSD1306_SetActiveColor(&L2HAL_SSD1306_Context, OffColor);
 		L2HAL_SSD1306_DrawPixel(&L2HAL_SSD1306_Context, oldX, oldY);
 
 		// Moving to new position
@@ -65,7 +75,7 @@ int main(int argc, char* argv[])
 		oldY = floor(y + 0.5);
 
 		// Turning on new pixel
-		L2HAL_SSD1306_SetActiveColor(&L2HAL_SSD1306_Context, FMGL_MONOCHROME_COLOR_ON);
+		L2HAL_SSD1306_SetActiveColor(&L2HAL_SSD1306_Context, OnColor);
 		L2HAL_SSD1306_DrawPixel(&L2HAL_SSD1306_Context, oldX, oldY);
 
 		L2HAL_SSD1306_PushFramebuffer(&L2HAL_SSD1306_Context);

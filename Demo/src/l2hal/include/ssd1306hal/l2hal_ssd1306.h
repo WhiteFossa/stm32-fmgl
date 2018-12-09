@@ -45,10 +45,10 @@
 #define L2HAL_SSD1306_FRAMEBUFFER_SIZE L2HAL_SSD1306_DISPLAY_WIDTH * L2HAL_SSD1306_DISPLAY_HEIGHT / 8
 
 /**
- * Allowed colors.
+ * Pixel states.
  */
-#define FMGL_MONOCHROME_COLOR_ON 0xFF
-#define FMGL_MONOCHROME_COLOR_OFF 0x00
+#define L2HAL_SSD1306_PIXEL_OFF 0x00
+#define L2HAL_SSD1306_PIXEL_ON 0xFF
 
 /**
  * Display context, I2C connection, device address etc are stored here.
@@ -76,6 +76,19 @@ typedef struct
 	uint8_t ActiveColor;
 
 } L2HAL_SSD1306_ContextStruct;
+
+/**
+ * Structure, containing color.
+ */
+typedef struct
+{
+	/**
+	 * Color components.
+	 */
+	uint8_t R;
+	uint8_t G;
+	uint8_t B;
+} FMGL_ColorStruct;
 
 /**************************************
  ****** API functions goes here *******
@@ -111,9 +124,9 @@ uint16_t L2HAL_SSD1306_GetWidth(void);
 uint16_t L2HAL_SSD1306_GetHeight(void);
 
 /**
- * Set color, what will be used for drawing.
+ * Set color, what will be used for drawing. If all R = G = B = 0, then pixel will be off, otherwise - on.
  */
-void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, uint8_t color);
+void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_ColorStruct color);
 
 /**
  * Draws pixel with active color. Do nothing if coordinates are incorrect. DOESN'T PUSH

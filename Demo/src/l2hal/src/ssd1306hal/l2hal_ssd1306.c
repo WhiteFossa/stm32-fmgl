@@ -202,9 +202,16 @@ bool L2HAL_SSD1306_GetFramebufferAddress(uint16_t x, uint16_t y, uint16_t* index
 	*mask = 1 << (y % L2HAL_SSD1306_PAGE_HEIGHT);
 }
 
-void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, uint8_t color)
+void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_ColorStruct color)
 {
-	context->ActiveColor = color;
+	if (0 == color.R && 0 == color.G && 0 == color.B)
+	{
+		context->ActiveColor = L2HAL_SSD1306_PIXEL_OFF;
+	}
+	else
+	{
+		context->ActiveColor = L2HAL_SSD1306_PIXEL_ON;
+	}
 }
 
 void L2HAL_SSD1306_DrawPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y)
