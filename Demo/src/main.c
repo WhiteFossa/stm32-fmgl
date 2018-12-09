@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 		}
 		else if (x >= L2HAL_SSD1306_DISPLAY_WIDTH)
 		{
-			x = 2 * L2HAL_SSD1306_DISPLAY_WIDTH - x;
+			x = 2 * L2HAL_SSD1306_DISPLAY_WIDTH - x - 1;
 			dx *= -1;
 		}
 
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 		}
 		else if (y >= L2HAL_SSD1306_DISPLAY_HEIGHT)
 		{
-			y = 2 * L2HAL_SSD1306_DISPLAY_HEIGHT - y;
+			y = 2 * L2HAL_SSD1306_DISPLAY_HEIGHT - y - 1;
 			dy *= -1;
 		}
 

@@ -64,7 +64,15 @@ typedef struct
 	/* Display bus address. */
 	uint8_t BusAddress;
 
-	/* Framebuffer */
+	/* True if transfer to display in progress. */
+	bool IsTransferInProgress;
+
+	/* Command code is stored here. !! DO NOT ACCESS IT DIRECTLY !! Use L2HAL_SSD1306_SetCommandBuffer() instead */
+	uint8_t CommandBuffer;
+
+	/* Framebuffer. !! CONTENT MUST NOT CHANGE DURING FRAMEBUFFER PUSH !! See
+	 * void L2HAL_SSD1306_PushFramebuffer() for details.
+	 */
 	uint8_t Framebuffer[L2HAL_SSD1306_FRAMEBUFFER_SIZE];
 
 	/* If true then framebuffer push in progress */
@@ -93,6 +101,12 @@ typedef struct
 /**************************************
  ****** API functions goes here *******
  **************************************/
+
+/**
+ * Call this function from I2C interrupt transfer completed handler, i.e. from void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
+ * for correct I2C bus.
+ */
+void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context);
 
 /**
  * Attempts to detect display on bus. If detected, then IsFound and BussAddress will be set in context.
@@ -134,12 +148,25 @@ void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_Col
  */
 void L2HAL_SSD1306_DrawPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y);
 
-/* Pushes framebuffer to display, if push already initiated waits for completion. */
+/**
+ * Pushes framebuffer to display, if push already initiated waits for completion.
+ */
 void L2HAL_SSD1306_PushFramebuffer(L2HAL_SSD1306_ContextStruct* context);
+
 
 /**************************************
  ****** API functions ends here *******
  **************************************/
+
+/**
+ * Waits in loop (polling) for context->IsTransferInProgress == false.
+ */
+void L2HAL_SSD1306_WaitForTransferCompletion(L2HAL_SSD1306_ContextStruct* context);
+
+/**
+ * Stores command in command buffer (within context), waiting for transfer completion if needed.
+ */
+void L2HAL_SSD1306_SetCommandBuffer(L2HAL_SSD1306_ContextStruct* context, uint8_t command);
 
 /**
  * Send command to display.

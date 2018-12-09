@@ -11,6 +11,7 @@ void L2HAL_SSD1306_DetectDisplay(L2HAL_SSD1306_ContextStruct* context)
 			/* We found it */
 			context->BusAddress = addrs[i];
 			context->IsFound = true;
+			context->IsTransferInProgress = false;
 			context->IsFramebufferBeingPushed = false;
 
 			return;
@@ -21,13 +22,13 @@ void L2HAL_SSD1306_DetectDisplay(L2HAL_SSD1306_ContextStruct* context)
 	context->IsFound = false;
 }
 
-
 void L2HAL_SSD1306_DetectDisplayAtAddress(L2HAL_SSD1306_ContextStruct* context, uint8_t address)
 {
 	if (HAL_OK == HAL_I2C_IsDeviceReady(context->I2CHandle, address, 1, L2HAL_SSD1306_IO_TIMEOUT))
 	{
 		context->BusAddress = address;
 		context->IsFound = true;
+		context->IsTransferInProgress = false;
 		context->IsFramebufferBeingPushed = false;
 
 		return;
@@ -35,7 +36,6 @@ void L2HAL_SSD1306_DetectDisplayAtAddress(L2HAL_SSD1306_ContextStruct* context, 
 
 	context->IsFound = false;
 }
-
 
 void L2HAL_SSD1306_CheckIfFound(L2HAL_SSD1306_ContextStruct* context)
 {
@@ -45,34 +45,58 @@ void L2HAL_SSD1306_CheckIfFound(L2HAL_SSD1306_ContextStruct* context)
 	}
 }
 
+void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context)
+{
+	if (context->IsTransferInProgress)
+	{
+		context->IsTransferInProgress = false;
+	}
+}
+
+void L2HAL_SSD1306_WaitForTransferCompletion(L2HAL_SSD1306_ContextStruct* context)
+{
+	while(context->IsTransferInProgress) { }
+}
+
+void L2HAL_SSD1306_SetCommandBuffer(L2HAL_SSD1306_ContextStruct* context, uint8_t command)
+{
+	L2HAL_SSD1306_WaitForTransferCompletion(context);
+	context->CommandBuffer = command;
+}
 
 void L2HAL_SSD1306_WriteCommand(L2HAL_SSD1306_ContextStruct* context, uint8_t command)
 {
 	L2HAL_SSD1306_CheckIfFound(context);
 
+	L2HAL_SSD1306_SetCommandBuffer(context, command);
+
 	/* Using HAL_I2C_Mem_Write to prepend control byte without allocating buffer for it */
-	if (HAL_OK != HAL_I2C_Mem_Write(context->I2CHandle, context->BusAddress, L2HAL_SSD1306_CONTROL_BYTE_COMMAND, 1, &command, 1, L2HAL_SSD1306_IO_TIMEOUT))
+	context->IsTransferInProgress = true;
+	context->CommandBuffer = command;
+	if (HAL_OK != HAL_I2C_Mem_Write_IT(context->I2CHandle, context->BusAddress, L2HAL_SSD1306_CONTROL_BYTE_COMMAND, 1, &context->CommandBuffer, 1))
 	{
+		context->IsTransferInProgress = false; /* Transfer didn't start */
 		L2HAL_Error(L2HAL_ERROR_GENERIC);
 	}
 }
-
 
 void L2HAL_SSD1306_WriteData(L2HAL_SSD1306_ContextStruct* context, uint8_t* data, uint16_t length)
 {
 	L2HAL_SSD1306_CheckIfFound(context);
 
+	L2HAL_SSD1306_WaitForTransferCompletion(context);
+
 	/* Using HAL_I2C_Mem_Write to prepend control byte without allocating buffer for it */
-	if (HAL_OK != HAL_I2C_Mem_Write(context->I2CHandle, context->BusAddress, L2HAL_SSD1306_CONTROL_BYTE_DATA, 1, data, length, L2HAL_SSD1306_IO_TIMEOUT))
+	context->IsTransferInProgress = true;
+	if (HAL_OK != HAL_I2C_Mem_Write_IT(context->I2CHandle, context->BusAddress, L2HAL_SSD1306_CONTROL_BYTE_DATA, 1, data, length))
 	{
+		context->IsTransferInProgress = false; /* Transfer didn't start */
 		L2HAL_Error(L2HAL_ERROR_GENERIC);
 	}
 }
 
 void L2HAL_SSD1306_TurnDisplayOn(L2HAL_SSD1306_ContextStruct* context)
 {
-	L2HAL_SSD1306_CheckIfFound(context);
-
 	/* Turning display off to avoid blinking during setup process. */
 	L2HAL_SSD1306_WriteCommand(context, L2HAL_SSD1306_COMMAND_OFF);
 
@@ -148,8 +172,6 @@ void L2HAL_SSD1306_TurnDisplayOn(L2HAL_SSD1306_ContextStruct* context)
 
 void L2HAL_SSD1306_TurnDisplayOff(L2HAL_SSD1306_ContextStruct* context)
 {
-	L2HAL_SSD1306_CheckIfFound(context);
-
 	/* Turning display off */
 	L2HAL_SSD1306_WriteCommand(context, L2HAL_SSD1306_COMMAND_OFF);
 
@@ -160,8 +182,6 @@ void L2HAL_SSD1306_TurnDisplayOff(L2HAL_SSD1306_ContextStruct* context)
 
 void L2HAL_SSD1306_SetBrightness(L2HAL_SSD1306_ContextStruct* context, uint8_t brightness)
 {
-	L2HAL_SSD1306_CheckIfFound(context);
-
 	L2HAL_SSD1306_WriteCommand(context, L2HAL_SSD1306_COMMAND_SET_BRIGHTNESS_LEVEL);
 	L2HAL_SSD1306_WriteCommand(context, brightness);
 }
@@ -177,8 +197,6 @@ uint16_t L2HAL_SSD1306_GetHeight(void)
 
 void L2HAL_SSD1306_PushFramebuffer(L2HAL_SSD1306_ContextStruct* context)
 {
-	L2HAL_SSD1306_CheckIfFound(context);
-
 	/* Waiting for previous push completion */
 	while(context->IsFramebufferBeingPushed) {}
 

@@ -86,6 +86,12 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c)
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 
 		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+		/* Display driver uses I2C interrupts exchange */
+		HAL_NVIC_SetPriority(I2C1_ER_IRQn, I2C1_ER_IRQN_PRIORITY, I2C1_ER_IRQN_SUBPRIORITY);
+		HAL_NVIC_EnableIRQ(I2C1_ER_IRQn);
+		HAL_NVIC_SetPriority(I2C1_EV_IRQn, I2C1_EV_IRQN_PRIORITY, I2C1_EV_IRQN_SUBPRIORITY);
+		HAL_NVIC_EnableIRQ(I2C1_EV_IRQn);
 	}
 }
 
@@ -93,7 +99,28 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
 {
 	if (hi2c->Instance == I2C1)
 	{
+		HAL_NVIC_DisableIRQ(I2C1_ER_IRQn);
+		HAL_NVIC_DisableIRQ(I2C1_EV_IRQn);
+
 		__HAL_RCC_I2C1_CLK_DISABLE();
 		HAL_GPIO_DeInit(GPIOB, GPIO_PIN_6 | GPIO_PIN_7);
+	}
+}
+
+void I2C1_EV_IRQHandler(void)
+{
+	HAL_I2C_EV_IRQHandler(&I2CHandle);
+}
+
+void I2C1_ER_IRQHandler(void)
+{
+	HAL_I2C_ER_IRQHandler(&I2CHandle);
+}
+
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+	if (hi2c->Instance == I2C1)
+	{
+		L2HAL_SSD1306_InterruptTransferCompleted(&L2HAL_SSD1306_Context);
 	}
 }
