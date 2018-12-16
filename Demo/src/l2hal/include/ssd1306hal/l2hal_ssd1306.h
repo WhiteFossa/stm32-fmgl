@@ -51,6 +51,25 @@
 #define L2HAL_SSD1306_PIXEL_ON 0xFF
 
 /**
+ * If L2HAL_SSD1306_GetBrightness() for giver color is higher or equal to this value,
+ * then pixel will be lit.
+ */
+#define L2HAL_SSD1306_BRIGHTNESS_THRESHOLD 0.5
+
+/**
+ * Factors for brightness calculation, normalized to 0xFF.
+ * Br = 0.2126 * R + 0.7152 * G + 0.0722 * B
+ */
+#define L2HAL_SSD1306_BRIGHTNESS_R_FACTOR 0.2126
+#define L2HAL_SSD1306_BRIGHTNESS_G_FACTOR 0.7152
+#define L2HAL_SSD1306_BRIGHTNESS_B_FACTOR 0.0722
+
+/**
+ * Maximal possible brightness.
+ */
+#define L2HAL_SSD1306_MAX_BRIGHTNESS 1
+
+/**
  * Display context, I2C connection, device address etc are stored here.
  */
 typedef struct
@@ -91,11 +110,11 @@ typedef struct
 typedef struct
 {
 	/**
-	 * Color components.
+	 * Color components [0-1].
 	 */
-	uint8_t R;
-	uint8_t G;
-	uint8_t B;
+	float R;
+	float G;
+	float B;
 } FMGL_ColorStruct;
 
 /**************************************
@@ -189,5 +208,10 @@ void L2HAL_SSD1306_CheckIfFound(L2HAL_SSD1306_ContextStruct* context);
  * pixel) for pixel in byte.
  */
 bool L2HAL_SSD1306_GetFramebufferAddress(uint16_t x, uint16_t y, uint16_t* index, uint8_t* mask);
+
+/**
+ * Returns brightness [0-L2HAL_SSD1306_MAX_BRIGHTNESS] for given color.
+ */
+float L2HAL_SSD1306_GetBrightness(FMGL_ColorStruct color);
 
 #endif /* L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_ */

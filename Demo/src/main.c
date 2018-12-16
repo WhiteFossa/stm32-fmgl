@@ -35,9 +35,9 @@ int main(int argc, char* argv[])
 	OffColor.B = 0;
 
 	FMGL_ColorStruct OnColor;
-	OnColor.R = 0xFF;
-	OnColor.G = 0xFF;
-	OnColor.B = 0xFF;
+	OnColor.R = 1;
+	OnColor.G = 1;
+	OnColor.B = 1;
 
 	while(1)
 	{
