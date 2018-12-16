@@ -256,3 +256,29 @@ float L2HAL_SSD1306_GetBrightness(FMGL_ColorStruct color)
 			+ color.B * L2HAL_SSD1306_BRIGHTNESS_B_FACTOR;
 }
 
+FMGL_ColorStruct L2HAL_SSD1306_GetPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y)
+{
+	uint16_t index;
+	uint8_t mask;
+	FMGL_ColorStruct result;
+
+	// Off color
+	result.R = L2HAL_SSD1306_PIXEL_OFF_R;
+	result.G = L2HAL_SSD1306_PIXEL_OFF_G;
+	result.B = L2HAL_SSD1306_PIXEL_OFF_B;
+
+	if (false == L2HAL_SSD1306_GetFramebufferAddress(x, y, &index, &mask))
+	{
+		return result; // Incorrect pixels are always off
+	}
+
+	if (0 != (context->Framebuffer[index] & mask))
+	{
+		result.R = L2HAL_SSD1306_PIXEL_ON_R;
+		result.G = L2HAL_SSD1306_PIXEL_ON_G;
+		result.B = L2HAL_SSD1306_PIXEL_ON_B;
+	}
+
+	return result;
+}
+

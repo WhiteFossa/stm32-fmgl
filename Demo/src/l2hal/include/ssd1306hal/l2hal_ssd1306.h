@@ -54,20 +54,34 @@
  * If L2HAL_SSD1306_GetBrightness() for giver color is higher or equal to this value,
  * then pixel will be lit.
  */
-#define L2HAL_SSD1306_BRIGHTNESS_THRESHOLD 0.5
+#define L2HAL_SSD1306_BRIGHTNESS_THRESHOLD 0.5f
 
 /**
  * Factors for brightness calculation, normalized to 0xFF.
  * Br = 0.2126 * R + 0.7152 * G + 0.0722 * B
  */
-#define L2HAL_SSD1306_BRIGHTNESS_R_FACTOR 0.2126
-#define L2HAL_SSD1306_BRIGHTNESS_G_FACTOR 0.7152
-#define L2HAL_SSD1306_BRIGHTNESS_B_FACTOR 0.0722
+#define L2HAL_SSD1306_BRIGHTNESS_R_FACTOR 0.2126f
+#define L2HAL_SSD1306_BRIGHTNESS_G_FACTOR 0.7152f
+#define L2HAL_SSD1306_BRIGHTNESS_B_FACTOR 0.0722f
 
 /**
  * Maximal possible brightness.
  */
 #define L2HAL_SSD1306_MAX_BRIGHTNESS 1
+
+/**
+ * Return this color if pixel is lit.
+ */
+#define L2HAL_SSD1306_PIXEL_ON_R 1.0f
+#define L2HAL_SSD1306_PIXEL_ON_G 1.0f
+#define L2HAL_SSD1306_PIXEL_ON_B 1.0f
+
+/**
+ * Return this color if pixel is off.
+ */
+#define L2HAL_SSD1306_PIXEL_OFF_R 0.0f
+#define L2HAL_SSD1306_PIXEL_OFF_G 0.0f
+#define L2HAL_SSD1306_PIXEL_OFF_B 0.0f
 
 /**
  * Display context, I2C connection, device address etc are stored here.
@@ -166,6 +180,11 @@ void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_Col
  * FRAMEBUFFER.
  */
 void L2HAL_SSD1306_DrawPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y);
+
+/**
+ * Get color of pixel with given coordinates. Return off pixel color if coordinates are incorrect.
+ */
+FMGL_ColorStruct L2HAL_SSD1306_GetPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y);
 
 /**
  * Pushes framebuffer to display, if push already initiated waits for completion.
