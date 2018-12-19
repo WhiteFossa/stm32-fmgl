@@ -15,6 +15,7 @@ RM := rm -rf
 -include system/src/cmsis/subdir.mk
 -include src/l2hal/src/ssd1306hal/subdir.mk
 -include src/l2hal/src/subdir.mk
+-include src/fmgl/src/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk

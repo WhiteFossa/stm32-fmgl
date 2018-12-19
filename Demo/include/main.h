@@ -2,5 +2,8 @@
 #define __MAIN_H
 
 #include "l2hal.h"
+#include "fmgl.h"
+
+FMGL_DriverContext fmglContext;
 
 #endif /* __MAIN_H */

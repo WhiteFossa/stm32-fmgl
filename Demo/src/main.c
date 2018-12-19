@@ -20,6 +20,10 @@ int main(int argc, char* argv[])
 	L2HAL_SSD1306_DetectDisplay(&L2HAL_SSD1306_Context);
 	L2HAL_SSD1306_TurnDisplayOn(&L2HAL_SSD1306_Context);
 
+	/* Attaching FMGL to display */
+	fmglContext = FMGL_AttachToDriver(&L2HAL_SSD1306_Context, &L2HAL_SSD1306_GetWidth, &L2HAL_SSD1306_GetHeight, &L2HAL_SSD1306_SetActiveColor,
+			&L2HAL_SSD1306_DrawPixel, &L2HAL_SSD1306_GetPixel, &L2HAL_SSD1306_PushFramebuffer);
+
 	double x = 0;
 	double y = 0;
 
@@ -42,8 +46,8 @@ int main(int argc, char* argv[])
 	while(1)
 	{
 		// Turning off old pixel
-		L2HAL_SSD1306_SetActiveColor(&L2HAL_SSD1306_Context, OffColor);
-		L2HAL_SSD1306_DrawPixel(&L2HAL_SSD1306_Context, oldX, oldY);
+		FMGL_SetActiveColor(&fmglContext, OffColor);
+		FMGL_DrawPixel(&fmglContext, oldX, oldY);
 
 		// Moving to new position
 		x += dx;
@@ -75,10 +79,10 @@ int main(int argc, char* argv[])
 		oldY = floor(y + 0.5);
 
 		// Turning on new pixel
-		L2HAL_SSD1306_SetActiveColor(&L2HAL_SSD1306_Context, OnColor);
-		L2HAL_SSD1306_DrawPixel(&L2HAL_SSD1306_Context, oldX, oldY);
+		FMGL_SetActiveColor(&fmglContext, OnColor);
+		FMGL_DrawPixel(&fmglContext, oldX, oldY);
 
-		L2HAL_SSD1306_PushFramebuffer(&L2HAL_SSD1306_Context);
+		FMGL_PushFramebuffer(&fmglContext);
 	}
 
 	return 0;

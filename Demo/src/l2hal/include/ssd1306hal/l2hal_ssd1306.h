@@ -5,10 +5,12 @@
 #ifndef L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_
 #define L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_
 
+#include "stdint.h"
 #include "stm32f1xx_hal.h"
 #include "bool_type.h"
 #include "l2hal_errors.h"
 #include "l2hal_ssd1306_commands.h"
+#include "fmgl.h"
 
 /* Display I/O timeout in milliseconds */
 #define L2HAL_SSD1306_IO_TIMEOUT 100U
@@ -118,28 +120,10 @@ typedef struct
 
 } L2HAL_SSD1306_ContextStruct;
 
-/**
- * Structure, containing color.
- */
-typedef struct
-{
-	/**
-	 * Color components [0-1].
-	 */
-	float R;
-	float G;
-	float B;
-} FMGL_ColorStruct;
 
 /**************************************
  ****** API functions goes here *******
  **************************************/
-
-/**
- * Call this function from I2C interrupt transfer completed handler, i.e. from void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
- * for correct I2C bus.
- */
-void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context);
 
 /**
  * Attempts to detect display on bus. If detected, then IsFound and BussAddress will be set in context.
@@ -171,7 +155,7 @@ uint16_t L2HAL_SSD1306_GetWidth(void);
 uint16_t L2HAL_SSD1306_GetHeight(void);
 
 /**
- * Set color, what will be used for drawing. If all R = G = B = 0, then pixel will be off, otherwise - on.
+ * Set color, what will be used for drawing.
  */
 void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_ColorStruct color);
 
@@ -195,6 +179,12 @@ void L2HAL_SSD1306_PushFramebuffer(L2HAL_SSD1306_ContextStruct* context);
 /**************************************
  ****** API functions ends here *******
  **************************************/
+
+/**
+ * Call this function from I2C interrupt transfer completed handler, i.e. from void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
+ * for correct I2C bus.
+ */
+void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context);
 
 /**
  * Waits in loop (polling) for context->IsTransferInProgress == false.
