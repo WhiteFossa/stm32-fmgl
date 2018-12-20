@@ -30,7 +30,13 @@ FMGL_DriverContext FMGL_AttachToDriver
 
 void FMGL_SetActiveColor(FMGL_DriverContext* context, FMGL_ColorStruct color)
 {
-	context->SetActiveColor(context->DeviceContext, color);
+	context->ActiveColor = color;
+	context->SetActiveColor(context->DeviceContext, context->ActiveColor);
+}
+
+FMGL_ColorStruct FMGL_GetActiveColor(FMGL_DriverContext* context)
+{
+	return context->ActiveColor;
 }
 
 void FMGL_DrawPixel (FMGL_DriverContext* context, uint16_t x, uint16_t y)
@@ -61,5 +67,15 @@ FMGL_ColorStruct FMGL_GetPixel(FMGL_DriverContext* context, uint16_t x, uint16_t
 void FMGL_PushFramebuffer (FMGL_DriverContext* context)
 {
 	context->PushFramebuffer(context->DeviceContext);
+}
+
+uint16_t FMGL_GetDisplayWidth(FMGL_DriverContext* context)
+{
+	return context->GetWidth();
+}
+
+uint16_t FMGL_GetDisplayHeight(FMGL_DriverContext* context)
+{
+	return context->GetHeight();
 }
 

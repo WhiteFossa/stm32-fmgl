@@ -64,6 +64,11 @@ typedef struct
 	uint16_t MaxX;
 	uint16_t MaxY;
 
+	/**
+	 * Active color.
+	 */
+	FMGL_ColorStruct ActiveColor;
+
 } FMGL_DriverContext;
 
 
@@ -96,9 +101,20 @@ FMGL_DriverContext FMGL_AttachToDriver
  ***************************/
 
 /**
+ * Returns display width and height.
+ */
+uint16_t FMGL_GetDisplayWidth(FMGL_DriverContext* context);
+uint16_t FMGL_GetDisplayHeight(FMGL_DriverContext* context);
+
+/**
  * Set active color.
  */
 void FMGL_SetActiveColor(FMGL_DriverContext* context, FMGL_ColorStruct color);
+
+/**
+ * Returns current active color.
+ */
+FMGL_ColorStruct FMGL_GetActiveColor(FMGL_DriverContext* context);
 
 /**
  * Draws pixel with given color.

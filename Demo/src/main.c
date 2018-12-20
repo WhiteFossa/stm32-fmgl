@@ -58,9 +58,9 @@ int main(int argc, char* argv[])
 			x = abs(x);
 			dx *= -1;
 		}
-		else if (x >= L2HAL_SSD1306_DISPLAY_WIDTH)
+		else if (x >= FMGL_GetDisplayWidth(&fmglContext))
 		{
-			x = 2 * L2HAL_SSD1306_DISPLAY_WIDTH - x - 1;
+			x = 2 * FMGL_GetDisplayWidth(&fmglContext) - x - 1;
 			dx *= -1;
 		}
 
@@ -69,9 +69,9 @@ int main(int argc, char* argv[])
 			y = abs(y);
 			dy *= -1;
 		}
-		else if (y >= L2HAL_SSD1306_DISPLAY_HEIGHT)
+		else if (y >= FMGL_GetDisplayHeight(&fmglContext))
 		{
-			y = 2 * L2HAL_SSD1306_DISPLAY_HEIGHT - y - 1;
+			y = 2 * FMGL_GetDisplayHeight(&fmglContext) - y - 1;
 			dy *= -1;
 		}
 
