@@ -8,6 +8,12 @@
 #define FMGL_INCLUDE_FMGL_H_
 
 #include "stdint.h"
+#include "bool_type.h"
+
+/**
+ * To avoid magic 8 in code.
+ */
+#define FMGL_BITS_PER_BYTE 8
 
 /**
  * Structure, containing color.
@@ -21,6 +27,23 @@ typedef struct
 	float G;
 	float B;
 } FMGL_ColorStruct;
+
+/**
+ * Structure with XBM image.
+ */
+typedef struct
+{
+	/**
+	 * Image dimensions.
+	 */
+	uint16_t Width;
+	uint16_t Height;
+
+	/**
+	 * Raster, packed as array of bytes.
+	 */
+	uint8_t* Raster;
+} FMGL_XBMStruct;
 
 /**
  * Device driver context. Library works with driver using this context.
@@ -134,3 +157,10 @@ void FMGL_PushFramebuffer (FMGL_DriverContext* context);
 /***************************
  * API functions ends here *
  ***************************/
+
+/**
+ * Returns true if pixel at given coordinates is active, false otherwise.
+ * If coordinates are out of image, then result is undefined.
+ */
+bool FMGL_IsActiveXBMPixel(FMGL_XBMStruct* image, uint16_t x, uint16_t y);
+

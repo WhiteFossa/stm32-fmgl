@@ -24,7 +24,55 @@ int main(int argc, char* argv[])
 	fmglContext = FMGL_AttachToDriver(&L2HAL_SSD1306_Context, &L2HAL_SSD1306_GetWidth, &L2HAL_SSD1306_GetHeight, &L2HAL_SSD1306_SetActiveColor,
 			&L2HAL_SSD1306_DrawPixel, &L2HAL_SSD1306_GetPixel, &L2HAL_SSD1306_PushFramebuffer);
 
-	double x = 0;
+	/* Preparing image */
+	FMGL_XBMStruct image;
+	image.Width = Demo_width;
+	image.Height = Demo_height;
+	image.Raster = Demo_bits;
+
+	FMGL_ColorStruct OffColor;
+	OffColor.R = 0;
+	OffColor.G = 0;
+	OffColor.B = 0;
+
+	FMGL_ColorStruct OnColor;
+	OnColor.R = 1;
+	OnColor.G = 1;
+	OnColor.B = 1;
+
+	FMGL_SetActiveColor(&fmglContext, OffColor);
+	for (uint16_t y = 0; y < 64; y++)
+	{
+		for (uint16_t x = 0; x < 128; x++)
+		{
+			FMGL_DrawPixel(&fmglContext, x, y);
+		}
+	}
+	FMGL_PushFramebuffer(&fmglContext);
+
+
+	for (uint16_t y = 0; y < 64; y++)
+	{
+		for (uint16_t x = 0; x < 128; x++)
+		{
+			if (FMGL_IsActiveXBMPixel(&image, x, y))
+			{
+				FMGL_SetActiveColor(&fmglContext, OnColor);
+			}
+			else
+			{
+				FMGL_SetActiveColor(&fmglContext, OffColor);
+			}
+
+			FMGL_DrawPixel(&fmglContext, x, y);
+		}
+	}
+
+	FMGL_PushFramebuffer(&fmglContext);
+
+	while(1) {}
+
+/*	double x = 0;
 	double y = 0;
 
 	double dx = 3;
@@ -83,7 +131,7 @@ int main(int argc, char* argv[])
 		FMGL_DrawPixel(&fmglContext, oldX, oldY);
 
 		FMGL_PushFramebuffer(&fmglContext);
-	}
+	}*/
 
 	return 0;
 }
