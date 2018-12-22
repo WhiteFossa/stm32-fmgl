@@ -3,7 +3,7 @@
 
 #include "l2hal.h"
 #include "fmgl.h"
-#include "demo_xbm.h"
+#include "Awesome.h"
 
 FMGL_DriverContext fmglContext;
 

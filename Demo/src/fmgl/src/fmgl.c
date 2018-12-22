@@ -105,3 +105,39 @@ bool FMGL_IsActiveXBMPixel(FMGL_XBMStruct* image, uint16_t x, uint16_t y)
 	}
 }
 
+void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
+		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor)
+{
+	/* Do at least one pixel fit the screen? */
+	if (x > context->MaxX || y > context->MaxY)
+	{
+		return;
+	}
+
+	uint32_t scaledWidth = image->Width * scaleX;
+	uint32_t scaledHeight = image->Height * scaleY;
+
+	for (uint32_t dy = 0; dy < scaledHeight; dy++)
+	{
+		uint16_t sy = dy / scaleY;
+
+		for (uint32_t dx = 0; dx < scaledWidth; dx++)
+		{
+			uint16_t sx = dx / scaleX;
+
+			if (FMGL_IsActiveXBMPixel(image, sx, sy))
+			{
+				/* Active pixel */
+				FMGL_SetActiveColor(context, activeColor);
+			}
+			else
+			{
+				/* Inactive pixel */
+				FMGL_SetActiveColor(context, inactiveColor);
+			}
+
+			FMGL_DrawPixel(context, dx + x, dy + y);
+		}
+	}
+}
+

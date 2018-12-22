@@ -155,6 +155,17 @@ FMGL_ColorStruct FMGL_GetPixel(FMGL_DriverContext* context, uint16_t x, uint16_t
 void FMGL_PushFramebuffer (FMGL_DriverContext* context);
 
 /***************************
+ * XBM rendering functions *
+ ***************************/
+
+/**
+ * Renders XBM image such way, that (0,0) pixel of image will be placed at (x,y). Image is being
+ * scaled up by scaleX and scaleY. XBM's active pixels will be displayed using activeColor, inactive - using inactiveColor.
+ */
+void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
+		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor);
+
+/***************************
  * API functions ends here *
  ***************************/
 
