@@ -106,7 +106,7 @@ bool FMGL_IsActiveXBMPixel(FMGL_XBMStruct* image, uint16_t x, uint16_t y)
 }
 
 void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
-		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor)
+		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor, FMGL_XBMTransparencyMode transparency)
 {
 	/* Do at least one pixel fit the screen? */
 	if (x > context->MaxX || y > context->MaxY)
@@ -117,27 +117,49 @@ void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t
 	uint32_t scaledWidth = image->Width * scaleX;
 	uint32_t scaledHeight = image->Height * scaleY;
 
-	for (uint32_t dy = 0; dy < scaledHeight; dy++)
+	FMGL_ColorStruct colors[FMGL_XBM_COLORS_NUMBER]; /* Colors, active color first */
+	colors[FMGL_XBM_ACTIVE_COLOR_INDEX] = activeColor;
+	colors[FMGL_XBM_INACTIVE_COLOR_INDEX] = inactiveColor;
+
+	for (uint8_t colorIndex = 0; colorIndex < FMGL_XBM_COLORS_NUMBER; colorIndex++)
 	{
-		uint16_t sy = dy / scaleY;
-
-		for (uint32_t dx = 0; dx < scaledWidth; dx++)
+		if
+		(
+			((FMGL_XBM_ACTIVE_COLOR_INDEX == colorIndex) && (FMGL_XBMTransparencyModeTransparentActive == transparency))
+			||
+			((FMGL_XBM_INACTIVE_COLOR_INDEX == colorIndex) && (FMGL_XBMTransparencyModeTransparentInactive == transparency))
+		)
 		{
-			uint16_t sx = dx / scaleX;
+			/* Skipping transparent color */
+			continue;
+		}
 
-			if (FMGL_IsActiveXBMPixel(image, sx, sy))
-			{
-				/* Active pixel */
-				FMGL_SetActiveColor(context, activeColor);
-			}
-			else
-			{
-				/* Inactive pixel */
-				FMGL_SetActiveColor(context, inactiveColor);
-			}
+		FMGL_SetActiveColor(context, colors[colorIndex]);
 
-			FMGL_DrawPixel(context, dx + x, dy + y);
+		for (uint32_t dy = 0; dy < scaledHeight; dy++)
+		{
+			uint16_t sy = dy / scaleY;
+
+			for (uint32_t dx = 0; dx < scaledWidth; dx++)
+			{
+				uint16_t sx = dx / scaleX;
+
+				bool isActive = FMGL_IsActiveXBMPixel(image, sx, sy);
+
+				if
+				(
+					((FMGL_XBM_ACTIVE_COLOR_INDEX == colorIndex) && isActive)
+					||
+					((FMGL_XBM_INACTIVE_COLOR_INDEX == colorIndex) && !isActive)
+				)
+				{
+					/* Active pixel */
+					FMGL_DrawPixel(context, dx + x, dy + y);
+				}
+			}
 		}
 	}
+
+
 }
 

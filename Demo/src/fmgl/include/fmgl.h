@@ -16,6 +16,23 @@
 #define FMGL_BITS_PER_BYTE 8
 
 /**
+ * For internal use in FMGL_RenderXBM
+ */
+#define FMGL_XBM_ACTIVE_COLOR_INDEX 0
+#define FMGL_XBM_INACTIVE_COLOR_INDEX 1
+#define FMGL_XBM_COLORS_NUMBER 2
+
+/**
+ * Possible transparency rendering modes for XBM images.
+ */
+typedef enum
+{
+	FMGL_XBMTransparencyModeNormal = 0, /* Image will be rendered as is */
+	FMGL_XBMTransparencyModeTransparentInactive = 1, /* Inactive pixels will be transparent */
+	FMGL_XBMTransparencyModeTransparentActive = 2 /* Active pixels will be transparent */
+} FMGL_XBMTransparencyMode;
+
+/**
  * Structure, containing color.
  */
 typedef struct
@@ -163,7 +180,7 @@ void FMGL_PushFramebuffer (FMGL_DriverContext* context);
  * scaled up by scaleX and scaleY. XBM's active pixels will be displayed using activeColor, inactive - using inactiveColor.
  */
 void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
-		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor);
+		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor, FMGL_XBMTransparencyMode transparency);
 
 /***************************
  * API functions ends here *

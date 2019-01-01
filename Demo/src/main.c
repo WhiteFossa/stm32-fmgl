@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 		oldX = floor(x + 0.5);
 		oldY = floor(y + 0.5);
 
-		FMGL_RenderXBM(&fmglContext, &image, oldX, oldY, 1, 1, OnColor, OffColor);
+		FMGL_RenderXBM(&fmglContext, &image, oldX, oldY, 1, 1, OnColor, OffColor, FMGL_XBMTransparencyModeNormal);
 		FMGL_PushFramebuffer(&fmglContext);
 
 		FMGL_PushFramebuffer(&fmglContext);
