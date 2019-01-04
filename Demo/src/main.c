@@ -51,9 +51,8 @@ int main(int argc, char* argv[])
 
 	while(1)
 	{
-		// Turning off old pixel
-//		FMGL_SetActiveColor(&fmglContext, OffColor);
-//		FMGL_DrawPixel(&fmglContext, oldX, oldY);
+		// Cleaning screen
+		FMGL_DrawRectangleFilled(&fmglContext, 0, 0, FMGL_GetDisplayWidth(&fmglContext), FMGL_GetDisplayHeight(&fmglContext), OffColor, OffColor);
 
 		// Moving to new position
 		x += dx;
@@ -84,10 +83,17 @@ int main(int argc, char* argv[])
 		oldX = floor(x + 0.5);
 		oldY = floor(y + 0.5);
 
-		FMGL_RenderXBM(&fmglContext, &image, oldX, oldY, 1, 1, OnColor, OffColor, FMGL_XBMTransparencyModeNormal);
+		/* Crosshair */
+		FMGL_SetActiveColor(&fmglContext, OnColor);
+		FMGL_DrawLineHorizontal(&fmglContext, 0, fmglContext.MaxX, oldY + image.Height / 2);
+		FMGL_DrawLineVertical(&fmglContext, oldX + image.Width / 2, 0, fmglContext.MaxY);
+
+		FMGL_DrawRectangle(&fmglContext, oldX, oldY, oldX + 32, oldY + 32);
+		FMGL_RenderXBM(&fmglContext, &image, oldX, oldY, 1, 1, OnColor, OffColor, FMGL_XBMTransparencyModeTransparentInactive);
 		FMGL_PushFramebuffer(&fmglContext);
 
-		FMGL_PushFramebuffer(&fmglContext);
+		HAL_Delay(10);
+
 	}
 
 	return 0;

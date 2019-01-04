@@ -11,6 +11,12 @@
 #include "bool_type.h"
 
 /**
+ * Macroses for minimal and maximal values.
+ */
+#define FMGL_MIN(x, y) (((x) < (y)) ? (x) : (y))
+#define FMGL_MAX(x, y) (((x) > (y)) ? (x) : (y))
+
+/**
  * To avoid magic 8 in code.
  */
 #define FMGL_BITS_PER_BYTE 8
@@ -170,6 +176,37 @@ FMGL_ColorStruct FMGL_GetPixel(FMGL_DriverContext* context, uint16_t x, uint16_t
  * Pushes framebuffer to device.
  */
 void FMGL_PushFramebuffer (FMGL_DriverContext* context);
+
+
+/*********
+ * Lines *
+ *********/
+
+/**
+ * Draws horizontal line.
+ */
+void FMGL_DrawLineHorizontal(FMGL_DriverContext* context, uint16_t x1, uint16_t x2, uint16_t y);
+
+/**
+ * Draws vertical line.
+ */
+void FMGL_DrawLineVertical(FMGL_DriverContext* context, uint16_t x, uint16_t y1, uint16_t y2);
+
+
+/**************
+ * Rectangles *
+ **************/
+
+/**
+ * Draws rectangle without filling it.
+ */
+void FMGL_DrawRectangle(FMGL_DriverContext* context, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
+
+/**
+ * Draws filled rectangle. Active color didn't change after this function call.
+ */
+void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, FMGL_ColorStruct borderColor, FMGL_ColorStruct fillColor);
+
 
 /***************************
  * XBM rendering functions *

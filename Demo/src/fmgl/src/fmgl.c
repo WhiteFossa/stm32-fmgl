@@ -159,7 +159,169 @@ void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t
 			}
 		}
 	}
+}
 
+void FMGL_DrawLineHorizontal(FMGL_DriverContext* context, uint16_t x1, uint16_t x2, uint16_t y)
+{
+	if (y > context->MaxY)
+	{
+		return;
+	}
 
+	uint16_t minX = FMGL_MIN(x1, x2);
+	if (minX > context->MaxX)
+	{
+		/* Out of screen, can't draw */
+		return;
+	}
+
+	uint16_t maxX = FMGL_MAX(x1, x2);
+
+	if (maxX > context->MaxX)
+	{
+		maxX = context->MaxX;
+	}
+
+	for (uint16_t x = minX; x <= maxX; x++)
+	{
+		FMGL_DrawPixel(context, x, y);
+	}
+}
+
+void FMGL_DrawLineVertical(FMGL_DriverContext* context, uint16_t x, uint16_t y1, uint16_t y2)
+{
+	if (x > context->MaxX)
+	{
+		return;
+	}
+
+	uint16_t minY = FMGL_MIN(y1, y2);
+
+	if (minY > context->MaxY)
+	{
+		return;
+	}
+
+	uint16_t maxY = FMGL_MAX(y1, y2);
+
+	if (maxY > context->MaxY)
+	{
+		maxY = context->MaxY;
+	}
+
+	for (uint16_t y = minY; y <= maxY; y++)
+	{
+		FMGL_DrawPixel(context, x, y);
+	}
+}
+
+/**
+ * Draws rectangle without filling it.
+ */
+void FMGL_DrawRectangle(FMGL_DriverContext* context, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+{
+	/* Will at least one pixel be on screen */
+	uint16_t minX = FMGL_MIN(x1, x2);
+
+	if (minX > context->MaxX)
+	{
+		return;
+	}
+
+	uint16_t minY = FMGL_MIN(y1, y2);
+
+	if (minY > context->MaxY)
+	{
+		return;
+	}
+
+	/* At least some pixels will be displayed */
+	uint16_t maxX = FMGL_MAX(x1, x2);
+	uint16_t maxY = FMGL_MAX(y1, y2);
+
+	uint16_t maxVisibleX = FMGL_MIN(maxX, context->MaxX);
+	uint16_t maxVisibleY = FMGL_MIN(maxY, context->MaxY);
+
+	/* Drawing 100% visible parts */
+	FMGL_DrawLineHorizontal(context, minX, maxVisibleX, minY);
+	FMGL_DrawLineVertical(context, minX, minY, maxVisibleY);
+
+	/* Right border */
+	if (maxX <= context->MaxX)
+	{
+		FMGL_DrawLineVertical(context, maxVisibleX, minY, maxVisibleY);
+	}
+
+	/* Bottom border */
+	if (maxY <= context->MaxY)
+	{
+		FMGL_DrawLineHorizontal(context, minX, maxVisibleX, maxVisibleY);
+	}
+}
+
+void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, FMGL_ColorStruct borderColor, FMGL_ColorStruct fillColor)
+{
+	FMGL_ColorStruct activeColor = FMGL_GetActiveColor(context);
+
+	/* Will at least one pixel be on screen */
+	uint16_t minX = FMGL_MIN(x1, x2);
+
+	if (minX > context->MaxX)
+	{
+		return;
+	}
+
+	uint16_t minY = FMGL_MIN(y1, y2);
+
+	if (minY > context->MaxY)
+	{
+		return;
+	}
+
+	/* At least some pixels will be displayed */
+	uint16_t maxX = FMGL_MAX(x1, x2);
+	uint16_t maxY = FMGL_MAX(y1, y2);
+
+	uint16_t maxVisibleX = FMGL_MIN(maxX, context->MaxX);
+	uint16_t maxVisibleY = FMGL_MIN(maxY, context->MaxY);
+
+	uint16_t fillLeftX = minX + 1;
+	uint16_t fillTopY = minY + 1;
+
+	uint16_t fillRightX = maxVisibleX; /* Initially think that right and bottom borders are off-screen*/
+	uint16_t fillBottomY = maxVisibleY;
+
+	/* Borders */
+	FMGL_SetActiveColor(context, borderColor);
+	FMGL_DrawLineHorizontal(context, minX, maxVisibleX, minY);
+	FMGL_DrawLineVertical(context, minX, minY, maxVisibleY);
+
+	if (maxX <= context->MaxX)
+	{
+		/*Right border is on screen so moving fill right bottom 1 pixel left*/
+		fillRightX -= 1;
+		FMGL_DrawLineVertical(context, maxVisibleX, minY, maxVisibleY);
+	}
+
+	if (maxY <= context->MaxY)
+	{
+		fillBottomY -= 1;
+		FMGL_DrawLineHorizontal(context, minX, maxVisibleX, maxVisibleY);
+	}
+
+	/* Fill */
+	if ((fillLeftX > context->MaxX) || (fillTopY > context->MaxY) || (fillRightX < fillLeftX) || (fillBottomY < fillTopY))
+	{
+		FMGL_SetActiveColor(context, activeColor);
+		return;
+	}
+
+	FMGL_SetActiveColor(context, fillColor);
+	for (uint16_t y = fillTopY; y <= fillBottomY; y++)
+	{
+		FMGL_DrawLineHorizontal(context, fillLeftX, fillRightX, y);
+	}
+
+	FMGL_SetActiveColor(context, activeColor);
 }
 
