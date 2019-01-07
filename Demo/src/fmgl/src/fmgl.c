@@ -79,7 +79,7 @@ uint16_t FMGL_GetDisplayHeight(FMGL_DriverContext* context)
 	return context->GetHeight();
 }
 
-bool FMGL_IsActiveXBMPixel(FMGL_XBMStruct* image, uint16_t x, uint16_t y)
+bool FMGL_IsActiveXBMPixel(FMGL_XBMImage* image, uint16_t x, uint16_t y)
 {
 	if (x >= image->Width || y >= image->Height)
 	{
@@ -105,7 +105,7 @@ bool FMGL_IsActiveXBMPixel(FMGL_XBMStruct* image, uint16_t x, uint16_t y)
 	}
 }
 
-void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
+void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMImage* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
 		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor, FMGL_XBMTransparencyMode transparency)
 {
 	/* Do at least one pixel fit the screen? */
@@ -323,5 +323,19 @@ void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t
 	}
 
 	FMGL_SetActiveColor(context, activeColor);
+}
+
+void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint8_t character)
+{
+	/* Generating XBM image struct */
+	FMGL_XBMImage characterImage;
+	characterImage.Height = fontSettings->Font->Height;
+
+	FMGL_FontCharacter characterStruct = *fontSettings->Font->Characters[character];
+
+	characterImage.Width = characterStruct.Width;
+	characterImage.Raster = characterStruct.Raster;
+
+	FMGL_RenderXBM(context, &characterImage, x, y, fontSettings->Scale, fontSettings->Scale, *fontSettings->FontColor, *fontSettings->BackgroundColor, *fontSettings->Transparency);
 }
 

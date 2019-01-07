@@ -27,6 +27,7 @@ CPP_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+src/fmgl/include/fonts/src \
 src/fmgl/src \
 src/l2hal/src \
 src/l2hal/src/ssd1306hal \

@@ -1,0 +1,16 @@
+For TTF fonts (looks bad when converted to bitmap) do something like this:
+
+convert -resize 7x13\! -font Liberation-Sans -pointsize 10 label:A A.xbm
+or
+convert -font LiberationSans -pointsize 14 label:'\$' char.xbm
+
+For PSF (console) fonts:
+1) Install psftools (not pfstools!!): https://www.seasip.info/Unix/PSF/
+
+2) Download fonts, for example Terminus: http://terminus-font.sourceforge.net/, build it.
+
+3) Select good font, for my case it's: ter-k12n.psf (12 pixels height, KOI8-R)
+
+4) Make .inc file with glyphs: psf2inc --psf1 ter-k12n.psf ter-k12n.inc
+
+6) Each character (they are numbere in decimal format) in INC file is XBM image, images are mirrored left to right, so we need to mirror it back.

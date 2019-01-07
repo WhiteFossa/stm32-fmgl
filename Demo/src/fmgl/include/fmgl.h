@@ -66,7 +66,7 @@ typedef struct
 	 * Raster, packed as array of bytes.
 	 */
 	uint8_t* Raster;
-} FMGL_XBMStruct;
+} FMGL_XBMImage;
 
 /**
  * Device driver context. Library works with driver using this context.
@@ -118,7 +118,65 @@ typedef struct
 } FMGL_DriverContext;
 
 
-#endif /* FMGL_INCLUDE_FMGL_H_ */
+/***************************
+ * Font-related structures *
+ ***************************/
+
+/* Each font defines 256 characters (including null-character for 0x00) */
+#define FMGL_FONT_CHARACTERS_COUNT 256
+
+/**
+ * Font character.
+ */
+typedef struct
+{
+	/* Character width (height is defined in font) */
+	uint8_t Width;
+
+	/* Character raster (actually XBM image) */
+	uint8_t* Raster;
+} FMGL_FontCharacter;
+
+
+/**
+ * Font.
+ */
+typedef struct
+{
+	/* Character height. */
+	uint8_t Height;
+
+	/* Array of pointers to actual characters */
+	FMGL_FontCharacter* Characters[FMGL_FONT_CHARACTERS_COUNT];
+} FMGL_Font;
+
+/**
+ * Font settings for drawing
+ */
+typedef struct
+{
+	/* Font to use */
+	FMGL_Font* Font;
+
+	/* Font scale */
+	uint16_t Scale;
+
+	/* Font pixels color */
+	FMGL_ColorStruct* FontColor;
+
+	/* Font background color */
+	FMGL_ColorStruct* BackgroundColor;
+
+	/* Font transparency */
+	FMGL_XBMTransparencyMode* Transparency;
+
+} FMGL_FontSettings;
+
+
+/**********************************
+ * End of font-related structures *
+ **********************************/
+
 
 /*****************************
  * API functions starts here *
@@ -216,8 +274,9 @@ void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t
  * Renders XBM image such way, that (0,0) pixel of image will be placed at (x,y). Image is being
  * scaled up by scaleX and scaleY. XBM's active pixels will be displayed using activeColor, inactive - using inactiveColor.
  */
-void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
+void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMImage* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
 		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor, FMGL_XBMTransparencyMode transparency);
+
 
 /***************************
  * API functions ends here *
@@ -227,5 +286,11 @@ void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMStruct* image, uint16_t
  * Returns true if pixel at given coordinates is active, false otherwise.
  * If coordinates are out of image, then result is undefined.
  */
-bool FMGL_IsActiveXBMPixel(FMGL_XBMStruct* image, uint16_t x, uint16_t y);
+bool FMGL_IsActiveXBMPixel(FMGL_XBMImage* image, uint16_t x, uint16_t y);
 
+/**
+ * Draws one character at given position.
+ */
+void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint8_t character);
+
+#endif /* FMGL_INCLUDE_FMGL_H_ */
