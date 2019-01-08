@@ -279,8 +279,13 @@ void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMImage* image, uint16_t 
 bool FMGL_IsActiveXBMPixel(FMGL_XBMImage* image, uint16_t x, uint16_t y);
 
 /**
- * Draws one character at given position.
+ * Draws one character at given position. Returns drawn character width (in width parameter).
  */
-void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint8_t character);
+void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char character);
+
+/**
+ * Draws characters string and returns width of actually drawn part of it in width parameter.
+ */
+void FMGL_RenderString(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char* string);
 
 #endif /* FMGL_INCLUDE_FMGL_H_ */

@@ -325,15 +325,40 @@ void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t
 	FMGL_SetActiveColor(context, activeColor);
 }
 
-void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint8_t character)
+void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char character)
 {
-	/* Generating XBM image struct */
+	/* Generating XBM image structure */
 	FMGL_XBMImage characterImage;
 	characterImage.Height = fontSettings->Font->Height;
+	characterImage.Width = fontSettings->Font->GetCharacterWidth((uint8_t)character);
+	characterImage.Raster = fontSettings->Font->Characters[(uint8_t)character];
 
-	characterImage.Width = fontSettings->Font->GetCharacterWidth(character);
-	characterImage.Raster = fontSettings->Font->Characters[character];
+	*width = characterImage.Width;
 
 	FMGL_RenderXBM(context, &characterImage, x, y, fontSettings->Scale, fontSettings->Scale, *fontSettings->FontColor, *fontSettings->BackgroundColor, *fontSettings->Transparency);
+}
+
+void FMGL_RenderString(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char* string)
+{
+	/* Iterating through string until 0x00 or right screen border. */
+	uint16_t currentX = x;
+	char* currentChar = string;
+	uint16_t lastCharWidth;
+
+	while(0x00 != *currentChar)
+	{
+		FMGL_RenderCharacter(context, fontSettings, currentX, y, &lastCharWidth, *currentChar);
+
+		currentX += lastCharWidth;
+
+		if (currentX > context->MaxX)
+		{
+			break;
+		}
+
+		currentChar ++;
+	}
+
+	*width = currentX - x;
 }
 

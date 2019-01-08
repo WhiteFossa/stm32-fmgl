@@ -13,4 +13,5 @@ For PSF (console) fonts:
 
 4) Make .inc file with glyphs: psf2inc --psf1 ter-k12n.psf ter-k12n.inc
 
-6) Each character (they are numbere in decimal format) in INC file is XBM image, images are mirrored left to right, so we need to mirror it back.
+6) Each character (they are numbere in decimal format) in INC file is XBM image, images are mirrored left to right, so we need to mirror it back using supplied tool:
+Call ./BitsOrderReverter.py "0x00, 0x00, 0xf8, 0x88, 0x88, 0x88, 0x88, 0x88, 0x88, 0xf8, 0x00, 0x00" and it will print line with reverted bytes.

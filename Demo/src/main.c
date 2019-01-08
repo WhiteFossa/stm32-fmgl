@@ -47,7 +47,11 @@ int main(int argc, char* argv[])
 	fontSettings.BackgroundColor = &OffColor;
 	fontSettings.Transparency = &transparencyMode;
 
-	FMGL_RenderCharacter(&fmglContext, &fontSettings, 0, 0, '*');
+	uint16_t drawnWidth;
+
+	FMGL_RenderString(&fmglContext, &fontSettings, 0, 0, &drawnWidth, " !\"#$%&'()*+,-./01234");
+	FMGL_RenderString(&fmglContext, &fontSettings, 0, 12, &drawnWidth, "56789:;<=>?@ABCDEFGHI");
+	FMGL_RenderString(&fmglContext, &fontSettings, 0, 24, &drawnWidth, "JKLMNOPQRSTUVWXYZ");
 	FMGL_PushFramebuffer(&fmglContext);
 
 	while(1) {}
