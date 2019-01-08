@@ -331,10 +331,8 @@ void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSe
 	FMGL_XBMImage characterImage;
 	characterImage.Height = fontSettings->Font->Height;
 
-	FMGL_FontCharacter characterStruct = *fontSettings->Font->Characters[character];
-
-	characterImage.Width = characterStruct.Width;
-	characterImage.Raster = characterStruct.Raster;
+	characterImage.Width = fontSettings->Font->GetCharacterWidth(character);
+	characterImage.Raster = fontSettings->Font->Characters[character];
 
 	FMGL_RenderXBM(context, &characterImage, x, y, fontSettings->Scale, fontSettings->Scale, *fontSettings->FontColor, *fontSettings->BackgroundColor, *fontSettings->Transparency);
 }

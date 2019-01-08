@@ -126,19 +126,6 @@ typedef struct
 #define FMGL_FONT_CHARACTERS_COUNT 256
 
 /**
- * Font character.
- */
-typedef struct
-{
-	/* Character width (height is defined in font) */
-	uint8_t Width;
-
-	/* Character raster (actually XBM image) */
-	uint8_t* Raster;
-} FMGL_FontCharacter;
-
-
-/**
  * Font.
  */
 typedef struct
@@ -146,8 +133,11 @@ typedef struct
 	/* Character height. */
 	uint8_t Height;
 
-	/* Array of pointers to actual characters */
-	FMGL_FontCharacter* Characters[FMGL_FONT_CHARACTERS_COUNT];
+	/* Array of pointers to character rasters (XBM images) */
+	uint8_t* Characters[FMGL_FONT_CHARACTERS_COUNT];
+
+	/* Pointer to function, returning character width. */
+	uint16_t (*GetCharacterWidth) (uint8_t character);
 } FMGL_Font;
 
 /**
