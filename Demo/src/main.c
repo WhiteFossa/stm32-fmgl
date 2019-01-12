@@ -49,9 +49,15 @@ int main(int argc, char* argv[])
 
 	uint16_t drawnWidth;
 
-	FMGL_RenderString(&fmglContext, &fontSettings, 0, 0, &drawnWidth, " !\"#$%&'()*+,-./01234");
-	FMGL_RenderString(&fmglContext, &fontSettings, 0, 12, &drawnWidth, "56789:;<=>?@ABCDEFGHI");
-	FMGL_RenderString(&fmglContext, &fontSettings, 0, 24, &drawnWidth, "JKLMNOPQRSTUVWXYZ");
+	/* ASCII */
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 0, &drawnWidth, " !\"#$%&'()*+,-./01234");
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 12, &drawnWidth, "56789:;<=>?@ABCDEFGHI");
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 24, &drawnWidth, "JKLMNOPQRSTUVWXYZ[\\]^");
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 36, &drawnWidth, "_`abcdefghijklmnopqrs");
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 48, &drawnWidth, "tuvwxyz{|}~");
+
+	/* KOI8-R */
+	FMGL_RenderString(&fmglContext, &fontSettings, 0, 0, &drawnWidth, "\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf");
 	FMGL_PushFramebuffer(&fmglContext);
 
 	while(1) {}
