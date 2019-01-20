@@ -124,9 +124,59 @@ FMGL_Font FMGL_FontTerminusRegular12Init(void)
 	FMGL_FontTerminusRegular12.Characters[0xcd] = FMGL_FontTerminusRegular12_CyrLowCaseEmRaster;
 	FMGL_FontTerminusRegular12.Characters[0xce] = FMGL_FontTerminusRegular12_CyrLowCaseEnRaster;
 	FMGL_FontTerminusRegular12.Characters[0xcf] = FMGL_FontTerminusRegular12_CyrLowCaseORaster;
+	FMGL_FontTerminusRegular12.Characters[0xd0] = FMGL_FontTerminusRegular12_CyrLowCasePeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xd1] = FMGL_FontTerminusRegular12_CyrLowCaseIaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xd2] = FMGL_FontTerminusRegular12_CyrLowCaseErRaster;
+	FMGL_FontTerminusRegular12.Characters[0xd3] = FMGL_FontTerminusRegular12_CyrLowCaseEsRaster;
+	FMGL_FontTerminusRegular12.Characters[0xd4] = FMGL_FontTerminusRegular12_CyrLowCaseTeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xd5] = FMGL_FontTerminusRegular12_CyrLowCaseURaster;
+	FMGL_FontTerminusRegular12.Characters[0xd6] = FMGL_FontTerminusRegular12_CyrLowCaseZheRaster;
+	FMGL_FontTerminusRegular12.Characters[0xd7] = FMGL_FontTerminusRegular12_CyrLowCaseVeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xd8] = FMGL_FontTerminusRegular12_CyrLowCaseSoftSignRaster;
+	FMGL_FontTerminusRegular12.Characters[0xd9] = FMGL_FontTerminusRegular12_CyrLowCaseYeriRaster;
+	FMGL_FontTerminusRegular12.Characters[0xda] = FMGL_FontTerminusRegular12_CyrLowCaseZeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xdb] = FMGL_FontTerminusRegular12_CyrLowCaseShaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xdc] = FMGL_FontTerminusRegular12_CyrLowCaseReversedERaster;
+	FMGL_FontTerminusRegular12.Characters[0xdd] = FMGL_FontTerminusRegular12_CyrLowCaseShchaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xde] = FMGL_FontTerminusRegular12_CyrLowCaseCheRaster;
+	FMGL_FontTerminusRegular12.Characters[0xdf] = FMGL_FontTerminusRegular12_CyrLowCaseHardSignRaster;
+	FMGL_FontTerminusRegular12.Characters[0xe0] = FMGL_FontTerminusRegular12_CyrCapIURaster;
+	FMGL_FontTerminusRegular12.Characters[0xe1] = FMGL_FontTerminusRegular12_CyrCapARaster;
+	FMGL_FontTerminusRegular12.Characters[0xe2] = FMGL_FontTerminusRegular12_CyrCapBeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xe3] = FMGL_FontTerminusRegular12_CyrCapTseRaster;
+	FMGL_FontTerminusRegular12.Characters[0xe4] = FMGL_FontTerminusRegular12_CyrCapDeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xe5] = FMGL_FontTerminusRegular12_CyrCapIeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xe6] = FMGL_FontTerminusRegular12_CyrCapEfRaster;
+	FMGL_FontTerminusRegular12.Characters[0xe7] = FMGL_FontTerminusRegular12_CyrCapGeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xe8] = FMGL_FontTerminusRegular12_CyrCapKhaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xe9] = FMGL_FontTerminusRegular12_CyrCapIiRaster;
+	FMGL_FontTerminusRegular12.Characters[0xea] = FMGL_FontTerminusRegular12_CyrCapShortIiRaster;
+	FMGL_FontTerminusRegular12.Characters[0xeb] = FMGL_FontTerminusRegular12_CyrCapKaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xec] = FMGL_FontTerminusRegular12_CyrCapElRaster;
+	FMGL_FontTerminusRegular12.Characters[0xed] = FMGL_FontTerminusRegular12_CyrCapEmRaster;
+	FMGL_FontTerminusRegular12.Characters[0xee] = FMGL_FontTerminusRegular12_CyrCapEnRaster;
+	FMGL_FontTerminusRegular12.Characters[0xef] = FMGL_FontTerminusRegular12_CyrCapORaster;
+	FMGL_FontTerminusRegular12.Characters[0xf0] = FMGL_FontTerminusRegular12_CyrCapPeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf1] = FMGL_FontTerminusRegular12_CyrCapIaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf2] = FMGL_FontTerminusRegular12_CyrCapErRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf0] = FMGL_FontTerminusRegular12_CyrCapPeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf1] = FMGL_FontTerminusRegular12_CyrCapIaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf2] = FMGL_FontTerminusRegular12_CyrCapErRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf3] = FMGL_FontTerminusRegular12_CyrCapEsRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf4] = FMGL_FontTerminusRegular12_CyrCapTeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf5] = FMGL_FontTerminusRegular12_CyrCapURaster;
+	FMGL_FontTerminusRegular12.Characters[0xf6] = FMGL_FontTerminusRegular12_CyrCapZheRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf7] = FMGL_FontTerminusRegular12_CyrCapVeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf8] = FMGL_FontTerminusRegular12_CyrCapSoftSignRaster;
+	FMGL_FontTerminusRegular12.Characters[0xf9] = FMGL_FontTerminusRegular12_CyrCapYeriRaster;
+	FMGL_FontTerminusRegular12.Characters[0xfa] = FMGL_FontTerminusRegular12_CyrCapZeRaster;
+	FMGL_FontTerminusRegular12.Characters[0xfb] = FMGL_FontTerminusRegular12_CyrCapShaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xfc] = FMGL_FontTerminusRegular12_CyrCapReversedERaster;
+	FMGL_FontTerminusRegular12.Characters[0xfd] = FMGL_FontTerminusRegular12_CyrCapShchaRaster;
+	FMGL_FontTerminusRegular12.Characters[0xfe] = FMGL_FontTerminusRegular12_CyrCapCheRaster;
+	FMGL_FontTerminusRegular12.Characters[0xff] = FMGL_FontTerminusRegular12_CyrCapHardSignRaster;
+
+
 
 	return FMGL_FontTerminusRegular12;
 }
-
-
-
