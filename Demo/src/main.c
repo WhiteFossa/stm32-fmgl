@@ -9,7 +9,7 @@
 #include "main.h"
 
 int main(int argc, char* argv[])
-{
+ {
 	/* Setting up hardware */
 	L2HAL_Init();
 
@@ -57,10 +57,16 @@ int main(int argc, char* argv[])
 //	FMGL_RenderString(&fmglContext, &fontSettings, 0, 48, &drawnWidth, "tuvwxyz{|}~");
 
 	/* KOI8-R */
-	FMGL_RenderString(&fmglContext, &fontSettings, 0, 0, &drawnWidth, "\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4");
-	FMGL_RenderString(&fmglContext, &fontSettings, 0, 12, &drawnWidth, "\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9");
-	FMGL_RenderString(&fmglContext, &fontSettings, 0, 24, &drawnWidth, "\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe");
-	FMGL_RenderString(&fmglContext, &fontSettings, 0, 36, &drawnWidth, "\xff");
+	/* Russian letters*/
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 0, &drawnWidth, "\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4");
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 12, &drawnWidth, "\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9");
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 24, &drawnWidth, "\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe");
+//	FMGL_RenderString(&fmglContext, &fontSettings, 0, 36, &drawnWidth, "\xff");
+
+	/* Forms elements */
+	FMGL_RenderString(&fmglContext, &fontSettings, 0, 0, &drawnWidth, "\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94");
+	FMGL_RenderString(&fmglContext, &fontSettings, 0, 12, &drawnWidth, "\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f");
+
 	FMGL_PushFramebuffer(&fmglContext);
 
 	while(1) {}
