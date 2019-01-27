@@ -254,4 +254,5 @@ static const uint8_t FMGL_FontTerminusRegular12_FormsVertDblHorizSnglRaster[] = 
 static const uint8_t FMGL_FontTerminusRegular12_FormsDblVertHorizRaster[] = { 0x0A, 0x0A, 0x0A, 0x0A, 0x3B, 0x00, 0x3B, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A }; /* Forms double vertical and horizontal */
 static const uint8_t FMGL_FontTerminusRegular12_CopyrightSign[] = { 0x00, 0x00, 0x1E, 0x21, 0x2D, 0x25, 0x25, 0x2D, 0x21, 0x1E, 0x00, 0x00 }; /* Copyright sign */
 
+
 #endif /* FMGL_INCLUDE_FONTS_TERMINUSREGULAR12_H_ */

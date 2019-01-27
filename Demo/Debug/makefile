@@ -16,7 +16,7 @@ RM := rm -rf
 -include src/l2hal/src/ssd1306hal/subdir.mk
 -include src/l2hal/src/subdir.mk
 -include src/fmgl/src/subdir.mk
--include src/fmgl/include/fonts/src/subdir.mk
+-include src/fmgl/fonts/src/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk
