@@ -8,7 +8,6 @@
 /**
  * Forms elements and special characters.
  */
-
 #define KOI8R_FORMS_LT_HORIZ					0x80 /* Forms light horizontal */
 #define KOI8R_FORMS_LT_VERT						0x81 /* Forms light vertical */
 #define KOI8R_FORMS_LT_DOWN_RIGHT				0x82 /* Forms light down and right */
@@ -72,8 +71,45 @@
 #define KOI8R_FORMS_DBL_VERT_HORIZ				0xbe /* Forms double vertical and horizontal */
 #define KOI8R_COPYRIGHT_SIGN					0xbf /* Copyright sign */
 
+/**
+ * Russian small letters.
+ */
+#define KOI8R_CYR_LOW_CASE_A					0xc1 /* а */
+#define KOI8R_CYR_LOW_CASE_BE					0xc2 /* б */
+#define KOI8R_CYR_LOW_CASE_VE					0xd7 /* в */
+#define KOI8R_CYR_LOW_CASE_GE					0xc7 /* г */
+#define KOI8R_CYR_LOW_CASE_DE					0xc4 /* д */
+#define KOI8R_CYR_LOW_CASE_IE					0xc5 /* е */
+#define KOI8R_CYR_LOW_CASE_IO					0xa3 /* ё */
+#define KOI8R_CYR_LOW_CASE_ZHE					0xd6 /* ж */
+#define KOI8R_CYR_LOW_CASE_ZE					0xda /* з */
+#define KOI8R_CYR_LOW_CASE_II					0xc9 /* и */
+#define KOI8R_CYR_LOW_CASE_SHORT_II				0xca /* й */
+#define KOI8R_CYR_LOW_CASE_KA					0xcb /* к */
+#define KOI8R_CYR_LOW_CASE_EL					0xcc /* л */
+#define KOI8R_CYR_LOW_CASE_EM					0xcd /* м */
+#define KOI8R_CYR_LOW_CASE_EN					0xce /* н */
+#define KOI8R_CYR_LOW_CASE_O					0xcf /* о */
+#define KOI8R_CYR_LOW_CASE_PE					0xd0 /* п */
+#define KOI8R_CYR_LOW_CASE_ER					0xd2 /* р */
+#define KOI8R_CYR_LOW_CASE_ES					0xd3 /* с */
+#define KOI8R_CYR_LOW_CASE_TE					0xd4 /* т */
+#define KOI8R_CYR_LOW_CASE_U					0xd5 /* у */
+#define KOI8R_CYR_LOW_CASE_EF					0xc6 /* ф */
+#define KOI8R_CYR_LOW_CASE_KHA					0xc8 /* х */
+#define KOI8R_CYR_LOW_CASE_TSE					0xc3 /* ц */
+#define KOI8R_CYR_LOW_CASE_CHE					0xde /* ч */
+#define KOI8R_CYR_LOW_CASE_SHA					0xdb /* ш */
+#define KOI8R_CYR_LOW_CASE_SHCHA				0xdd /* щ */
+#define KOI8R_CYR_LOW_CASE_HARD_SIGN			0xdf /* ъ */
+#define KOI8R_CYR_LOW_CASE_YERI					0xd9 /* ы */
+#define KOI8R_CYR_LOW_CASE_SOFT_SIGN			0xd8 /* ь */
+#define KOI8R_CYR_LOW_CASE_REVERSED_E			0xdc /* э */
+#define KOI8R_CYR_LOW_CASE_IU					0xc0 /* ю */
+#define KOI8R_CYR_LOW_CASE_IA					0xd1 /* я */
 
-//#define KOI8R_CyrLowCaseIo[] /* ё */
+
+//
 //#define KOI8R_CyrCapIo[] /* Ё */
 
 #endif /* FMGL_CHARSETS_INCLUDE_KOI8_R_H_ */
