@@ -108,8 +108,38 @@
 #define KOI8R_CYR_LOW_CASE_IU					0xc0 /* ю */
 #define KOI8R_CYR_LOW_CASE_IA					0xd1 /* я */
 
-
-//
-//#define KOI8R_CyrCapIo[] /* Ё */
+#define KOI8R_CYR_CAP_A							0xe1 /* А */
+#define KOI8R_CYR_CAP_BE						0xe2 /* Б */
+#define KOI8R_CYR_CAP_VE						0xf7 /* В */
+#define KOI8R_CYR_CAP_GE						0xe7 /* Г */
+#define KOI8R_CYR_CAP_DE						0xe4 /* Д */
+#define KOI8R_CYR_CAP_IE						0xe5 /* Е */
+#define KOI8R_CYR_CAP_IO						0xb3 /* Ё */
+#define KOI8R_CYR_CAP_ZHE						0xf6 /* Ж */
+#define KOI8R_CYR_CAP_ZE						0xfa /* З */
+#define KOI8R_CYR_CAP_II						0xe9 /* И */
+#define KOI8R_CYR_CAP_SHORT_II					0xea /* Й */
+#define KOI8R_CYR_CAP_KA						0xeb /* К */
+#define KOI8R_CYR_CAP_EL						0xec /* Л */
+#define KOI8R_CYR_CAP_EM						0xed /* М */
+#define KOI8R_CYR_CAP_EN						0xee /* Н */
+#define KOI8R_CYR_CAP_O							0xef /* О */
+#define KOI8R_CYR_CAP_PE						0xf0 /* П */
+#define KOI8R_CYR_CAP_ER						0xf2 /* Р */
+#define KOI8R_CYR_CAP_ES						0xf3 /* С */
+#define KOI8R_CYR_CAP_TE						0xf4 /* Т */
+#define KOI8R_CYR_CAP_U							0xf5 /* У */
+#define KOI8R_CYR_CAP_EF						0xe6 /* Ф */
+#define KOI8R_CYR_CAP_KHA						0xe8 /* Х */
+#define KOI8R_CYR_CAP_TSE						0xe3 /* Ц */
+#define KOI8R_CYR_CAP_CHE						0xfe /* Ч */
+#define KOI8R_CYR_CAP_SHA						0xfb /* Ш */
+#define KOI8R_CYR_CAP_SHCHA						0xfd /* Щ */
+#define KOI8R_CYR_CAP_HARD_SIGN					0xff /* Ъ */
+#define KOI8R_CYR_CAP_YERI						0xf9 /* Ы */
+#define KOI8R_CYR_CAP_SOFT_SIGN					0xf8 /* Ь */
+#define KOI8R_CYR_CAP_REVERSED_E				0xfc /* Э */
+#define KOI8R_CYR_CAP_IU						0xe0 /* Ю */
+#define KOI8R_CYR_CAP_IA						0xf1 /* Я */
 
 #endif /* FMGL_CHARSETS_INCLUDE_KOI8_R_H_ */
