@@ -13,8 +13,8 @@ RM := rm -rf
 -include system/src/diag/subdir.mk
 -include system/src/cortexm/subdir.mk
 -include system/src/cmsis/subdir.mk
--include src/l2hal/src/ssd1306hal/subdir.mk
 -include src/l2hal/src/subdir.mk
+-include src/l2hal/drivers/display/ssd1306/src/subdir.mk
 -include src/fmgl/src/subdir.mk
 -include src/fmgl/fonts/src/subdir.mk
 -include src/subdir.mk

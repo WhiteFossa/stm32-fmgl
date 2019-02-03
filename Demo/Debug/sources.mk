@@ -29,8 +29,8 @@ CPP_DEPS :=
 SUBDIRS := \
 src/fmgl/fonts/src \
 src/fmgl/src \
+src/l2hal/drivers/display/ssd1306/src \
 src/l2hal/src \
-src/l2hal/src/ssd1306hal \
 src \
 system/src/cmsis \
 system/src/cortexm \

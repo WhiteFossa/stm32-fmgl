@@ -5,12 +5,12 @@
 #ifndef L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_
 #define L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_
 
-#include "stdint.h"
-#include "stm32f1xx_hal.h"
-#include "bool_type.h"
-#include "l2hal_errors.h"
-#include "l2hal_ssd1306_commands.h"
-#include "fmgl.h"
+#include <stdint.h>
+#include <stm32f1xx_hal.h>
+#include <bool_type.h>
+#include <l2hal_errors.h>
+#include <l2hal_ssd1306_commands.h>
+#include <fmgl.h>
 
 /* Display I/O timeout in milliseconds */
 #define L2HAL_SSD1306_IO_TIMEOUT 100U

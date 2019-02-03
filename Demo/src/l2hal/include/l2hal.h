@@ -5,9 +5,9 @@
 #ifndef L2HAL_INCLUDE_L2HAL_H_
 #define L2HAL_INCLUDE_L2HAL_H_
 
-#include "stm32f1xx_hal.h"
-#include "l2hal_errors.h"
-#include "ssd1306hal/l2hal_ssd1306.h"
+#include <stm32f1xx_hal.h>
+#include <l2hal_errors.h>
+#include <l2hal_ssd1306.h>
 
 /* Defines */
 

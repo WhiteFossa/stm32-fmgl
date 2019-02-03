@@ -5,8 +5,8 @@
 #ifndef L2HAL_INCLUDE_L2HAL_ERRORS_H_
 #define L2HAL_INCLUDE_L2HAL_ERRORS_H_
 
-#include "stm32f1xx_hal.h"
-#include "stm32f1xx_hal_rcc.h"
+#include <stm32f1xx_hal.h>
+#include <stm32f1xx_hal_rcc.h>
 
 /**
  * Clock this port on error.
