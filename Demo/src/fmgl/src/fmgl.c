@@ -325,7 +325,7 @@ void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t
 	FMGL_SetActiveColor(context, activeColor);
 }
 
-void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char character)
+void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, char character)
 {
 	/* Generating XBM image structure */
 	FMGL_XBMImage characterImage;
@@ -333,32 +333,117 @@ void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSe
 	characterImage.Width = fontSettings->Font->GetCharacterWidth((uint8_t)character);
 	characterImage.Raster = fontSettings->Font->Characters[(uint8_t)character];
 
-	*width = characterImage.Width;
-
 	FMGL_RenderXBM(context, &characterImage, x, y, fontSettings->Scale, fontSettings->Scale, *fontSettings->FontColor, *fontSettings->BackgroundColor, *fontSettings->Transparency);
 }
 
-void FMGL_RenderString(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char* string)
+void FMGL_RenderOneLineDumb(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* maxX, char* string)
 {
-	/* Iterating through string until 0x00 or right screen border. */
+	uint16_t scaledCharactersSpacing = fontSettings->CharactersSpacing * fontSettings->Scale;
+
+	*maxX = x;
 	uint16_t currentX = x;
+
 	char* currentChar = string;
-	uint16_t lastCharWidth;
 
-	while(0x00 != *currentChar)
+	while (true)
 	{
-		FMGL_RenderCharacter(context, fontSettings, currentX, y, &lastCharWidth, *currentChar);
+		if ('\0' == *currentChar)
+		{
+			/* End of line */
+			return;
+		}
+		else if ('\n' == *currentChar)
+		{
+			/* Newline is not allowed */
+			L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT);
+		}
 
-		currentX += lastCharWidth;
-
+		/* Could we draw current pixel? */
 		if (currentX > context->MaxX)
 		{
-			break;
+			/* No */
+			return;
 		}
+
+		/* Drawing */
+		FMGL_RenderCharacter(context, fontSettings, currentX, y, *currentChar);
+
+		currentX += fontSettings->Font->GetCharacterWidth(*currentChar);
+		*maxX = currentX - 1;
+
+		/* Adding intercharacter spacing */
+		currentX += scaledCharactersSpacing;
 
 		currentChar ++;
 	}
-
-	*width = currentX - x;
 }
 
+uint16_t FMGL_CalculateOneLineWidth(FMGL_FontSettings* fontSettings, char* string)
+{
+	size_t length = strlen(string);
+	if (0 == length)
+	{
+		return 0;
+	}
+
+	uint16_t width = (length - 1) * fontSettings->CharactersSpacing * fontSettings->Scale;
+
+	char* currentChar = string;
+
+	while(true)
+	{
+		if ('\0' == *currentChar)
+		{
+			return width;
+		}
+		else if ('\n' == *currentChar)
+		{
+			/* Newline is not allowed */
+			L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT);
+		}
+
+		width += fontSettings->Font->GetCharacterWidth(*currentChar);
+		currentChar ++;
+	}
+}
+
+void FMGL_RenderTextWithLineBreaks(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y,
+		uint16_t* maxX, uint16_t* maxY, char* string)
+{
+	*maxX = x;
+
+	 /* +1 To move after newline */	size_t length = strlen(string);
+
+	uint16_t scaledLineHeight = (fontSettings->Font->Height + fontSettings->LinesSpacing) * fontSettings->Scale;
+
+	/* Scanning string for newlines */
+	uint16_t startPos = 0;
+	for (uint16_t pos = 0; pos < length; pos ++)
+	{
+		if ('\n' == string[pos])
+		{
+			FMGL_RenderSubstring(context, fontSettings, startPos, pos - startPos, x, &y, scaledLineHeight, maxX, string);
+			startPos = pos + 1; /* +1 To move after newline */
+		}
+	}
+
+	FMGL_RenderSubstring(context, fontSettings, startPos, length - startPos, x, &y, scaledLineHeight, maxX, string);
+
+	*maxY = y;
+}
+
+void FMGL_RenderSubstring(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t startPos, uint16_t length,
+		uint16_t x, uint16_t* y, uint16_t scaledLineHeight, uint16_t* maxX, char* string)
+{
+	char* substr = AUX_Str_Substring(string, startPos, length);
+	uint16_t currMaxX;
+	FMGL_RenderOneLineDumb(context, fontSettings, x, *y, &currMaxX, substr);
+	AUX_Mem_SafeFree(substr);
+
+	if (currMaxX > *maxX)
+	{
+		*maxX = currMaxX;
+	}
+
+	*y += scaledLineHeight;
+}

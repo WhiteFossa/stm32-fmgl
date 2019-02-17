@@ -7,8 +7,10 @@
 #ifndef FMGL_INCLUDE_FMGL_H_
 #define FMGL_INCLUDE_FMGL_H_
 
-#include "stdint.h"
-#include "bool_type.h"
+#include <stdint.h>
+#include <string.h>
+#include <l2hal_aux.h>
+#include <l2hal_errors.h>
 
 /**
  * Macroses for minimal and maximal values.
@@ -151,6 +153,12 @@ typedef struct
 	/* Font scale */
 	uint16_t Scale;
 
+	/* Add this width between characters (scaled by Scale) */
+	uint16_t CharactersSpacing;
+
+	/* Add this height between lines (scaled by Scale) */
+	uint16_t LinesSpacing;
+
 	/* Font pixels color */
 	FMGL_ColorStruct* FontColor;
 
@@ -268,6 +276,32 @@ void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMImage* image, uint16_t 
 		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor, FMGL_XBMTransparencyMode transparency);
 
 
+/*******************************
+ * Strings rendering functions *
+ *******************************/
+
+/**
+ * Draws one line without wrapping at spaces. Newlines aren't allowed, in case of newline L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT) will be called.
+ * Draws until line end or until no pixels of next character falls into screen area. Returns (in maxX parameter) x coordinate of rightmost pixel drawn.
+ */
+void FMGL_RenderOneLineDumb(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* maxX, char* string);
+
+/**
+ * Renders text without wrapping at spaces, but with wrapping at newlines.
+ * @param context Pointer to FMGL library context.
+ * @param fontSettings Pointer to font settings.
+ * @param x,y Top left text coordinates.
+ * @param string Text to render.
+ * @param maxX,maxY Output parameters, maximal coordinates of rendered text.
+ */
+void FMGL_RenderTextWithLineBreaks(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y,
+		uint16_t* maxX, uint16_t* maxY, char* string);
+
+/**
+ * Calculates given string width (in pixels). Spaces are treated as usual characters (no carry), newlines aren't allowed (L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT) will be called).
+ */
+uint16_t FMGL_CalculateOneLineWidth(FMGL_FontSettings* fontSettings, char* string);
+
 /***************************
  * API functions ends here *
  ***************************/
@@ -279,13 +313,24 @@ void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMImage* image, uint16_t 
 bool FMGL_IsActiveXBMPixel(FMGL_XBMImage* image, uint16_t x, uint16_t y);
 
 /**
- * Draws one character at given position. Returns drawn character width (in width parameter).
+ * Draws one character at given position.
  */
-void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char character);
+void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, char character);
 
 /**
- * Draws characters string and returns width of actually drawn part of it in width parameter.
+ * For internal use in FMGL_RenderTextWithLineBreaks().
+ * @param context Pointer to FMGL library context.
+ * @param fontSettings Pointer to font settings.
+ * @param startPos Start position in string from what substring to render begins.
+ * @param length Substring to render length.
+ * @param x X coordinate of substring top left pixel.
+ * @param y Pointer to Y coordinate of top substring top left pixel. Will be incremented to scaledLineHeight.
+ * @param scaledLineHeight Scaled line height (could be calculated, but have to be provided to improve speed).
+ * @param maxX Pointer to variable, where maximal X coordinate of rendered pixels will be stored.
+ * @param string String, from what substring will be rendered.
  */
-void FMGL_RenderString(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char* string);
+void FMGL_RenderSubstring(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t startPos, uint16_t length,
+		uint16_t x, uint16_t* y, uint16_t scaledLineHeight, uint16_t* maxX, char* string);
+
 
 #endif /* FMGL_INCLUDE_FMGL_H_ */

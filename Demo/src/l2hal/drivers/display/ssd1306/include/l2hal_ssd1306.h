@@ -7,8 +7,7 @@
 
 #include <stdint.h>
 #include <stm32f1xx_hal.h>
-#include <bool_type.h>
-#include <l2hal_errors.h>
+#include <l2hal_aux.h>
 #include <l2hal_ssd1306_commands.h>
 #include <fmgl.h>
 

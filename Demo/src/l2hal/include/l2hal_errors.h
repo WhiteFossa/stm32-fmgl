@@ -39,11 +39,16 @@
  */
 #define L2HAL_ERROR_GENERIC 1
 
+/**
+ * Function get wrong argument.
+ */
+#define L2HAL_ERROR_WRONG_ARGUMENT 2
+
 
 /**
  * Call it if error happened.
  * @param code Error code.
  */
-void L2HAL_Error(int8_t code);
+void L2HAL_Error(int16_t code);
 
 #endif /* L2HAL_INCLUDE_L2HAL_ERRORS_H_ */
