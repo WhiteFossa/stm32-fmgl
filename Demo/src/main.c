@@ -21,29 +21,29 @@ int main(int argc, char* argv[])
 	L2HAL_SSD1306_TurnDisplayOn(&L2HAL_SSD1306_Context);
 
 	/* Attaching FMGL to display */
-	fmglContext = FMGL_AttachToDriver(&L2HAL_SSD1306_Context, &L2HAL_SSD1306_GetWidth, &L2HAL_SSD1306_GetHeight, &L2HAL_SSD1306_SetActiveColor,
+	fmglContext = FMGL_API_AttachToDriver(&L2HAL_SSD1306_Context, &L2HAL_SSD1306_GetWidth, &L2HAL_SSD1306_GetHeight, &L2HAL_SSD1306_SetActiveColor,
 			&L2HAL_SSD1306_DrawPixel, &L2HAL_SSD1306_GetPixel, &L2HAL_SSD1306_PushFramebuffer);
 
 	/* Initializing font */
-	FMGL_Font font= FMGL_FontTerminusRegular12Init();
+	FMGL_API_Font font= FMGL_FontTerminusRegular12Init();
 
-	FMGL_ColorStruct OffColor;
+	FMGL_API_ColorStruct OffColor;
 	OffColor.R = 0;
 	OffColor.G = 0;
 	OffColor.B = 0;
 
-	FMGL_ColorStruct OnColor;
+	FMGL_API_ColorStruct OnColor;
 	OnColor.R = 1;
 	OnColor.G = 1;
 	OnColor.B = 1;
 
-	FMGL_XBMTransparencyMode transparencyMode = FMGL_XBMTransparencyModeNormal;
+	FMGL_API_XBMTransparencyMode transparencyMode = FMGL_XBMTransparencyModeNormal;
 
 	/* Font settings */
-	FMGL_FontSettings fontSettings;
+	FMGL_API_FontSettings fontSettings;
 	fontSettings.Font = &font;
 	fontSettings.Scale = 1;
-	fontSettings.CharactersSpacing = 1;
+	fontSettings.CharactersSpacing = 0;
 	fontSettings.LinesSpacing = 0;
 	fontSettings.FontColor = &OnColor;
 	fontSettings.BackgroundColor = &OffColor;
@@ -52,10 +52,25 @@ int main(int argc, char* argv[])
 	uint16_t maxX;
 	uint16_t maxY;
 
-	FMGL_RenderTextWithLineBreaks(&fmglContext, &fontSettings, 0, 0, &maxX, &maxY, "YERF\n\nYUFF\nYIFF");
-	FMGL_RenderTextWithLineBreaks(&fmglContext, &fontSettings, 0, maxY, &maxX, &maxY, "Endline");
+	/* English banner */
+	uint16_t bannerEngWidth = FMGL_API_CalculateOneLineWidth(&fontSettings, "\xa1Hello, World!\xa1");
+	uint16_t bannerEngShift = (FMGL_API_GetDisplayWidth(&fmglContext) - bannerEngWidth) / 2;
 
-	FMGL_PushFramebuffer(&fmglContext);
+	FMGL_API_RenderTextWithLineBreaks(&fmglContext, &fontSettings, bannerEngShift, 0, &maxX, &maxY,
+		"\xa5\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa8\n"
+		"\xa1Hello, World!\xa1\n"
+		"\xab\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xae");
+
+	/* Russian banner*/
+	uint16_t bannerRusWidth = FMGL_API_CalculateOneLineWidth(&fontSettings, "\xa1\xf0\xd2\xc9\xd7\xc5\xd4, \xed\xc9\xd2!\xa1");
+	uint16_t bannerRusShift = (FMGL_API_GetDisplayWidth(&fmglContext) - bannerRusWidth) / 2;
+
+	FMGL_API_RenderTextWithLineBreaks(&fmglContext, &fontSettings, bannerRusShift, 33, &maxX, &maxY,
+		"\xa5\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa8\n"
+		"\xa1\xf0\xd2\xc9\xd7\xc5\xd4, \xed\xc9\xd2!\xa1\n"
+		"\xab\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xae");
+
+	FMGL_API_PushFramebuffer(&fmglContext);
 
 	while(1) {}
 

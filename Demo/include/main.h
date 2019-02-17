@@ -7,6 +7,6 @@
 #include "Awesome.h"
 
 
-FMGL_DriverContext fmglContext;
+FMGL_API_DriverContext fmglContext;
 
 #endif /* __MAIN_H */

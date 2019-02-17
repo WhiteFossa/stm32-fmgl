@@ -222,7 +222,7 @@ bool L2HAL_SSD1306_GetFramebufferAddress(uint16_t x, uint16_t y, uint16_t* index
 	return true;
 }
 
-void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_ColorStruct color)
+void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_API_ColorStruct color)
 {
 	float brightness = L2HAL_SSD1306_GetBrightness(color);
 
@@ -251,18 +251,18 @@ void L2HAL_SSD1306_DrawPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, u
 	context->Framebuffer[index] = (context->Framebuffer[index] & antimask) | (mask & context->ActiveColor);
 }
 
-float L2HAL_SSD1306_GetBrightness(FMGL_ColorStruct color)
+float L2HAL_SSD1306_GetBrightness(FMGL_API_ColorStruct color)
 {
 	return color.R * L2HAL_SSD1306_BRIGHTNESS_R_FACTOR
 			+ color.G * L2HAL_SSD1306_BRIGHTNESS_G_FACTOR
 			+ color.B * L2HAL_SSD1306_BRIGHTNESS_B_FACTOR;
 }
 
-FMGL_ColorStruct L2HAL_SSD1306_GetPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y)
+FMGL_API_ColorStruct L2HAL_SSD1306_GetPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y)
 {
 	uint16_t index;
 	uint8_t mask;
-	FMGL_ColorStruct result;
+	FMGL_API_ColorStruct result;
 
 	// Off color
 	result.R = L2HAL_SSD1306_PIXEL_OFF_R;

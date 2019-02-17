@@ -1,17 +1,17 @@
-#include "fmgl.h"
+#include <fmgl_private.h>
 
-FMGL_DriverContext FMGL_AttachToDriver
+FMGL_API_DriverContext FMGL_API_AttachToDriver
 (
 	void* deviceContext,
 	uint16_t (*GetWidth) (void),
 	uint16_t (*GetHeight) (void),
-	void (*SetActiveColor) (void* deviceContext, FMGL_ColorStruct color),
+	void (*SetActiveColor) (void* deviceContext, FMGL_API_ColorStruct color),
 	void (*DrawPixel) (void* deviceContext, uint16_t x, uint16_t y),
-	FMGL_ColorStruct (*GetPixel) (void* deviceContext, uint16_t x, uint16_t y),
+	FMGL_API_ColorStruct (*GetPixel) (void* deviceContext, uint16_t x, uint16_t y),
 	void (*PushFramebuffer) (void* deviceContext)
 )
 {
-	FMGL_DriverContext context;
+	FMGL_API_DriverContext context;
 
 	context.DeviceContext = deviceContext;
 	context.GetWidth = GetWidth;
@@ -28,18 +28,18 @@ FMGL_DriverContext FMGL_AttachToDriver
 	return context;
 }
 
-void FMGL_SetActiveColor(FMGL_DriverContext* context, FMGL_ColorStruct color)
+void FMGL_API_SetActiveColor(FMGL_API_DriverContext* context, FMGL_API_ColorStruct color)
 {
 	context->ActiveColor = color;
 	context->SetActiveColor(context->DeviceContext, context->ActiveColor);
 }
 
-FMGL_ColorStruct FMGL_GetActiveColor(FMGL_DriverContext* context)
+FMGL_API_ColorStruct FMGL_API_GetActiveColor(FMGL_API_DriverContext* context)
 {
 	return context->ActiveColor;
 }
 
-void FMGL_DrawPixel (FMGL_DriverContext* context, uint16_t x, uint16_t y)
+void FMGL_API_DrawPixel (FMGL_API_DriverContext* context, uint16_t x, uint16_t y)
 {
 	if (x > context->MaxX || y > context->MaxY)
 	{
@@ -49,9 +49,9 @@ void FMGL_DrawPixel (FMGL_DriverContext* context, uint16_t x, uint16_t y)
 	context->DrawPixel(context->DeviceContext, x, y);
 }
 
-FMGL_ColorStruct FMGL_GetPixel(FMGL_DriverContext* context, uint16_t x, uint16_t y)
+FMGL_API_ColorStruct FMGL_API_GetPixel(FMGL_API_DriverContext* context, uint16_t x, uint16_t y)
 {
-	FMGL_ColorStruct result;
+	FMGL_API_ColorStruct result;
 	result.R = 0;
 	result.G = 0;
 	result.B = 0;
@@ -64,49 +64,23 @@ FMGL_ColorStruct FMGL_GetPixel(FMGL_DriverContext* context, uint16_t x, uint16_t
 	return context->GetPixel(context->DeviceContext, x, y);
 }
 
-void FMGL_PushFramebuffer (FMGL_DriverContext* context)
+void FMGL_API_PushFramebuffer (FMGL_API_DriverContext* context)
 {
 	context->PushFramebuffer(context->DeviceContext);
 }
 
-uint16_t FMGL_GetDisplayWidth(FMGL_DriverContext* context)
+uint16_t FMGL_API_GetDisplayWidth(FMGL_API_DriverContext* context)
 {
 	return context->GetWidth();
 }
 
-uint16_t FMGL_GetDisplayHeight(FMGL_DriverContext* context)
+uint16_t FMGL_API_GetDisplayHeight(FMGL_API_DriverContext* context)
 {
 	return context->GetHeight();
 }
 
-bool FMGL_IsActiveXBMPixel(FMGL_XBMImage* image, uint16_t x, uint16_t y)
-{
-	if (x >= image->Width || y >= image->Height)
-	{
-		return false;
-	}
-
-	uint16_t bytesPerRow = image->Width / FMGL_BITS_PER_BYTE; /* Round down */
-	if (0 != (image->Width % FMGL_BITS_PER_BYTE)) /* Do we have non completely filled byte at rightmost position in row*/
-	{
-		bytesPerRow ++;
-	}
-
-	uint32_t index = y * bytesPerRow + x / FMGL_BITS_PER_BYTE;
-	uint8_t mask = (1 << (x % FMGL_BITS_PER_BYTE));
-
-	if (0 != (image->Raster[index] & mask))
-	{
-		return true; /* To be sure that 0xFF is returned */
-	}
-	else
-	{
-		return false;
-	}
-}
-
-void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMImage* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
-		FMGL_ColorStruct activeColor, FMGL_ColorStruct inactiveColor, FMGL_XBMTransparencyMode transparency)
+void FMGL_API_RenderXBM(FMGL_API_DriverContext* context, FMGL_API_XBMImage* image, uint16_t x, uint16_t y, uint16_t scaleX, uint16_t scaleY,
+		FMGL_API_ColorStruct activeColor, FMGL_API_ColorStruct inactiveColor, FMGL_API_XBMTransparencyMode transparency)
 {
 	/* Do at least one pixel fit the screen? */
 	if (x > context->MaxX || y > context->MaxY)
@@ -117,24 +91,24 @@ void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMImage* image, uint16_t 
 	uint32_t scaledWidth = image->Width * scaleX;
 	uint32_t scaledHeight = image->Height * scaleY;
 
-	FMGL_ColorStruct colors[FMGL_XBM_COLORS_NUMBER]; /* Colors, active color first */
-	colors[FMGL_XBM_ACTIVE_COLOR_INDEX] = activeColor;
-	colors[FMGL_XBM_INACTIVE_COLOR_INDEX] = inactiveColor;
+	FMGL_API_ColorStruct colors[FMGL_PRIV_XBM_COLORS_NUMBER]; /* Colors, active color first */
+	colors[FMGL_PRIV_XBM_ACTIVE_COLOR_INDEX] = activeColor;
+	colors[FMGL_PRIV_XBM_INACTIVE_COLOR_INDEX] = inactiveColor;
 
-	for (uint8_t colorIndex = 0; colorIndex < FMGL_XBM_COLORS_NUMBER; colorIndex++)
+	for (uint8_t colorIndex = 0; colorIndex < FMGL_PRIV_XBM_COLORS_NUMBER; colorIndex++)
 	{
 		if
 		(
-			((FMGL_XBM_ACTIVE_COLOR_INDEX == colorIndex) && (FMGL_XBMTransparencyModeTransparentActive == transparency))
+			((FMGL_PRIV_XBM_ACTIVE_COLOR_INDEX == colorIndex) && (FMGL_XBMTransparencyModeTransparentActive == transparency))
 			||
-			((FMGL_XBM_INACTIVE_COLOR_INDEX == colorIndex) && (FMGL_XBMTransparencyModeTransparentInactive == transparency))
+			((FMGL_PRIV_XBM_INACTIVE_COLOR_INDEX == colorIndex) && (FMGL_XBMTransparencyModeTransparentInactive == transparency))
 		)
 		{
 			/* Skipping transparent color */
 			continue;
 		}
 
-		FMGL_SetActiveColor(context, colors[colorIndex]);
+		FMGL_API_SetActiveColor(context, colors[colorIndex]);
 
 		for (uint32_t dy = 0; dy < scaledHeight; dy++)
 		{
@@ -144,38 +118,38 @@ void FMGL_RenderXBM(FMGL_DriverContext* context, FMGL_XBMImage* image, uint16_t 
 			{
 				uint16_t sx = dx / scaleX;
 
-				bool isActive = FMGL_IsActiveXBMPixel(image, sx, sy);
+				bool isActive = FMGL_Priv_IsActiveXBMPixel(image, sx, sy);
 
 				if
 				(
-					((FMGL_XBM_ACTIVE_COLOR_INDEX == colorIndex) && isActive)
+					((FMGL_PRIV_XBM_ACTIVE_COLOR_INDEX == colorIndex) && isActive)
 					||
-					((FMGL_XBM_INACTIVE_COLOR_INDEX == colorIndex) && !isActive)
+					((FMGL_PRIV_XBM_INACTIVE_COLOR_INDEX == colorIndex) && !isActive)
 				)
 				{
 					/* Active pixel */
-					FMGL_DrawPixel(context, dx + x, dy + y);
+					FMGL_API_DrawPixel(context, dx + x, dy + y);
 				}
 			}
 		}
 	}
 }
 
-void FMGL_DrawLineHorizontal(FMGL_DriverContext* context, uint16_t x1, uint16_t x2, uint16_t y)
+void FMGL_API_DrawLineHorizontal(FMGL_API_DriverContext* context, uint16_t x1, uint16_t x2, uint16_t y)
 {
 	if (y > context->MaxY)
 	{
 		return;
 	}
 
-	uint16_t minX = FMGL_MIN(x1, x2);
+	uint16_t minX = MIN(x1, x2);
 	if (minX > context->MaxX)
 	{
 		/* Out of screen, can't draw */
 		return;
 	}
 
-	uint16_t maxX = FMGL_MAX(x1, x2);
+	uint16_t maxX = MAX(x1, x2);
 
 	if (maxX > context->MaxX)
 	{
@@ -184,25 +158,25 @@ void FMGL_DrawLineHorizontal(FMGL_DriverContext* context, uint16_t x1, uint16_t 
 
 	for (uint16_t x = minX; x <= maxX; x++)
 	{
-		FMGL_DrawPixel(context, x, y);
+		FMGL_API_DrawPixel(context, x, y);
 	}
 }
 
-void FMGL_DrawLineVertical(FMGL_DriverContext* context, uint16_t x, uint16_t y1, uint16_t y2)
+void FMGL_API_DrawLineVertical(FMGL_API_DriverContext* context, uint16_t x, uint16_t y1, uint16_t y2)
 {
 	if (x > context->MaxX)
 	{
 		return;
 	}
 
-	uint16_t minY = FMGL_MIN(y1, y2);
+	uint16_t minY = MIN(y1, y2);
 
 	if (minY > context->MaxY)
 	{
 		return;
 	}
 
-	uint16_t maxY = FMGL_MAX(y1, y2);
+	uint16_t maxY = MAX(y1, y2);
 
 	if (maxY > context->MaxY)
 	{
@@ -211,24 +185,24 @@ void FMGL_DrawLineVertical(FMGL_DriverContext* context, uint16_t x, uint16_t y1,
 
 	for (uint16_t y = minY; y <= maxY; y++)
 	{
-		FMGL_DrawPixel(context, x, y);
+		FMGL_API_DrawPixel(context, x, y);
 	}
 }
 
 /**
  * Draws rectangle without filling it.
  */
-void FMGL_DrawRectangle(FMGL_DriverContext* context, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+void FMGL_API_DrawRectangle(FMGL_API_DriverContext* context, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
 	/* Will at least one pixel be on screen */
-	uint16_t minX = FMGL_MIN(x1, x2);
+	uint16_t minX = MIN(x1, x2);
 
 	if (minX > context->MaxX)
 	{
 		return;
 	}
 
-	uint16_t minY = FMGL_MIN(y1, y2);
+	uint16_t minY = MIN(y1, y2);
 
 	if (minY > context->MaxY)
 	{
@@ -236,42 +210,42 @@ void FMGL_DrawRectangle(FMGL_DriverContext* context, uint16_t x1, uint16_t y1, u
 	}
 
 	/* At least some pixels will be displayed */
-	uint16_t maxX = FMGL_MAX(x1, x2);
-	uint16_t maxY = FMGL_MAX(y1, y2);
+	uint16_t maxX = MAX(x1, x2);
+	uint16_t maxY = MAX(y1, y2);
 
-	uint16_t maxVisibleX = FMGL_MIN(maxX, context->MaxX);
-	uint16_t maxVisibleY = FMGL_MIN(maxY, context->MaxY);
+	uint16_t maxVisibleX = MIN(maxX, context->MaxX);
+	uint16_t maxVisibleY = MIN(maxY, context->MaxY);
 
 	/* Drawing 100% visible parts */
-	FMGL_DrawLineHorizontal(context, minX, maxVisibleX, minY);
-	FMGL_DrawLineVertical(context, minX, minY, maxVisibleY);
+	FMGL_API_DrawLineHorizontal(context, minX, maxVisibleX, minY);
+	FMGL_API_DrawLineVertical(context, minX, minY, maxVisibleY);
 
 	/* Right border */
 	if (maxX <= context->MaxX)
 	{
-		FMGL_DrawLineVertical(context, maxVisibleX, minY, maxVisibleY);
+		FMGL_API_DrawLineVertical(context, maxVisibleX, minY, maxVisibleY);
 	}
 
 	/* Bottom border */
 	if (maxY <= context->MaxY)
 	{
-		FMGL_DrawLineHorizontal(context, minX, maxVisibleX, maxVisibleY);
+		FMGL_API_DrawLineHorizontal(context, minX, maxVisibleX, maxVisibleY);
 	}
 }
 
-void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, FMGL_ColorStruct borderColor, FMGL_ColorStruct fillColor)
+void FMGL_API_DrawRectangleFilled(FMGL_API_DriverContext* context, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, FMGL_API_ColorStruct borderColor, FMGL_API_ColorStruct fillColor)
 {
-	FMGL_ColorStruct activeColor = FMGL_GetActiveColor(context);
+	FMGL_API_ColorStruct activeColor = FMGL_API_GetActiveColor(context);
 
 	/* Will at least one pixel be on screen */
-	uint16_t minX = FMGL_MIN(x1, x2);
+	uint16_t minX = MIN(x1, x2);
 
 	if (minX > context->MaxX)
 	{
 		return;
 	}
 
-	uint16_t minY = FMGL_MIN(y1, y2);
+	uint16_t minY = MIN(y1, y2);
 
 	if (minY > context->MaxY)
 	{
@@ -279,11 +253,11 @@ void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t
 	}
 
 	/* At least some pixels will be displayed */
-	uint16_t maxX = FMGL_MAX(x1, x2);
-	uint16_t maxY = FMGL_MAX(y1, y2);
+	uint16_t maxX = MAX(x1, x2);
+	uint16_t maxY = MAX(y1, y2);
 
-	uint16_t maxVisibleX = FMGL_MIN(maxX, context->MaxX);
-	uint16_t maxVisibleY = FMGL_MIN(maxY, context->MaxY);
+	uint16_t maxVisibleX = MIN(maxX, context->MaxX);
+	uint16_t maxVisibleY = MIN(maxY, context->MaxY);
 
 	uint16_t fillLeftX = minX + 1;
 	uint16_t fillTopY = minY + 1;
@@ -292,51 +266,42 @@ void FMGL_DrawRectangleFilled(FMGL_DriverContext* context, uint16_t x1, uint16_t
 	uint16_t fillBottomY = maxVisibleY;
 
 	/* Borders */
-	FMGL_SetActiveColor(context, borderColor);
-	FMGL_DrawLineHorizontal(context, minX, maxVisibleX, minY);
-	FMGL_DrawLineVertical(context, minX, minY, maxVisibleY);
+	FMGL_API_SetActiveColor(context, borderColor);
+	FMGL_API_DrawLineHorizontal(context, minX, maxVisibleX, minY);
+	FMGL_API_DrawLineVertical(context, minX, minY, maxVisibleY);
 
 	if (maxX <= context->MaxX)
 	{
 		/*Right border is on screen so moving fill right bottom 1 pixel left*/
 		fillRightX -= 1;
-		FMGL_DrawLineVertical(context, maxVisibleX, minY, maxVisibleY);
+		FMGL_API_DrawLineVertical(context, maxVisibleX, minY, maxVisibleY);
 	}
 
 	if (maxY <= context->MaxY)
 	{
 		fillBottomY -= 1;
-		FMGL_DrawLineHorizontal(context, minX, maxVisibleX, maxVisibleY);
+		FMGL_API_DrawLineHorizontal(context, minX, maxVisibleX, maxVisibleY);
 	}
 
 	/* Fill */
 	if ((fillLeftX > context->MaxX) || (fillTopY > context->MaxY) || (fillRightX < fillLeftX) || (fillBottomY < fillTopY))
 	{
-		FMGL_SetActiveColor(context, activeColor);
+		FMGL_API_SetActiveColor(context, activeColor);
 		return;
 	}
 
-	FMGL_SetActiveColor(context, fillColor);
+	FMGL_API_SetActiveColor(context, fillColor);
 	for (uint16_t y = fillTopY; y <= fillBottomY; y++)
 	{
-		FMGL_DrawLineHorizontal(context, fillLeftX, fillRightX, y);
+		FMGL_API_DrawLineHorizontal(context, fillLeftX, fillRightX, y);
 	}
 
-	FMGL_SetActiveColor(context, activeColor);
+	FMGL_API_SetActiveColor(context, activeColor);
 }
 
-void FMGL_RenderCharacter(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, char character)
-{
-	/* Generating XBM image structure */
-	FMGL_XBMImage characterImage;
-	characterImage.Height = fontSettings->Font->Height;
-	characterImage.Width = fontSettings->Font->GetCharacterWidth((uint8_t)character);
-	characterImage.Raster = fontSettings->Font->Characters[(uint8_t)character];
 
-	FMGL_RenderXBM(context, &characterImage, x, y, fontSettings->Scale, fontSettings->Scale, *fontSettings->FontColor, *fontSettings->BackgroundColor, *fontSettings->Transparency);
-}
 
-void FMGL_RenderOneLineDumb(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* maxX, char* string)
+void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* maxX, char* string)
 {
 	uint16_t scaledCharactersSpacing = fontSettings->CharactersSpacing * fontSettings->Scale;
 
@@ -366,7 +331,7 @@ void FMGL_RenderOneLineDumb(FMGL_DriverContext* context, FMGL_FontSettings* font
 		}
 
 		/* Drawing */
-		FMGL_RenderCharacter(context, fontSettings, currentX, y, *currentChar);
+		FMGL_Priv_RenderCharacter(context, fontSettings, currentX, y, *currentChar);
 
 		currentX += fontSettings->Font->GetCharacterWidth(*currentChar);
 		*maxX = currentX - 1;
@@ -378,7 +343,7 @@ void FMGL_RenderOneLineDumb(FMGL_DriverContext* context, FMGL_FontSettings* font
 	}
 }
 
-uint16_t FMGL_CalculateOneLineWidth(FMGL_FontSettings* fontSettings, char* string)
+uint16_t FMGL_API_CalculateOneLineWidth(FMGL_API_FontSettings* fontSettings, char* string)
 {
 	size_t length = strlen(string);
 	if (0 == length)
@@ -407,7 +372,7 @@ uint16_t FMGL_CalculateOneLineWidth(FMGL_FontSettings* fontSettings, char* strin
 	}
 }
 
-void FMGL_RenderTextWithLineBreaks(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t x, uint16_t y,
+void FMGL_API_RenderTextWithLineBreaks(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y,
 		uint16_t* maxX, uint16_t* maxY, char* string)
 {
 	*maxX = x;
@@ -422,28 +387,12 @@ void FMGL_RenderTextWithLineBreaks(FMGL_DriverContext* context, FMGL_FontSetting
 	{
 		if ('\n' == string[pos])
 		{
-			FMGL_RenderSubstring(context, fontSettings, startPos, pos - startPos, x, &y, scaledLineHeight, maxX, string);
+			FMGL_Priv_RenderSubstring(context, fontSettings, startPos, pos - startPos, x, &y, scaledLineHeight, maxX, string);
 			startPos = pos + 1; /* +1 To move after newline */
 		}
 	}
 
-	FMGL_RenderSubstring(context, fontSettings, startPos, length - startPos, x, &y, scaledLineHeight, maxX, string);
+	FMGL_Priv_RenderSubstring(context, fontSettings, startPos, length - startPos, x, &y, scaledLineHeight, maxX, string);
 
 	*maxY = y;
-}
-
-void FMGL_RenderSubstring(FMGL_DriverContext* context, FMGL_FontSettings* fontSettings, uint16_t startPos, uint16_t length,
-		uint16_t x, uint16_t* y, uint16_t scaledLineHeight, uint16_t* maxX, char* string)
-{
-	char* substr = AUX_Str_Substring(string, startPos, length);
-	uint16_t currMaxX;
-	FMGL_RenderOneLineDumb(context, fontSettings, x, *y, &currMaxX, substr);
-	AUX_Mem_SafeFree(substr);
-
-	if (currMaxX > *maxX)
-	{
-		*maxX = currMaxX;
-	}
-
-	*y += scaledLineHeight;
 }

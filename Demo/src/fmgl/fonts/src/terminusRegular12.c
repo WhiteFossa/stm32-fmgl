@@ -6,7 +6,7 @@ uint16_t FMGL_FontTerminusRegular12GetCharacterWidth (uint8_t character)
 	return FMGL_FONT_TERMINUS_REGULAR_12_CHARACTER_WIDTH;
 }
 
-FMGL_Font FMGL_FontTerminusRegular12Init(void)
+FMGL_API_Font FMGL_FontTerminusRegular12Init(void)
 {
 	/* Basic setup */
 	FMGL_FontTerminusRegular12.Height = 12;

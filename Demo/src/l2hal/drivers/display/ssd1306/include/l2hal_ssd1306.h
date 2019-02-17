@@ -156,7 +156,7 @@ uint16_t L2HAL_SSD1306_GetHeight(void);
 /**
  * Set color, what will be used for drawing.
  */
-void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_ColorStruct color);
+void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_API_ColorStruct color);
 
 /**
  * Draws pixel with active color. Do nothing if coordinates are incorrect. DOESN'T PUSH
@@ -167,7 +167,7 @@ void L2HAL_SSD1306_DrawPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, u
 /**
  * Get color of pixel with given coordinates. Return off pixel color if coordinates are incorrect.
  */
-FMGL_ColorStruct L2HAL_SSD1306_GetPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y);
+FMGL_API_ColorStruct L2HAL_SSD1306_GetPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y);
 
 /**
  * Pushes framebuffer to display, if push already initiated waits for completion.
@@ -220,6 +220,6 @@ bool L2HAL_SSD1306_GetFramebufferAddress(uint16_t x, uint16_t y, uint16_t* index
 /**
  * Returns brightness [0-L2HAL_SSD1306_MAX_BRIGHTNESS] for given color.
  */
-float L2HAL_SSD1306_GetBrightness(FMGL_ColorStruct color);
+float L2HAL_SSD1306_GetBrightness(FMGL_API_ColorStruct color);
 
 #endif /* L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_ */

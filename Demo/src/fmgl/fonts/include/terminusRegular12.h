@@ -15,7 +15,7 @@
 /**
  * Call this function to get font instance.
  */
-FMGL_Font FMGL_FontTerminusRegular12Init(void);
+FMGL_API_Font FMGL_FontTerminusRegular12Init(void);
 
 /**
  * Returns character width.
@@ -23,7 +23,7 @@ FMGL_Font FMGL_FontTerminusRegular12Init(void);
 uint16_t FMGL_FontTerminusRegular12GetCharacterWidth (uint8_t character);
 
 /* Basic font settings */
-FMGL_Font FMGL_FontTerminusRegular12;
+FMGL_API_Font FMGL_FontTerminusRegular12;
 
 /*************************
  * Characters going here *

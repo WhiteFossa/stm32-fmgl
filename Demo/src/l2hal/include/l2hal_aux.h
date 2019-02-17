@@ -16,6 +16,12 @@
 #define true 0xFF
 #define false 0x00
 
+/**
+ * Macroses for minimal and maximal values.
+ */
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+
 /************************
  * Memory-related stuff *
  ************************/
@@ -25,9 +31,6 @@
  */
 void AUX_Mem_SafeFree(void* ptr);
 
-/*******************************
- * End of memory-related stuff *
- *******************************/
 
 /*************************
  * Strings-related stuff *
@@ -43,8 +46,7 @@ char* AUX_Str_Substring(char* string, uint16_t start, uint16_t length);
  */
 char* AUX_Str_MergeStrings(char* str1, char* str2);
 
-/********************************
- * End of strings-related stuff *
- ********************************/
+
+
 
 #endif /* L2HAL_INCLUDE_L2HAL_AUX_H_ */
