@@ -41,10 +41,11 @@ void FMGL_Priv_RenderCharacter(FMGL_API_DriverContext* context, FMGL_API_FontSet
  * @param x X coordinate of substring top left pixel.
  * @param y Pointer to Y coordinate of top substring top left pixel. Will be incremented to scaledLineHeight.
  * @param scaledLineHeight Scaled line height (could be calculated, but have to be provided to improve speed).
- * @param maxX Pointer to variable, where maximal X coordinate of rendered pixels will be stored.
  * @param string String, from what substring will be rendered.
+ * @param width Pointer to variable, where width (in pixels) is stored. If substring width is higher than width, then width will be updated
+ * to substring width.
  */
 void FMGL_Priv_RenderSubstring(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t startPos, uint16_t length,
-		uint16_t x, uint16_t* y, uint16_t scaledLineHeight, uint16_t* maxX, char* string);
+		uint16_t x, uint16_t* y, uint16_t scaledLineHeight, uint16_t* width, char* string);
 
 #endif /* FMGL_INCLUDE_FMGL_PRIVATE_H_ */

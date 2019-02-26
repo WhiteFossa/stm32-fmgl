@@ -266,9 +266,9 @@ void FMGL_API_RenderXBM(FMGL_API_DriverContext* context, FMGL_API_XBMImage* imag
 
 /**
  * Draws one line without wrapping at spaces. Newlines aren't allowed, in case of newline L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT) will be called.
- * Draws until line end or until no pixels of next character falls into screen area. Returns (in maxX parameter) x coordinate of rightmost pixel drawn.
+ * Draws until line end or until no pixels of next character falls into screen area. Returns (in width parameter) width of drawn line.
  */
-void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* maxX, char* string);
+void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char* string);
 
 /**
  * Renders text without wrapping at spaces, but with wrapping at newlines.
@@ -276,10 +276,10 @@ void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSe
  * @param fontSettings Pointer to font settings.
  * @param x,y Top left text coordinates.
  * @param string Text to render.
- * @param maxX,maxY Output parameters, maximal coordinates of rendered text.
+ * @param width,height Output parameters, rendered text sizes.
  */
-void FMGL_API_RenderTextWithLineBreaks(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y,
-		uint16_t* maxX, uint16_t* maxY, char* string);
+void FMGL_API_RenderTextWithLineBreaks(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, uint16_t* height,
+		char* string);
 
 /**
  * Calculates given string width (in pixels). Spaces are treated as usual characters (no carry), newlines aren't allowed (L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT) will be called).
