@@ -38,11 +38,11 @@ void FMGL_Priv_RenderCharacter(FMGL_API_DriverContext* context, FMGL_API_FontSet
 }
 
 void FMGL_Priv_RenderSubstring(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t startPos, uint16_t length,
-		uint16_t x, uint16_t* y, uint16_t scaledLineHeight, uint16_t* width, char* string)
+		uint16_t x, uint16_t* y, uint16_t scaledLineHeight, uint16_t* width, bool isDryRun, char* string)
 {
 	char* substr = AUX_Str_Substring(string, startPos, length);
 	uint16_t currWidth;
-	FMGL_API_RenderOneLineDumb(context, fontSettings, x, *y, &currWidth, substr);
+	FMGL_API_RenderOneLineDumb(context, fontSettings, x, *y, &currWidth, isDryRun, substr);
 	AUX_Mem_SafeFree(substr);
 
 	if (currWidth > *width)

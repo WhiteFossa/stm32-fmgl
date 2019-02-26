@@ -267,24 +267,27 @@ void FMGL_API_RenderXBM(FMGL_API_DriverContext* context, FMGL_API_XBMImage* imag
 /**
  * Draws one line without wrapping at spaces. Newlines aren't allowed, in case of newline L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT) will be called.
  * Draws until line end or until no pixels of next character falls into screen area. Returns (in width parameter) width of drawn line.
+ * @param context Pointer to FMGL library context.
+ * @param fontSettings Pointer to font settings.
+ * @param x,y Top left text coordinates.
+ * @param width Pointer to variable, where rendered text width will be stored.
+ * @param isDryRun If true, then doesn't draw anything, just calculating width.
+ * @param string Text to render.
  */
-void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char* string);
+void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width,
+		bool isDryRun, char* string);
 
 /**
  * Renders text without wrapping at spaces, but with wrapping at newlines.
  * @param context Pointer to FMGL library context.
  * @param fontSettings Pointer to font settings.
  * @param x,y Top left text coordinates.
+ * @param width,height Pointers to variables, where rendered text sizes will be stored.
+ * @param isDryRun If true, then doesn't draw anything, just calculating width.
  * @param string Text to render.
- * @param width,height Output parameters, rendered text sizes.
  */
 void FMGL_API_RenderTextWithLineBreaks(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, uint16_t* height,
-		char* string);
-
-/**
- * Calculates given string width (in pixels). Spaces are treated as usual characters (no carry), newlines aren't allowed (L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT) will be called).
- */
-uint16_t FMGL_API_CalculateOneLineWidth(FMGL_API_FontSettings* fontSettings, char* string);
+		bool isDryRun, char* string);
 
 /***************************
  * API functions ends here *

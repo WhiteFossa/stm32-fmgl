@@ -49,27 +49,31 @@ int main(int argc, char* argv[])
 	fontSettings.BackgroundColor = &OffColor;
 	fontSettings.Transparency = &transparencyMode;
 
-	uint16_t width;
-	uint16_t height;
-
 	/* English banner */
-	uint16_t bannerEngWidth = FMGL_API_CalculateOneLineWidth(&fontSettings, "\xa1Hello, World!\xa1");
-	uint16_t bannerEngShift = (FMGL_API_GetDisplayWidth(&fmglContext) - bannerEngWidth) / 2;
+	const char* bannerEng = "\xa5\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa8\n"
+			"\xa1Hello, World!\xa1\n"
+			"\xab\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xae";
 
-	FMGL_API_RenderTextWithLineBreaks(&fmglContext, &fontSettings, bannerEngShift, 0, &width, &height,
-		"\xa5\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa8\n"
-		"\xa1Hello, World!\xa1\n"
-		"\xab\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xae");
+	uint16_t bannerEngWidth;
+	uint16_t bannerEngHeight;
+	FMGL_API_RenderTextWithLineBreaks(&fmglContext, &fontSettings, 0, 0, &bannerEngWidth, &bannerEngHeight, true, bannerEng);
 
 	/* Russian banner*/
-	uint16_t bannerRusWidth = FMGL_API_CalculateOneLineWidth(&fontSettings, "\xa1\xf0\xd2\xc9\xd7\xc5\xd4, \xed\xc9\xd2!\xa1");
-	uint16_t bannerRusShift = (FMGL_API_GetDisplayWidth(&fmglContext) - bannerRusWidth) / 2;
+	const char* bannerRus = "\xa5\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa8\n"
+			"\xa1\xf0\xd2\xc9\xd7\xc5\xd4, \xed\xc9\xd2!\xa1\n"
+			"\xab\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xae";
 
-	FMGL_API_RenderTextWithLineBreaks(&fmglContext, &fontSettings, bannerRusShift, 33, &width, &height,
-		"\xa5\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa8\n"
-		"\xa1\xf0\xd2\xc9\xd7\xc5\xd4, \xed\xc9\xd2!\xa1\n"
-		"\xab\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xae");
+	uint16_t bannerRusWidth;
+	uint16_t bannerRusHeight;
+	FMGL_API_RenderTextWithLineBreaks(&fmglContext, &fontSettings, 0, 0, &bannerRusWidth, &bannerRusHeight, true, bannerRus);
 
+	uint16_t bannerEngHShift = (FMGL_API_GetDisplayWidth(&fmglContext) - bannerEngWidth) / 2;
+	uint16_t bannerRusHShift = (FMGL_API_GetDisplayWidth(&fmglContext) - bannerRusWidth) / 2;
+
+	/* Actual drawing */
+	uint16_t width, height;
+	FMGL_API_RenderTextWithLineBreaks(&fmglContext, &fontSettings, bannerEngHShift, 0, &width, &height, false, bannerEng);
+	FMGL_API_RenderTextWithLineBreaks(&fmglContext, &fontSettings, bannerRusHShift, 33, &width, &height, false, bannerRus);
 	FMGL_API_PushFramebuffer(&fmglContext);
 
 	while(1) {}

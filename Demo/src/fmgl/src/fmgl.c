@@ -301,7 +301,8 @@ void FMGL_API_DrawRectangleFilled(FMGL_API_DriverContext* context, uint16_t x1, 
 
 
 
-void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, char* string)
+void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width,
+		bool isDryRun, char* string)
 {
 	uint16_t scaledCharactersSpacing = fontSettings->CharactersSpacing * fontSettings->Scale;
 	uint16_t currentX = x;
@@ -329,7 +330,10 @@ void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSe
 		}
 
 		/* Drawing */
-		FMGL_Priv_RenderCharacter(context, fontSettings, currentX, y, *currentChar);
+		if (!isDryRun)
+		{
+			FMGL_Priv_RenderCharacter(context, fontSettings, currentX, y, *currentChar);
+		}
 
 		currentX += fontSettings->Font->GetCharacterWidth(*currentChar);
 		*width = currentX - x - 1;
@@ -341,37 +345,8 @@ void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSe
 	}
 }
 
-uint16_t FMGL_API_CalculateOneLineWidth(FMGL_API_FontSettings* fontSettings, char* string)
-{
-	size_t length = strlen(string);
-	if (0 == length)
-	{
-		return 0;
-	}
-
-	uint16_t width = (length - 1) * fontSettings->CharactersSpacing * fontSettings->Scale;
-
-	char* currentChar = string;
-
-	while(true)
-	{
-		if ('\0' == *currentChar)
-		{
-			return width;
-		}
-		else if ('\n' == *currentChar)
-		{
-			/* Newline is not allowed */
-			L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT);
-		}
-
-		width += fontSettings->Font->GetCharacterWidth(*currentChar);
-		currentChar ++;
-	}
-}
-
 void FMGL_API_RenderTextWithLineBreaks(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width, uint16_t* height,
-		char* string)
+		bool isDryRun, char* string)
 {
 	*width = 0;
 	*height = y;
@@ -386,12 +361,12 @@ void FMGL_API_RenderTextWithLineBreaks(FMGL_API_DriverContext* context, FMGL_API
 	{
 		if ('\n' == string[pos])
 		{
-			FMGL_Priv_RenderSubstring(context, fontSettings, startPos, pos - startPos, x, &y, scaledLineHeight, width, string);
+			FMGL_Priv_RenderSubstring(context, fontSettings, startPos, pos - startPos, x, &y, scaledLineHeight, width, isDryRun, string);
 			startPos = pos + 1; /* +1 To move after newline */
 		}
 	}
 
-	FMGL_Priv_RenderSubstring(context, fontSettings, startPos, length - startPos, x, &y, scaledLineHeight, width, string);
+	FMGL_Priv_RenderSubstring(context, fontSettings, startPos, length - startPos, x, &y, scaledLineHeight, width, isDryRun, string);
 
 	*height = y - *height;
 }
