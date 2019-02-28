@@ -15,7 +15,12 @@
 /**
  * Each font defines 256 characters (including null-character for 0x00)
  */
-#define FMGL_API_FONT_CHARACTERS_COUNT 256
+#define FMGL_API_FONT_CHARACTERS_COUNT 256U
+
+/**
+ * Maximal brightness for each color channel.
+ */
+#define FMGL_API_MAX_CHANNEL_BRIGHTNESS 255U
 
 /**
  * Possible transparency rendering modes for XBM images.
@@ -33,11 +38,11 @@ typedef enum
 typedef struct
 {
 	/**
-	 * Color components [0-1].
+	 * Color components [0-FMGL_API_MAX_CHANNEL_BRIGHTNESS].
 	 */
-	float R;
-	float G;
-	float B;
+	uint8_t R;
+	uint8_t G;
+	uint8_t B;
 } FMGL_API_ColorStruct;
 
 /**

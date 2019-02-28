@@ -33,9 +33,9 @@ int main(int argc, char* argv[])
 	OffColor.B = 0;
 
 	FMGL_API_ColorStruct OnColor;
-	OnColor.R = 1;
-	OnColor.G = 1;
-	OnColor.B = 1;
+	OnColor.R = FMGL_API_MAX_CHANNEL_BRIGHTNESS;
+	OnColor.G = FMGL_API_MAX_CHANNEL_BRIGHTNESS;
+	OnColor.B = FMGL_API_MAX_CHANNEL_BRIGHTNESS;
 
 	FMGL_API_XBMTransparencyMode transparencyMode = FMGL_XBMTransparencyModeNormal;
 
