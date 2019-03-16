@@ -158,7 +158,7 @@ typedef struct
 	/**
 	 *Pointer to function, returning character raster.
 	 */
-	uint8_t* (*GetCharacterRaster) (uint8_t character);
+	const uint8_t* (*GetCharacterRaster) (uint8_t character);
 } FMGL_API_Font;
 
 /**

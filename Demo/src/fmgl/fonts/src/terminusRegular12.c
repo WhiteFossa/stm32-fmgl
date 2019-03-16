@@ -5,7 +5,7 @@ uint16_t FMGL_FontTerminusRegular12GetCharacterWidth (uint8_t character)
 	return FMGL_FONT_TERMINUS_REGULAR_12_CHARACTER_WIDTH;
 }
 
-uint8_t* FMGL_FontTerminusRegular12GetCharacterRaster(uint8_t character)
+const uint8_t* FMGL_FontTerminusRegular12GetCharacterRaster(uint8_t character)
 {
 	if (character < FMGL_FONT_TERMINUS_REGULAR_12_FIRST_CHARACTER_CODE)
 	{
