@@ -151,14 +151,14 @@ typedef struct
 	uint8_t Height;
 
 	/**
-	 * Array of pointers to character rasters (XBM images).
-	 */
-	uint8_t* Characters[FMGL_API_FONT_CHARACTERS_COUNT];
-
-	/**
 	 * Pointer to function returning character width.
 	 */
 	uint16_t (*GetCharacterWidth) (uint8_t character);
+
+	/**
+	 *Pointer to function, returning character raster.
+	 */
+	uint8_t* (*GetCharacterRaster) (uint8_t character);
 } FMGL_API_Font;
 
 /**

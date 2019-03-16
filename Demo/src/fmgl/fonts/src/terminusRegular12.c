@@ -1,245 +1,25 @@
 #include "terminusRegular12.h"
-#include "koi8-r.h"
 
 uint16_t FMGL_FontTerminusRegular12GetCharacterWidth (uint8_t character)
 {
 	return FMGL_FONT_TERMINUS_REGULAR_12_CHARACTER_WIDTH;
 }
 
+uint8_t* FMGL_FontTerminusRegular12GetCharacterRaster(uint8_t character)
+{
+	if (character < FMGL_FONT_TERMINUS_REGULAR_12_FIRST_CHARACTER_CODE)
+	{
+		return FMGL_FontTerminusRegular12_WrongCharacterCode;
+	}
+
+	return FMGL_FontTerminusRegular12Characters[character - FMGL_FONT_TERMINUS_REGULAR_12_FIRST_CHARACTER_CODE];
+}
+
 FMGL_API_Font FMGL_FontTerminusRegular12Init(void)
 {
-	/* Basic setup */
-	FMGL_FontTerminusRegular12.Height = 12;
+	FMGL_FontTerminusRegular12.Height = FMGL_FONT_TERMINUS_REGULAR_12_CHARACTER_HEIGHT;
 	FMGL_FontTerminusRegular12.GetCharacterWidth = &FMGL_FontTerminusRegular12GetCharacterWidth;
-
-	/* Characters table */
-	FMGL_FontTerminusRegular12.Characters[' '] = FMGL_FontTerminusRegular12_SpaceRaster;
-	FMGL_FontTerminusRegular12.Characters['!'] = FMGL_FontTerminusRegular12_EclamationMarkRaster;
-	FMGL_FontTerminusRegular12.Characters['"'] = FMGL_FontTerminusRegular12_DoubleQuotesRaster;
-	FMGL_FontTerminusRegular12.Characters['#'] = FMGL_FontTerminusRegular12_SharpRaster;
-	FMGL_FontTerminusRegular12.Characters['$'] = FMGL_FontTerminusRegular12_DollarRaster;
-	FMGL_FontTerminusRegular12.Characters['%'] = FMGL_FontTerminusRegular12_PercentRaster;
-	FMGL_FontTerminusRegular12.Characters['&'] = FMGL_FontTerminusRegular12_AmpersandRaster;
-	FMGL_FontTerminusRegular12.Characters['\''] = FMGL_FontTerminusRegular12_QuoteRaster;
-	FMGL_FontTerminusRegular12.Characters['('] = FMGL_FontTerminusRegular12_LeftParenthesisRaster;
-	FMGL_FontTerminusRegular12.Characters[')'] = FMGL_FontTerminusRegular12_RightParenthesisRaster;
-	FMGL_FontTerminusRegular12.Characters['*'] = FMGL_FontTerminusRegular12_AsteriskRaster;
-	FMGL_FontTerminusRegular12.Characters['+'] = FMGL_FontTerminusRegular12_PlusRaster;
-	FMGL_FontTerminusRegular12.Characters[','] = FMGL_FontTerminusRegular12_CommaRaster;
-	FMGL_FontTerminusRegular12.Characters['-'] = FMGL_FontTerminusRegular12_MinusRaster;
-	FMGL_FontTerminusRegular12.Characters['.'] = FMGL_FontTerminusRegular12_DotRaster;
-	FMGL_FontTerminusRegular12.Characters['/'] = FMGL_FontTerminusRegular12_SlashRaster;
-	FMGL_FontTerminusRegular12.Characters['0'] = FMGL_FontTerminusRegular12_ZeroRaster;
-	FMGL_FontTerminusRegular12.Characters['1'] = FMGL_FontTerminusRegular12_OneRaster;
-	FMGL_FontTerminusRegular12.Characters['2'] = FMGL_FontTerminusRegular12_TwoRaster;
-	FMGL_FontTerminusRegular12.Characters['3'] = FMGL_FontTerminusRegular12_ThreeRaster;
-	FMGL_FontTerminusRegular12.Characters['4'] = FMGL_FontTerminusRegular12_FourRaster;
-	FMGL_FontTerminusRegular12.Characters['5'] = FMGL_FontTerminusRegular12_FiveRaster;
-	FMGL_FontTerminusRegular12.Characters['6'] = FMGL_FontTerminusRegular12_SixRaster;
-	FMGL_FontTerminusRegular12.Characters['7'] = FMGL_FontTerminusRegular12_SevenRaster;
-	FMGL_FontTerminusRegular12.Characters['8'] = FMGL_FontTerminusRegular12_EightRaster;
-	FMGL_FontTerminusRegular12.Characters['9'] = FMGL_FontTerminusRegular12_NineRaster;
-	FMGL_FontTerminusRegular12.Characters[':'] = FMGL_FontTerminusRegular12_ColonRaster;
-	FMGL_FontTerminusRegular12.Characters[';'] = FMGL_FontTerminusRegular12_SemicolonRaster;
-	FMGL_FontTerminusRegular12.Characters['<'] = FMGL_FontTerminusRegular12_LessRaster;
-	FMGL_FontTerminusRegular12.Characters['='] = FMGL_FontTerminusRegular12_EqualRaster;
-	FMGL_FontTerminusRegular12.Characters['>'] = FMGL_FontTerminusRegular12_GreaterRaster;
-	FMGL_FontTerminusRegular12.Characters['?'] = FMGL_FontTerminusRegular12_QuestionMarkRaster;
-	FMGL_FontTerminusRegular12.Characters['@'] = FMGL_FontTerminusRegular12_AtRaster;
-	FMGL_FontTerminusRegular12.Characters['A'] = FMGL_FontTerminusRegular12_EnCapACyrCapARaster;
-	FMGL_FontTerminusRegular12.Characters['B'] = FMGL_FontTerminusRegular12_EnCapBCyrCapVeRaster;
-	FMGL_FontTerminusRegular12.Characters['C'] = FMGL_FontTerminusRegular12_EnCapCCyrCapEsRaster;
-	FMGL_FontTerminusRegular12.Characters['D'] = FMGL_FontTerminusRegular12_EnCapDRaster;
-	FMGL_FontTerminusRegular12.Characters['E'] = FMGL_FontTerminusRegular12_EnCapECyrCapIeRaster;
-	FMGL_FontTerminusRegular12.Characters['F'] = FMGL_FontTerminusRegular12_EnCapFRaster;
-	FMGL_FontTerminusRegular12.Characters['G'] = FMGL_FontTerminusRegular12_EnCapGRaster;
-	FMGL_FontTerminusRegular12.Characters['H'] = FMGL_FontTerminusRegular12_EnCapHCyrCapEnRaster;
-	FMGL_FontTerminusRegular12.Characters['I'] = FMGL_FontTerminusRegular12_EnCapIRaster;
-	FMGL_FontTerminusRegular12.Characters['J'] = FMGL_FontTerminusRegular12_EnCapJRaster;
-	FMGL_FontTerminusRegular12.Characters['K'] = FMGL_FontTerminusRegular12_EnCapKCyrCapKaRaster;
-	FMGL_FontTerminusRegular12.Characters['L'] = FMGL_FontTerminusRegular12_EnCapLRaster;
-	FMGL_FontTerminusRegular12.Characters['M'] = FMGL_FontTerminusRegular12_EnCapMCyrCapEmRaster;
-	FMGL_FontTerminusRegular12.Characters['N'] = FMGL_FontTerminusRegular12_EnCapNRaster;
-	FMGL_FontTerminusRegular12.Characters['O'] = FMGL_FontTerminusRegular12_EnCapOCyrCapORaster;
-	FMGL_FontTerminusRegular12.Characters['P'] = FMGL_FontTerminusRegular12_EnCapPCyrCapErRaster;
-	FMGL_FontTerminusRegular12.Characters['Q'] = FMGL_FontTerminusRegular12_EnCapQRaster;
-	FMGL_FontTerminusRegular12.Characters['R'] = FMGL_FontTerminusRegular12_EnCapRRaster;
-	FMGL_FontTerminusRegular12.Characters['S'] = FMGL_FontTerminusRegular12_EnCapSRaster;
-	FMGL_FontTerminusRegular12.Characters['T'] = FMGL_FontTerminusRegular12_EnCapTCyrCapTeRaster;
-	FMGL_FontTerminusRegular12.Characters['U'] = FMGL_FontTerminusRegular12_EnCapURaster;
-	FMGL_FontTerminusRegular12.Characters['V'] = FMGL_FontTerminusRegular12_EnCapVRaster;
-	FMGL_FontTerminusRegular12.Characters['W'] = FMGL_FontTerminusRegular12_EnCapWRaster;
-	FMGL_FontTerminusRegular12.Characters['X'] = FMGL_FontTerminusRegular12_EnCapXCyrCapKhaRaster;
-	FMGL_FontTerminusRegular12.Characters['Y'] = FMGL_FontTerminusRegular12_EnCapYRaster;
-	FMGL_FontTerminusRegular12.Characters['Z'] = FMGL_FontTerminusRegular12_EnCapZRaster;
-	FMGL_FontTerminusRegular12.Characters['['] = FMGL_FontTerminusRegular12_SqareBracketLeftRaster;
-	FMGL_FontTerminusRegular12.Characters['\\'] = FMGL_FontTerminusRegular12_BackSlashRaster;
-	FMGL_FontTerminusRegular12.Characters[']'] = FMGL_FontTerminusRegular12_SqareBracketRightRaster;
-	FMGL_FontTerminusRegular12.Characters['^'] = FMGL_FontTerminusRegular12_CaretRaster;
-	FMGL_FontTerminusRegular12.Characters['_'] = FMGL_FontTerminusRegular12_UnderscoreRaster;
-	FMGL_FontTerminusRegular12.Characters['`'] = FMGL_FontTerminusRegular12_GraveAccentRaster;
-	FMGL_FontTerminusRegular12.Characters['a'] = FMGL_FontTerminusRegular12_EnLowCaseACyrLowCaseARaster;
-	FMGL_FontTerminusRegular12.Characters['b'] = FMGL_FontTerminusRegular12_EnLowCaseBRaster;
-	FMGL_FontTerminusRegular12.Characters['c'] = FMGL_FontTerminusRegular12_EnLowCaseCCyrLowCaseEsRaster;
-	FMGL_FontTerminusRegular12.Characters['d'] = FMGL_FontTerminusRegular12_EnLowCaseDRaster;
-	FMGL_FontTerminusRegular12.Characters['e'] = FMGL_FontTerminusRegular12_EnLowCaseECyrLowCaseIeRaster;
-	FMGL_FontTerminusRegular12.Characters['f'] = FMGL_FontTerminusRegular12_EnLowCaseFRaster;
-	FMGL_FontTerminusRegular12.Characters['g'] = FMGL_FontTerminusRegular12_EnLowCaseGCyrLowCaseDeRaster;
-	FMGL_FontTerminusRegular12.Characters['h'] = FMGL_FontTerminusRegular12_EnLowCaseHRaster;
-	FMGL_FontTerminusRegular12.Characters['i'] = FMGL_FontTerminusRegular12_EnLowCaseIRaster;
-	FMGL_FontTerminusRegular12.Characters['j'] = FMGL_FontTerminusRegular12_EnLowCaseJRaster;
-	FMGL_FontTerminusRegular12.Characters['k'] = FMGL_FontTerminusRegular12_EnLowCaseKRaster;
-	FMGL_FontTerminusRegular12.Characters['l'] = FMGL_FontTerminusRegular12_EnLowCaseLRaster;
-	FMGL_FontTerminusRegular12.Characters['m'] = FMGL_FontTerminusRegular12_EnLowCaseMRaster;
-	FMGL_FontTerminusRegular12.Characters['n'] = FMGL_FontTerminusRegular12_EnLowCaseNRaster;
-	FMGL_FontTerminusRegular12.Characters['o'] = FMGL_FontTerminusRegular12_EnLowCaseOCyrLowCaseORaster;
-	FMGL_FontTerminusRegular12.Characters['p'] = FMGL_FontTerminusRegular12_EnLowCasePCyrLowCaseErRaster;
-	FMGL_FontTerminusRegular12.Characters['q'] = FMGL_FontTerminusRegular12_EnLowCaseQRaster;
-	FMGL_FontTerminusRegular12.Characters['r'] = FMGL_FontTerminusRegular12_EnLowCaseRRaster;
-	FMGL_FontTerminusRegular12.Characters['s'] = FMGL_FontTerminusRegular12_EnLowCaseSRaster;
-	FMGL_FontTerminusRegular12.Characters['t'] = FMGL_FontTerminusRegular12_EnLowCaseTRaster;
-	FMGL_FontTerminusRegular12.Characters['u'] = FMGL_FontTerminusRegular12_EnLowCaseUCyrLowCaseIiRaster;
-	FMGL_FontTerminusRegular12.Characters['v'] = FMGL_FontTerminusRegular12_EnLowCaseVRaster;
-	FMGL_FontTerminusRegular12.Characters['w'] = FMGL_FontTerminusRegular12_EnLowCaseWRaster;
-	FMGL_FontTerminusRegular12.Characters['x'] = FMGL_FontTerminusRegular12_EnLowCaseXCyrLowCaseKhaRaster;
-	FMGL_FontTerminusRegular12.Characters['y'] = FMGL_FontTerminusRegular12_EnLowCaseYCyrLowCaseURaster;
-	FMGL_FontTerminusRegular12.Characters['z'] = FMGL_FontTerminusRegular12_EnLowCaseZRaster;
-	FMGL_FontTerminusRegular12.Characters['\{'] = FMGL_FontTerminusRegular12_CurlyBracketLeftRaster;
-	FMGL_FontTerminusRegular12.Characters['\|'] = FMGL_FontTerminusRegular12_VerticalBarRaster;
-	FMGL_FontTerminusRegular12.Characters['\}'] = FMGL_FontTerminusRegular12_CurlyBracketRightRaster;
-	FMGL_FontTerminusRegular12.Characters['\~'] = FMGL_FontTerminusRegular12_TildeRaster;
-
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_HORIZ] = FMGL_FontTerminusRegular12_FormsLtHorizRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_VERT] = FMGL_FontTerminusRegular12_FormsLtVertRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_DOWN_RIGHT] = FMGL_FontTerminusRegular12_FormsLtDownRightRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_DOWN_LEFT] = FMGL_FontTerminusRegular12_FormsLtDownLeftRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_UP_RIGHT] = FMGL_FontTerminusRegular12_FormsLtUpRightRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_UP_LEFT] = FMGL_FontTerminusRegular12_FormsLtUpLeftRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_VERT_RIGHT] = FMGL_FontTerminusRegular12_FormsLtVertRightRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_VERT_LEFT] = FMGL_FontTerminusRegular12_FormsLtVertLeftRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_HORIZ_DOWN] = FMGL_FontTerminusRegular12_FormsLtHorizDownRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_HORIZ_UP] = FMGL_FontTerminusRegular12_FormsLtHorizUpRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_LT_VERT_HORIZ] = FMGL_FontTerminusRegular12_FormsLtVertHorizRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_HF_BLOCK_UP] = FMGL_FontTerminusRegular12_HfBlockUpRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_HF_BLOCK_LOW] = FMGL_FontTerminusRegular12_HfBlockLowRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FULL_BLOCK] = FMGL_FontTerminusRegular12_FullBlockRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_HF_BLOCK_LEFT] = FMGL_FontTerminusRegular12_HfBlockLeftRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_HF_BLOCK_RIGHT] = FMGL_FontTerminusRegular12_HfBlockRightRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_SHADE_LIGHT] = FMGL_FontTerminusRegular12_ShadeLightRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_SHADE_MEDIUM] = FMGL_FontTerminusRegular12_ShadeMediumRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_SHADE_DARK] = FMGL_FontTerminusRegular12_ShadeDarkRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_HF_INTEGRAL_TOP] = FMGL_FontTerminusRegular12_HfIntegralTopRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_BLACK_SMALL_SQUARE] = FMGL_FontTerminusRegular12_BlackSmallSquareRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_BULLET] = FMGL_FontTerminusRegular12_BulletRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_SQRT] = FMGL_FontTerminusRegular12_SqrtRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_ALMOST_EQUAL] = FMGL_FontTerminusRegular12_AlmostEqualRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_LESS_OR_EQU] = FMGL_FontTerminusRegular12_LessOrEquRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_GREATER_OR_EQU] = FMGL_FontTerminusRegular12_GreaterOrEquRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_NBSP] = FMGL_FontTerminusRegular12_SpaceRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_HF_INTEGRAL_BOTTOM] = FMGL_FontTerminusRegular12_HfIntegralBottomRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_DEGREE_SIGN] = FMGL_FontTerminusRegular12_DegreeSignRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_SUPERSCRIPT_TWO] = FMGL_FontTerminusRegular12_SuperscriptTwoRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_MIDDLE_DOT] = FMGL_FontTerminusRegular12_MiddleDotRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_DIVISION_SIGN] = FMGL_FontTerminusRegular12_DivisionSignRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_HORIZ] = FMGL_FontTerminusRegular12_FormsDblHorizRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_VERT] = FMGL_FontTerminusRegular12_FormsDblVertRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DOWN_SNGL_RIGHT_DBL] = FMGL_FontTerminusRegular12_FormsDownSnglRightDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DOWN_DBL_RIGHT_SNGL] = FMGL_FontTerminusRegular12_FormsDownDblRightSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_DOWN_RIGHT] = FMGL_FontTerminusRegular12_FormsDblDownRightRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DOWN_SNGL_LEFT_DBL] = FMGL_FontTerminusRegular12_FormsDownSnglLeftDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DOWN_DBL_LEFT_SNGL] = FMGL_FontTerminusRegular12_FormsDownDblLeftSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_DOWN_LEFT] = FMGL_FontTerminusRegular12_FormsDblDownLeftRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_UP_SNGL_RIGHT_DBL] = FMGL_FontTerminusRegular12_FormsUpSnglRightDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_UP_DBL_RIGHT_SNGL] = FMGL_FontTerminusRegular12_FormsUpDblRightSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_UP_RIGHT] = FMGL_FontTerminusRegular12_FormsDblUpRightRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_UP_SNGL_LEFT_DBL] = FMGL_FontTerminusRegular12_FormsUpSnglLeftDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_UP_DBL_LEFT_SNGL] = FMGL_FontTerminusRegular12_FormsUpDblLeftSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_UP_LEFT] = FMGL_FontTerminusRegular12_FormsDblUpLeftRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_VERT_SNGL_RIGHT_DBL] = FMGL_FontTerminusRegular12_FormsVertSnglRightDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_VERT_DBL_RIGHT_SNGL] = FMGL_FontTerminusRegular12_FormsVertDblRightSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_VERT_RIGHT] = FMGL_FontTerminusRegular12_FormsDblVertRightRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_VERT_SNGL_LEFT_DBL] = FMGL_FontTerminusRegular12_FormsVertSnglLeftDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_VERT_DBL_LEFT_SNGL] = FMGL_FontTerminusRegular12_FormsVertDblLeftSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_VERT_LEFT] = FMGL_FontTerminusRegular12_FormsDblVertLeftRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DOWN_SNGL_HORIZ_DBL] = FMGL_FontTerminusRegular12_FormsDownSnglHorizDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DOWN_DBL_HORIZ_SNGL] = FMGL_FontTerminusRegular12_FormsDownDblHorizSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_DOWN_HORIZ] = FMGL_FontTerminusRegular12_FormsDblDownHorizRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_UP_SNGL_HORIZ_DBL] = FMGL_FontTerminusRegular12_FormsUpSnglHorizDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_UP_DBL_HORIZ_SNGL] = FMGL_FontTerminusRegular12_FormsUpDblHorizSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_UP_HORIZ] = FMGL_FontTerminusRegular12_FormsDblUpHorizRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_VERT_SNGL_HORIZ_DBL] = FMGL_FontTerminusRegular12_FormsVertSnglHorizDblRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_VERT_DBL_HORIZ_SNGL] = FMGL_FontTerminusRegular12_FormsVertDblHorizSnglRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_FORMS_DBL_VERT_HORIZ] = FMGL_FontTerminusRegular12_FormsDblVertHorizRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_COPYRIGHT_SIGN] = FMGL_FontTerminusRegular12_CopyrightSign;
-
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_IO] = FMGL_FontTerminusRegular12_CyrLowCaseIoRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_IU] = FMGL_FontTerminusRegular12_CyrLowCaseIURaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_A] = FMGL_FontTerminusRegular12_EnLowCaseACyrLowCaseARaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_BE] = FMGL_FontTerminusRegular12_CyrLowCaseBeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_TSE] = FMGL_FontTerminusRegular12_CyrLowCaseTseRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_DE] = FMGL_FontTerminusRegular12_EnLowCaseGCyrLowCaseDeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_IE] = FMGL_FontTerminusRegular12_EnLowCaseECyrLowCaseIeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_EF] = FMGL_FontTerminusRegular12_CyrLowCaseEfRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_GE] = FMGL_FontTerminusRegular12_CyrLowCaseGeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_KHA] = FMGL_FontTerminusRegular12_EnLowCaseXCyrLowCaseKhaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_II] = FMGL_FontTerminusRegular12_EnLowCaseUCyrLowCaseIiRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_SHORT_II] = FMGL_FontTerminusRegular12_CyrLowCaseShortIiRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_KA] = FMGL_FontTerminusRegular12_CyrLowCaseKaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_EL] = FMGL_FontTerminusRegular12_CyrLowCaseElRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_EM] = FMGL_FontTerminusRegular12_CyrLowCaseEmRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_EN] = FMGL_FontTerminusRegular12_CyrLowCaseEnRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_O] = FMGL_FontTerminusRegular12_EnLowCaseOCyrLowCaseORaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_PE] = FMGL_FontTerminusRegular12_CyrLowCasePeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_IA] = FMGL_FontTerminusRegular12_CyrLowCaseIaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_ER] = FMGL_FontTerminusRegular12_EnLowCasePCyrLowCaseErRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_ES] = FMGL_FontTerminusRegular12_EnLowCaseCCyrLowCaseEsRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_TE] = FMGL_FontTerminusRegular12_CyrLowCaseTeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_U] = FMGL_FontTerminusRegular12_EnLowCaseYCyrLowCaseURaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_ZHE] = FMGL_FontTerminusRegular12_CyrLowCaseZheRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_VE] = FMGL_FontTerminusRegular12_CyrLowCaseVeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_SOFT_SIGN] = FMGL_FontTerminusRegular12_CyrLowCaseSoftSignRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_YERI] = FMGL_FontTerminusRegular12_CyrLowCaseYeriRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_ZE] = FMGL_FontTerminusRegular12_CyrLowCaseZeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_SHA] = FMGL_FontTerminusRegular12_CyrLowCaseShaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_REVERSED_E] = FMGL_FontTerminusRegular12_CyrLowCaseReversedERaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_SHCHA] = FMGL_FontTerminusRegular12_CyrLowCaseShchaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_CHE] = FMGL_FontTerminusRegular12_CyrLowCaseCheRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_LOW_CASE_HARD_SIGN] = FMGL_FontTerminusRegular12_CyrLowCaseHardSignRaster;
-
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_IO] = FMGL_FontTerminusRegular12_CyrCapIoRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_IU] = FMGL_FontTerminusRegular12_CyrCapIURaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_A] = FMGL_FontTerminusRegular12_EnCapACyrCapARaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_BE] = FMGL_FontTerminusRegular12_CyrCapBeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_TSE] = FMGL_FontTerminusRegular12_CyrCapTseRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_DE] = FMGL_FontTerminusRegular12_CyrCapDeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_IE] = FMGL_FontTerminusRegular12_EnCapECyrCapIeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_EF] = FMGL_FontTerminusRegular12_CyrCapEfRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_GE] = FMGL_FontTerminusRegular12_CyrCapGeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_KHA] = FMGL_FontTerminusRegular12_EnCapXCyrCapKhaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_II] = FMGL_FontTerminusRegular12_CyrCapIiRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_SHORT_II] = FMGL_FontTerminusRegular12_CyrCapShortIiRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_KA] = FMGL_FontTerminusRegular12_EnCapKCyrCapKaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_EL] = FMGL_FontTerminusRegular12_CyrCapElRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_EM] = FMGL_FontTerminusRegular12_EnCapMCyrCapEmRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_EN] = FMGL_FontTerminusRegular12_EnCapHCyrCapEnRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_O] = FMGL_FontTerminusRegular12_EnCapOCyrCapORaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_PE] = FMGL_FontTerminusRegular12_CyrCapPeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_IA] = FMGL_FontTerminusRegular12_CyrCapIaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_ER] = FMGL_FontTerminusRegular12_EnCapPCyrCapErRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_ES] = FMGL_FontTerminusRegular12_EnCapCCyrCapEsRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_TE] = FMGL_FontTerminusRegular12_EnCapTCyrCapTeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_U] = FMGL_FontTerminusRegular12_CyrCapURaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_ZHE] = FMGL_FontTerminusRegular12_CyrCapZheRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_VE] = FMGL_FontTerminusRegular12_EnCapBCyrCapVeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_SOFT_SIGN] = FMGL_FontTerminusRegular12_CyrCapSoftSignRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_YERI] = FMGL_FontTerminusRegular12_CyrCapYeriRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_ZE] = FMGL_FontTerminusRegular12_CyrCapZeRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_SHA] = FMGL_FontTerminusRegular12_CyrCapShaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_REVERSED_E] = FMGL_FontTerminusRegular12_CyrCapReversedERaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_SHCHA] = FMGL_FontTerminusRegular12_CyrCapShchaRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_CHE] = FMGL_FontTerminusRegular12_CyrCapCheRaster;
-	FMGL_FontTerminusRegular12.Characters[KOI8R_CYR_CAP_HARD_SIGN] = FMGL_FontTerminusRegular12_CyrCapHardSignRaster;
-
+	FMGL_FontTerminusRegular12.GetCharacterRaster = &FMGL_FontTerminusRegular12GetCharacterRaster;
 
 	return FMGL_FontTerminusRegular12;
 }
