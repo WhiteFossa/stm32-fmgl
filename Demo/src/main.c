@@ -56,14 +56,30 @@ int main(int argc, char* argv[])
 	invertedFont.BackgroundColor = &OnColor;
 	invertedFont.Transparency = &transparencyMode;
 
+	/* Preparing sprite to draw */
+	sprite.Width = Awesome_width;
+	sprite.Height = Awesome_height;
+	sprite.Raster = Awesome_bits;
 
+	uint16_t maxX = FMGL_API_GetDisplayWidth(&fmglContext) -1;
+	uint16_t maxY = FMGL_API_GetDisplayHeight(&fmglContext) -1;
 
+	uint16_t spriteAreaMaxX = maxX - sprite.Width;
+	uint16_t spriteAreaMaxY = maxY - sprite.Height;
 
-	/* Main cycle */
 	currentFont = &normalFont;
 	uint32_t fontBlinkingCounter = FONT_BLINKING_INTERVAL + 1; /* +1 to cause immediate redraw */
+
+	int16_t spriteX = 0;
+	int16_t spriteY = 0;
+
+	int16_t spriteDX = SPRITE_SPEED_X;
+	int16_t spriteDY = SPRITE_SPEED_Y;
+
+	/* Main cycle */
 	while(true)
 	{
+		/* Blinking */
 		if (fontBlinkingCounter > FONT_BLINKING_INTERVAL)
 		{
 			fontBlinkingCounter = 0;
@@ -77,96 +93,50 @@ int main(int argc, char* argv[])
 			{
 				currentFont = &normalFont;
 			}
-
-			/* Drawing background text */
-			DrawBackgroundText(currentFont);
 		}
 		else
 		{
 			fontBlinkingCounter ++;
 		}
 
+		/* Moving sprite */
+		spriteX += spriteDX;
+		spriteY += spriteDY;
+
+		if (spriteX < 0)
+		{
+			spriteX = abs(spriteX);
+			spriteDX *= -1;
+		}
+		else if (spriteX > spriteAreaMaxX)
+		{
+			spriteX = 2 * spriteAreaMaxX - spriteX;
+			spriteDX *= -1;
+		}
+
+		if (spriteY < 0)
+		{
+			spriteY = abs(spriteY);
+			spriteDY *= -1;
+		}
+		else if (spriteY > spriteAreaMaxY)
+		{
+			spriteY = 2 * spriteAreaMaxY - spriteY;
+			spriteDY *= -1;
+		}
+
+		/* Clearing screen */
+		FMGL_API_DrawRectangleFilled(&fmglContext, 0, 0, maxX, maxY, OffColor, OffColor);
+
+		/* Drawing background text */
+		DrawBackgroundText(currentFont);
+
+		/* Drawing sprite */
+		FMGL_API_RenderXBM(&fmglContext, &sprite, spriteX, spriteY, 1, 1, OnColor, OffColor, FMGL_XBMTransparencyModeTransparentInactive);
+
 		/* Pushing framebuffer */
 		FMGL_API_PushFramebuffer(&fmglContext);
 	}
-
-//	/* Preparing image */
-//	FMGL_XBMImage image;
-//	image.Width = Awesome_width;
-//	image.Height = Awesome_height;
-//	image.Raster = Awesome_bits;
-
-//	FMGL_ColorStruct OffColor;
-//	OffColor.R = 0;
-//	OffColor.G = 0;
-//	OffColor.B = 0;
-//
-//	FMGL_ColorStruct OnColor;
-//	OnColor.R = 1;
-//	OnColor.G = 1;
-//	OnColor.B = 1;
-//
-//	FMGL_XBMImage character;
-//	character.Height = 12;
-//	character.Width = 3;
-//	character.Raster = font.Characters[0x21]->Raster;
-
-
-//	double x = 0;
-//	double y = 0;
-//
-//	double dx = 1;
-//	double dy = 2;
-//
-//	uint16_t oldX = 0;
-//	uint16_t oldY = 0;
-//
-//	while(1)
-//	{
-//		// Cleaning screen
-//		FMGL_DrawRectangleFilled(&fmglContext, 0, 0, FMGL_GetDisplayWidth(&fmglContext), FMGL_GetDisplayHeight(&fmglContext), OffColor, OffColor);
-//
-//		// Moving to new position
-//		x += dx;
-//		y += dy;
-//
-//		if (x < 0)
-//		{
-//			x = abs(x);
-//			dx *= -1;
-//		}
-//		else if (x >= FMGL_GetDisplayWidth(&fmglContext) - image.Width)
-//		{
-//			x = 2 * (FMGL_GetDisplayWidth(&fmglContext)- image.Width) - x - 1;
-//			dx *= -1;
-//		}
-//
-//		if (y < 0)
-//		{
-//			y = abs(y);
-//			dy *= -1;
-//		}
-//		else if (y >= FMGL_GetDisplayHeight(&fmglContext) - image.Height)
-//		{
-//			y = 2 * (FMGL_GetDisplayHeight(&fmglContext) - image.Height) - y - 1;
-//			dy *= -1;
-//		}
-//
-//		oldX = floor(x + 0.5);
-//		oldY = floor(y + 0.5);
-//
-//		/* Crosshair */
-//		FMGL_SetActiveColor(&fmglContext, OnColor);
-//		FMGL_DrawLineHorizontal(&fmglContext, 0, fmglContext.MaxX, oldY + image.Height / 2);
-//		FMGL_DrawLineVertical(&fmglContext, oldX + image.Width / 2, 0, fmglContext.MaxY);
-//
-//		FMGL_DrawRectangle(&fmglContext, oldX, oldY, oldX + 32, oldY + 32);
-//		FMGL_RenderXBM(&fmglContext, &image, oldX, oldY, 1, 1, OnColor, OffColor, FMGL_XBMTransparencyModeTransparentInactive);
-//		FMGL_PushFramebuffer(&fmglContext);
-//
-//		HAL_Delay(10);
-//
-//	}
 
 	return 0;
 }
