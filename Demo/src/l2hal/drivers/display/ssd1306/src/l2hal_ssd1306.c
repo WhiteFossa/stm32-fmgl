@@ -11,8 +11,7 @@ void L2HAL_SSD1306_DetectDisplay(L2HAL_SSD1306_ContextStruct* context)
 			/* We found it */
 			context->BusAddress = addrs[i];
 			context->IsFound = true;
-			context->IsTransferInProgress = false;
-			context->IsFramebufferBeingPushed = false;
+			context->IsDataTransferInProgress = false;
 
 			return;
 		}
@@ -28,8 +27,7 @@ void L2HAL_SSD1306_DetectDisplayAtAddress(L2HAL_SSD1306_ContextStruct* context, 
 	{
 		context->BusAddress = address;
 		context->IsFound = true;
-		context->IsTransferInProgress = false;
-		context->IsFramebufferBeingPushed = false;
+		context->IsDataTransferInProgress = false;
 
 		return;
 	}
@@ -45,37 +43,37 @@ void L2HAL_SSD1306_CheckIfFound(L2HAL_SSD1306_ContextStruct* context)
 	}
 }
 
-void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context)
-{
-	if (context->IsTransferInProgress)
-	{
-		context->IsTransferInProgress = false;
-	}
-}
 
 void L2HAL_SSD1306_WaitForTransferCompletion(L2HAL_SSD1306_ContextStruct* context)
 {
-	while(context->IsTransferInProgress) { }
+	while(context->IsDataTransferInProgress) {}
 }
 
-void L2HAL_SSD1306_SetCommandBuffer(L2HAL_SSD1306_ContextStruct* context, uint8_t command)
+void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context)
 {
-	L2HAL_SSD1306_WaitForTransferCompletion(context);
-	context->CommandBuffer = command;
+	if (context->IsDataTransferInProgress)
+	{
+		/* Data transfer completed */
+		context->IsDataTransferInProgress = false;
+	}
 }
+
 
 void L2HAL_SSD1306_WriteCommand(L2HAL_SSD1306_ContextStruct* context, uint8_t command)
 {
 	L2HAL_SSD1306_CheckIfFound(context);
 
-	L2HAL_SSD1306_SetCommandBuffer(context, command);
+	L2HAL_SSD1306_WaitForTransferCompletion(context); /* We can't send command when transfer is in progress */
 
-	/* Using HAL_I2C_Mem_Write to prepend control byte without allocating buffer for it */
-	context->IsTransferInProgress = true;
-	context->CommandBuffer = command;
-	if (HAL_OK != HAL_I2C_Mem_Write_IT(context->I2CHandle, context->BusAddress, L2HAL_SSD1306_CONTROL_BYTE_COMMAND, 1, &context->CommandBuffer, 1))
+	context->CommandCode = command;
+
+	/* Transfer started */
+	context->IsDataTransferInProgress = true;
+
+	/* Using HAL_I2C_Mem_Write to prepend control byte without allocating buffer for it. */
+	if (HAL_OK != HAL_I2C_Mem_Write_IT(context->I2CHandle, context->BusAddress, L2HAL_SSD1306_CONTROL_BYTE_COMMAND, 1, &context->CommandCode, 1))
 	{
-		context->IsTransferInProgress = false; /* Transfer didn't start */
+		context->IsDataTransferInProgress = false; /* Transfer didn't start */
 		L2HAL_Error(L2HAL_ERROR_GENERIC);
 	}
 }
@@ -86,11 +84,13 @@ void L2HAL_SSD1306_WriteData(L2HAL_SSD1306_ContextStruct* context, uint8_t* data
 
 	L2HAL_SSD1306_WaitForTransferCompletion(context);
 
+	/* Transfer started */
+	context->IsDataTransferInProgress = true;
+
 	/* Using HAL_I2C_Mem_Write to prepend control byte without allocating buffer for it */
-	context->IsTransferInProgress = true;
 	if (HAL_OK != HAL_I2C_Mem_Write_IT(context->I2CHandle, context->BusAddress, L2HAL_SSD1306_CONTROL_BYTE_DATA, 1, data, length))
 	{
-		context->IsTransferInProgress = false; /* Transfer didn't start */
+		context->IsDataTransferInProgress = false; /* Transfer didn't start */
 		L2HAL_Error(L2HAL_ERROR_GENERIC);
 	}
 }
@@ -197,16 +197,7 @@ uint16_t L2HAL_SSD1306_GetHeight(void)
 
 void L2HAL_SSD1306_PushFramebuffer(L2HAL_SSD1306_ContextStruct* context)
 {
-	/* Waiting for previous push completion */
-	while(context->IsFramebufferBeingPushed) {}
-
-	/* Push started */
-	context->IsFramebufferBeingPushed = true;
-
 	L2HAL_SSD1306_WriteData(context, context->Framebuffer, L2HAL_SSD1306_FRAMEBUFFER_SIZE);
-
-	/* Push completed */
-	context->IsFramebufferBeingPushed = false;
 }
 
 bool L2HAL_SSD1306_GetFramebufferAddress(uint16_t x, uint16_t y, uint16_t* index, uint8_t* mask)
@@ -238,6 +229,8 @@ void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_API
 
 void L2HAL_SSD1306_DrawPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y)
 {
+	L2HAL_SSD1306_WaitForTransferCompletion(context); /* We can't change framebuffer during transfer. */
+
 	uint16_t index;
 	uint8_t mask;
 

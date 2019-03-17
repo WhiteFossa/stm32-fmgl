@@ -39,19 +39,56 @@ int main(int argc, char* argv[])
 
 	FMGL_API_XBMTransparencyMode transparencyMode = FMGL_XBMTransparencyModeNormal;
 
-	/* Font settings */
-	FMGL_API_FontSettings fontSettings;
-	fontSettings.Font = &font;
-	fontSettings.Scale = 1;
-	fontSettings.CharactersSpacing = 0;
-	fontSettings.LinesSpacing = 0;
-	fontSettings.FontColor = &OnColor;
-	fontSettings.BackgroundColor = &OffColor;
-	fontSettings.Transparency = &transparencyMode;
+	/* Font settings (normal and inverted) */
+	normalFont.Font = &font;
+	normalFont.Scale = 1;
+	normalFont.CharactersSpacing = 0;
+	normalFont.LinesSpacing = 0;
+	normalFont.FontColor = &OnColor;
+	normalFont.BackgroundColor = &OffColor;
+	normalFont.Transparency = &transparencyMode;
 
-	DrawBackgroundText(&fontSettings);
+	invertedFont.Font = &font;
+	invertedFont.Scale = 1;
+	invertedFont.CharactersSpacing = 0;
+	invertedFont.LinesSpacing = 0;
+	invertedFont.FontColor = &OffColor;
+	invertedFont.BackgroundColor = &OnColor;
+	invertedFont.Transparency = &transparencyMode;
 
-	while(1) {}
+
+
+
+	/* Main cycle */
+	currentFont = &normalFont;
+	uint32_t fontBlinkingCounter = FONT_BLINKING_INTERVAL + 1; /* +1 to cause immediate redraw */
+	while(true)
+	{
+		if (fontBlinkingCounter > FONT_BLINKING_INTERVAL)
+		{
+			fontBlinkingCounter = 0;
+
+			/* Inverting font */
+			if (currentFont == &normalFont)
+			{
+				currentFont = &invertedFont;
+			}
+			else
+			{
+				currentFont = &normalFont;
+			}
+
+			/* Drawing background text */
+			DrawBackgroundText(currentFont);
+		}
+		else
+		{
+			fontBlinkingCounter ++;
+		}
+
+		/* Pushing framebuffer */
+		FMGL_API_PushFramebuffer(&fmglContext);
+	}
 
 //	/* Preparing image */
 //	FMGL_XBMImage image;
@@ -161,7 +198,6 @@ void DrawBackgroundText(FMGL_API_FontSettings* fontSettings)
 	uint16_t width, height;
 	FMGL_API_RenderTextWithLineBreaks(&fmglContext, fontSettings, bannerEngHShift, 0, &width, &height, false, bannerEng);
 	FMGL_API_RenderTextWithLineBreaks(&fmglContext, fontSettings, bannerRusHShift, 33, &width, &height, false, bannerRus);
-	FMGL_API_PushFramebuffer(&fmglContext);
 }
 
 #pragma GCC diagnostic pop

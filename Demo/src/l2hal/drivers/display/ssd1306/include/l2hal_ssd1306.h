@@ -99,19 +99,21 @@ typedef struct
 	/* Display bus address. */
 	uint8_t BusAddress;
 
-	/* True if transfer to display in progress. */
-	bool IsTransferInProgress;
+	/**
+	 * Command code is stored here during time of command transfer. !! DO NOT CHANGE DURING DATA TRANSFER !!
+	 */
+	uint8_t CommandCode;
 
-	/* Command code is stored here. !! DO NOT ACCESS IT DIRECTLY !! Use L2HAL_SSD1306_SetCommandBuffer() instead */
-	uint8_t CommandBuffer;
-
-	/* Framebuffer. !! CONTENT MUST NOT CHANGE DURING FRAMEBUFFER PUSH !! See
+	/* Framebuffer. !! CONTENT MUST NOT BE CHANGED DURING DATA TRANSFER !! See
 	 * void L2HAL_SSD1306_PushFramebuffer() for details.
 	 */
 	uint8_t Framebuffer[L2HAL_SSD1306_FRAMEBUFFER_SIZE];
 
-	/* If true then framebuffer push in progress */
-	bool IsFramebufferBeingPushed;
+	/**
+	 * If true then data transfer in progress.
+	 * Have to be volatile, because changed in interrupt handler.
+	 */
+	volatile bool IsDataTransferInProgress;
 
 	/**
 	 * Active color.
@@ -162,6 +164,8 @@ void L2HAL_SSD1306_SetActiveColor(L2HAL_SSD1306_ContextStruct* context, FMGL_API
 /**
  * Draws pixel with active color. Do nothing if coordinates are incorrect. DOESN'T PUSH
  * FRAMEBUFFER.
+ *
+ * Function will wait if data transfer is ongoing, because framebuffer can't be changed this time.
  */
 void L2HAL_SSD1306_DrawPixel(L2HAL_SSD1306_ContextStruct* context, uint16_t x, uint16_t y);
 
@@ -187,14 +191,9 @@ void L2HAL_SSD1306_PushFramebuffer(L2HAL_SSD1306_ContextStruct* context);
 void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context);
 
 /**
- * Waits in loop (polling) for context->IsTransferInProgress == false.
+ * Call this function to check if data transfer undergoing. If so, function will hang until it completed.
  */
 void L2HAL_SSD1306_WaitForTransferCompletion(L2HAL_SSD1306_ContextStruct* context);
-
-/**
- * Stores command in command buffer (within context), waiting for transfer completion if needed.
- */
-void L2HAL_SSD1306_SetCommandBuffer(L2HAL_SSD1306_ContextStruct* context, uint8_t command);
 
 /**
  * Send command to display.
