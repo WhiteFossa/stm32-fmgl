@@ -77,13 +77,6 @@
 
 
 /**
- * Call this function from I2C interrupt transfer completed handler, i.e. from void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
- * for correct I2C bus.
- * @param context Pointer to driver context.
- */
-void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context);
-
-/**
  * Call this function to check if data transfer undergoing. If so, function will hang until it completed.
  * @param context Pointer to driver context.
  */

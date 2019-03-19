@@ -6,6 +6,61 @@
 #ifndef L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_
 #define L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_
 
+/**
+ * How to use this driver:
+ *
+ * 1) Set-up I2C using STM32 HAL.
+ *    Sample code:
+ *
+ *    void L2HAL_SetupI2C(void)
+ *    {
+ *        // Clocking I2C
+ *        __HAL_RCC_I2C1_CLK_ENABLE();
+ *
+ *        // Setting up I2C
+ *        I2CHandle.Instance = I2C1;
+ *        I2CHandle.Init.ClockSpeed = 400000; // 400 KHz
+ *        I2CHandle.Init.DutyCycle = I2C_DUTYCYCLE_2;
+ *        I2CHandle.Init.OwnAddress1 = 0x00;
+ *        I2CHandle.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+ *        I2CHandle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+ *        I2CHandle.Init.OwnAddress2 = 0x00;
+ *        I2CHandle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+ *        I2CHandle.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+ *
+ *        if(HAL_I2C_Init(&I2CHandle) != HAL_OK)
+ *        {
+ *            // Initialization Error
+ *            L2HAL_Error(L2HAL_ERROR_GENERIC);
+ *        }
+ *    }
+ *
+ * 2) Add code, calling L2HAL_SSD1306_InterruptTransferCompleted() from I2C transfer complete interrupt handler (for correct bus, of course).
+ *    Sample code:
+ *
+ *    void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
+ *    {
+ *        if (hi2c->Instance == I2C1)
+ *        {
+ *            L2HAL_SSD1306_InterruptTransferCompleted(&L2HAL_SSD1306_Context);
+ *        }
+ *    }
+ *
+ * 3) Create instance of L2HAL_SSD1306_ContextStruct and set it's I2CHandler pointer to I2C bus handle from step 1.
+ *    Sample code:
+ *
+ *    L2HAL_SSD1306_Context.I2CHandle = &I2CHandle;
+ *
+ * 4) Call L2HAL_SSD1306_DetectDisplay() to attempt to detect display automatically at it's usual addresses or L2HAL_SSD1306_DetectDisplayAtAddress() to
+ *    attempt to detect display at user-provided address.
+ *
+ * 5) Probably you'll want to turn display on via L2HAL_SSD1306_TurnDisplayOn() command.
+ *
+ * 6) Draw on display by hands or use my FMGL (Fossa's MCU Graphics Library) to draw on it. You can find FMGL here: https://github.com/WhiteFossa/stm32-fmgl
+ *
+ * 7) Push local framebuffer (stored in MCU RAM) to display by calling L2HAL_SSD1306_PushFramebuffer().
+ */
+
 #include <stdint.h>
 #include <stm32f1xx_hal.h>
 #include <l2hal_aux.h>
@@ -144,5 +199,11 @@ FMGL_API_ColorStruct L2HAL_SSD1306_GetPixel(L2HAL_SSD1306_ContextStruct* context
  */
 void L2HAL_SSD1306_PushFramebuffer(L2HAL_SSD1306_ContextStruct* context);
 
+/**
+ * Call this function from I2C interrupt transfer completed handler, i.e. from void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
+ * for correct I2C bus.
+ * @param context Pointer to driver context.
+ */
+void L2HAL_SSD1306_InterruptTransferCompleted(L2HAL_SSD1306_ContextStruct* context);
 
 #endif /* L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_ */
