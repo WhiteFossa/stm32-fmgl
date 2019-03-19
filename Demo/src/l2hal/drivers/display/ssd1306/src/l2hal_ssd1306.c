@@ -1,4 +1,4 @@
-#include <l2hal_ssd1306.h>
+#include <l2hal_ssd1306_private.h>
 
 void L2HAL_SSD1306_DetectDisplay(L2HAL_SSD1306_ContextStruct* context)
 {

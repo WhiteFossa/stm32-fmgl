@@ -1,5 +1,6 @@
 /**
- * Command constants for SSD1306.
+ * @file
+ * @brief Command constants for SSD1306.
  * Only needed commands are here, see datasheet for full list.
  * When words like "flipped" / "mirrored" used, they are applied to cheap Chinese OLEDs, base on SSD1306.
  */
