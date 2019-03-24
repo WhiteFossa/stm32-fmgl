@@ -90,5 +90,3 @@ void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
 		L2HAL_SSD1306_InterruptTransferCompleted(&L2HAL_SSD1306_Context);
 	}
 }
-
-
