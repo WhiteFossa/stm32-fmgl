@@ -106,7 +106,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="fmgl_8h__dep__incl.png" border="0" usemap="#_2mnt_2nfs_2th_2sps_2fossa_2_projects_2_electronics_2stm32-fmgl_2library_2fmgl_2include_2fmgl_8hdep" alt=""/></div>
 <map name="_2mnt_2nfs_2th_2sps_2fossa_2_projects_2_electronics_2stm32-fmgl_2library_2fmgl_2include_2fmgl_8hdep" id="_2mnt_2nfs_2th_2sps_2fossa_2_projects_2_electronics_2stm32-fmgl_2library_2fmgl_2include_2fmgl_8hdep">
-<area shape="rect" id="node2" href="terminus_regular12_8h_source.html" title="/mnt/nfs/th/sps/fossa\l/Projects/Electronics\l/stm32&#45;fmgl/library/fmgl\l/fonts/include/terminusRegular12.h" alt="" coords="5,124,229,195"/>
+<area shape="rect" id="node2" href="terminus_regular12_8h.html" title="Terminus font, regular, 6x12 pixels. " alt="" coords="5,124,229,195"/>
 <area shape="rect" id="node3" href="fmgl__private_8h.html" title="Internal Fossa&#39;s MCU Graphics Library stuff. " alt="" coords="254,124,413,195"/>
 </map>
 </div>
@@ -128,8 +128,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a92c5d4a9b7c8d91dbc991316954a44dd"><td class="memItemLeft" align="right" valign="top"><a id="a92c5d4a9b7c8d91dbc991316954a44dd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FMGL_API_FONT_CHARACTERS_COUNT</b>&#160;&#160;&#160;256U</td></tr>
+<tr class="memitem:a92c5d4a9b7c8d91dbc991316954a44dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#a92c5d4a9b7c8d91dbc991316954a44dd">FMGL_API_FONT_CHARACTERS_COUNT</a>&#160;&#160;&#160;256U</td></tr>
 <tr class="separator:a92c5d4a9b7c8d91dbc991316954a44dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aa6b8400ee8a19d961909e671959d4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#a4aa6b8400ee8a19d961909e671959d4f">FMGL_API_MAX_CHANNEL_BRIGHTNESS</a>&#160;&#160;&#160;255U</td></tr>
 <tr class="separator:a4aa6b8400ee8a19d961909e671959d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,6 +178,29 @@ Functions</h2></td></tr>
 <div class="textblock"><p>Fossa's MCU Graphics Library main file. </p>
 <p>GPLv3 <a href="https://github.com/WhiteFossa/stm32-fmgl">https://github.com/WhiteFossa/stm32-fmgl</a> </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a92c5d4a9b7c8d91dbc991316954a44dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92c5d4a9b7c8d91dbc991316954a44dd">&#9670;&nbsp;</a></span>FMGL_API_FONT_CHARACTERS_COUNT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FMGL_API_FONT_CHARACTERS_COUNT&#160;&#160;&#160;256U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>How to use this library:</p>
+<p>1) Declare library context. Sample code:</p>
+<p><a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> fmglContext;</p>
+<p>2) Attach context to driver (you need set up driver first). Sample code:</p>
+<p>fmglContext = FMGL_API_AttachToDriver(&amp;L2HAL_SSD1306_Context, &amp;L2HAL_SSD1306_GetWidth, &amp;L2HAL_SSD1306_GetHeight, &amp;L2HAL_SSD1306_SetActiveColor, &amp;L2HAL_SSD1306_DrawPixel, &amp;L2HAL_SSD1306_GetPixel, &amp;L2HAL_SSD1306_PushFramebuffer);</p>
+<p>3) Draw something (at this step changes aren't displayed). Sample code:</p>
+<p>FMGL_API_RenderXBM(&amp;fmglContext, &amp;sprite, spriteX, spriteY, 1, 1, OnColor, OffColor, FMGL_XBMTransparencyModeTransparentInactive);</p>
+<p>4) Push changes into display. Sample code:</p>
+<p>FMGL_API_PushFramebuffer(&amp;fmglContext); </p>
+
+</div>
+</div>
 <a id="a4aa6b8400ee8a19d961909e671959d4f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4aa6b8400ee8a19d961909e671959d4f">&#9670;&nbsp;</a></span>FMGL_API_MAX_CHANNEL_BRIGHTNESS</h2>
 
@@ -284,6 +306,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>FMGL driver context, pass it to other API functions. </dd></dl>
 
 </div>
 </div>
@@ -575,6 +598,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Currently selected color. </dd></dl>
 
 </div>
 </div>
@@ -593,7 +617,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns display height. </p>
+<p>Returns display height. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Driver context. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Display height. </dd></dl>
 
 </div>
 </div>
@@ -618,6 +648,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Display width. </dd></dl>
 
 </div>
 </div>
@@ -660,6 +691,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Pixel color at given coordinates. </dd></dl>
 
 </div>
 </div>

@@ -93,26 +93,26 @@ $(document).ready(function(){initNavTree('struct_f_m_g_l___a_p_i___font.html',''
 Data Fields</h2></td></tr>
 <tr class="memitem:a678d5e1b9fa339e3093a12f87c2b45a5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_f_m_g_l___a_p_i___font.html#a678d5e1b9fa339e3093a12f87c2b45a5">Height</a></td></tr>
 <tr class="separator:a678d5e1b9fa339e3093a12f87c2b45a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f786ba75b626be84d89eb33b3491548"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_f_m_g_l___a_p_i___font.html#a7f786ba75b626be84d89eb33b3491548">Characters</a> [FMGL_API_FONT_CHARACTERS_COUNT]</td></tr>
-<tr class="separator:a7f786ba75b626be84d89eb33b3491548"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7abdfd0b836f34ceea04c381af22e949"><td class="memItemLeft" align="right" valign="top">uint16_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_f_m_g_l___a_p_i___font.html#a7abdfd0b836f34ceea04c381af22e949">GetCharacterWidth</a> )(uint8_t character)</td></tr>
 <tr class="separator:a7abdfd0b836f34ceea04c381af22e949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac27ba0b8c61d37a159ed4605ad6f5bf"><td class="memItemLeft" align="right" valign="top">const uint8_t *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_f_m_g_l___a_p_i___font.html#aac27ba0b8c61d37a159ed4605ad6f5bf">GetCharacterRaster</a> )(uint8_t character)</td></tr>
+<tr class="separator:aac27ba0b8c61d37a159ed4605ad6f5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Font-defining structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a7f786ba75b626be84d89eb33b3491548"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f786ba75b626be84d89eb33b3491548">&#9670;&nbsp;</a></span>Characters</h2>
+<a id="aac27ba0b8c61d37a159ed4605ad6f5bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac27ba0b8c61d37a159ed4605ad6f5bf">&#9670;&nbsp;</a></span>GetCharacterRaster</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* FMGL_API_Font::Characters[FMGL_API_FONT_CHARACTERS_COUNT]</td>
+          <td class="memname">const uint8_t*(* FMGL_API_Font::GetCharacterRaster) (uint8_t character)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Array of pointers to character rasters (XBM images). </p>
+<p>Pointer to function, returning character raster. </p>
 
 </div>
 </div>

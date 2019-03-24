@@ -15,6 +15,9 @@ var searchData=
   ['fmgl_5fapi_5frendertextwithlinebreaks',['FMGL_API_RenderTextWithLineBreaks',['../fmgl_8h.html#a38afe0f854425b698d6f73966a8da219',1,'fmgl.c']]],
   ['fmgl_5fapi_5frenderxbm',['FMGL_API_RenderXBM',['../fmgl_8h.html#af97cf9eee62945a612e0a187c276bb58',1,'fmgl.c']]],
   ['fmgl_5fapi_5fsetactivecolor',['FMGL_API_SetActiveColor',['../fmgl_8h.html#ace85463e60b76ce1269fc8da8f93a9ef',1,'fmgl.c']]],
+  ['fmgl_5ffontterminusregular12getcharacterraster',['FMGL_FontTerminusRegular12GetCharacterRaster',['../terminus_regular12_8h.html#a871fb9595c61e9a5a27820cd060a0292',1,'terminusRegular12.c']]],
+  ['fmgl_5ffontterminusregular12getcharacterwidth',['FMGL_FontTerminusRegular12GetCharacterWidth',['../terminus_regular12_8h.html#a2dbf890cbac835f497be89d0d0c8cca9',1,'terminusRegular12.c']]],
+  ['fmgl_5ffontterminusregular12init',['FMGL_FontTerminusRegular12Init',['../terminus_regular12_8h.html#a14ab14b09bea4f8ff9e4cad6cb395236',1,'terminusRegular12.c']]],
   ['fmgl_5fpriv_5fisactivexbmpixel',['FMGL_Priv_IsActiveXBMPixel',['../fmgl__private_8h.html#a2eeae9210e118fbb6f937927e2a49630',1,'fmgl_private.c']]],
   ['fmgl_5fpriv_5frendercharacter',['FMGL_Priv_RenderCharacter',['../fmgl__private_8h.html#a32b16ccf07cfa2bd3a563e73ddcfb0c2',1,'fmgl_private.c']]],
   ['fmgl_5fpriv_5frendersubstring',['FMGL_Priv_RenderSubstring',['../fmgl__private_8h.html#a0d0a0f5a60d43c1c979f3b1da5c7a7c2',1,'fmgl_private.c']]]
