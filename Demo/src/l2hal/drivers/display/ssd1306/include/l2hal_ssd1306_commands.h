@@ -1,8 +1,8 @@
 /**
  * @file
- * @brief Command constants for SSD1306.
+ * @brief Command constants for SSD1306 OLED display controller.
  * Only needed commands are here, see datasheet for full list.
- * When words like "flipped" / "mirrored" used, they are applied to cheap Chinese OLEDs, base on SSD1306.
+ * When words like "flipped" / "mirrored" used, they are applied to cheap Chinese OLEDs based on SSD1306.
  */
 
 #ifndef L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_COMMANDS_C_

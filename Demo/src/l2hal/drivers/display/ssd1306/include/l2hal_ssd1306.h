@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief SSD1306 level 2 HAL driver.
+ * @brief SSD1306 OLED display controller level 2 HAL driver.
  */
 
 #ifndef L2HAL_INCLUDE_SSD1306HAL_L2HAL_SSD1306_H_

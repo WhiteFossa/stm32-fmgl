@@ -1,6 +1,6 @@
 #include <l2hal_errors.h>
 
-void L2HAL_Error(int16_t code)
+void L2HAL_Error(L2HAL_ErrorCode code)
 {
 	L2HAL_ERROR_CLOCK_SIGNAL_PORT();
 

@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief SSD1306 level 2 HAL driver - private stuff.
+ * @brief SSD1306 OLED display controller level 2 HAL driver - private stuff.
  */
 
 #ifndef L2HAL_DRIVERS_DISPLAY_SSD1306_INCLUDE_L2HAL_SSD1306_PRIVATE_H_

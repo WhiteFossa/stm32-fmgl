@@ -1,5 +1,6 @@
-/*
- * Errors handling for level 2 HAL.
+/**
+ * @file
+ * @brief Errors handling stuff for level 2 HAL.
  */
 
 #ifndef L2HAL_INCLUDE_L2HAL_ERRORS_H_
@@ -30,25 +31,31 @@
 
 
 /**
- * No error.
+ * Possible error codes. 0-32767 is for stock codes, 32768-65535 is for user-defined ones.
  */
-#define L2HAL_ERROR_OK 0
+typedef enum
+{
+	/**
+	 * No error.
+	 */
+	OK = 0,
 
-/**
- * Generic error.
- */
-#define L2HAL_ERROR_GENERIC 1
+	/**
+	 * Generic error.
+	 */
+	Generic = 1,
 
-/**
- * Function get wrong argument.
- */
-#define L2HAL_ERROR_WRONG_ARGUMENT 2
+	/**
+	 * Function was called with wrong arguments
+	 */
+	WrongArgument = 2
+} L2HAL_ErrorCode;
 
 
 /**
  * Call it if error happened.
  * @param code Error code.
  */
-void L2HAL_Error(int16_t code);
+void L2HAL_Error(L2HAL_ErrorCode code);
 
 #endif /* L2HAL_INCLUDE_L2HAL_ERRORS_H_ */

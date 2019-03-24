@@ -226,6 +226,7 @@ typedef struct
  * @param drawPixel Pointer to function drawing pixels.
  * @param getPixel Pointer to function returning pixels color.
  * @param pushFramebuffer Pointer to function pushing framebuffer to device.
+ * @return FMGL driver context, pass it to other API functions.
  */
 FMGL_API_DriverContext FMGL_API_AttachToDriver
 (
@@ -245,12 +246,14 @@ FMGL_API_DriverContext FMGL_API_AttachToDriver
 /**
  * Returns display width.
  * @param context Driver context.
+ * @return Display width.
  */
 uint16_t FMGL_API_GetDisplayWidth(FMGL_API_DriverContext* context);
 
 /**
  * Returns display height.
-
+ * @param context Driver context.
+ * @return Display height.
  */
 uint16_t FMGL_API_GetDisplayHeight(FMGL_API_DriverContext* context);
 
@@ -264,6 +267,7 @@ void FMGL_API_SetActiveColor(FMGL_API_DriverContext* context, FMGL_API_ColorStru
 /**
  * Returns current active color.
  * @param context Driver context.
+ * @return Currently selected color.
  */
 FMGL_API_ColorStruct FMGL_API_GetActiveColor(FMGL_API_DriverContext* context);
 
@@ -280,6 +284,7 @@ void FMGL_API_DrawPixel(FMGL_API_DriverContext* context, uint16_t x, uint16_t y)
  * @param context Driver context.
  * @param x X pixel coordinate.
  * @param y Y pixel coordinate.
+ * @return Pixel color at given coordinates.
  */
 FMGL_API_ColorStruct FMGL_API_GetPixel(FMGL_API_DriverContext* context, uint16_t x, uint16_t y);
 

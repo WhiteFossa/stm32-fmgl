@@ -28,6 +28,7 @@
  * @param image Pointer to XBM image struct.
  * @param x Pixel X coordinate.
  * @param y Pixel Y coordinate.
+ * @return True if pixel at given coordinates is active.
  */
 bool FMGL_Priv_IsActiveXBMPixel(FMGL_API_XBMImage* image, uint16_t x, uint16_t y);
 

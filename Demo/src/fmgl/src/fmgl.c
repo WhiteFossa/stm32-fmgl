@@ -319,7 +319,7 @@ void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSe
 		else if ('\n' == *currentChar)
 		{
 			/* Newline is not allowed */
-			L2HAL_Error(L2HAL_ERROR_WRONG_ARGUMENT);
+			L2HAL_Error(OK);
 		}
 
 		/* Could we draw current pixel? */
