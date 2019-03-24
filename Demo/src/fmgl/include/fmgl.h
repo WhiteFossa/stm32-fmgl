@@ -1,3 +1,39 @@
+/*
+	This file is part of Fossa's MCU Graphics Library (FMGL).
+
+	FMGL is free software:
+	you can redistribute it and/or modify it under the terms of the
+	GNU General Public License as published by the Free Software
+	Foundation, either version 3 of the License, or (at your option)
+	any later version.
+
+	FMGL is distributed in the hope
+	that it will be useful, but WITHOUT ANY WARRANTY; without even
+	the implied warranty of MERCHANTABILITY or FITNESS FOR A
+	PARTICULAR PURPOSE.  See the GNU General Public License for more
+	details.
+
+	You should have received a copy of the GNU General Public License
+	along with FMGL.
+
+	If not, see <http://www.gnu.org/licenses/>.
+
+	-------------------------------------------------------------------------
+
+	Created by White Fossa, also known as Artyom Vetrov.
+
+	Feel free to contact: whitefossa@gmail.com
+
+	Repository: https://github.com/WhiteFossa/stm32-l2hal
+
+	If repository above is not available, try my LiveJournal:
+	fossa-white.livejournal.com
+
+	or as last measure try to search for #WhiteFossa hashtag.
+
+	-------------------------------------------------------------------------
+ */
+
 /**
  * @file
  * @brief Fossa's MCU Graphics Library main file.
@@ -6,6 +42,31 @@
  * https://github.com/WhiteFossa/stm32-fmgl
  */
 
+/**
+ * How to use this library:
+ *
+ * 1) Declare library context.
+ * Sample code:
+ *
+ * FMGL_API_DriverContext fmglContext;
+ *
+ * 2) Attach context to driver (you need set up driver first).
+ * Sample code:
+ *
+ * fmglContext = FMGL_API_AttachToDriver(&L2HAL_SSD1306_Context, &L2HAL_SSD1306_GetWidth, &L2HAL_SSD1306_GetHeight, &L2HAL_SSD1306_SetActiveColor,
+ *			&L2HAL_SSD1306_DrawPixel, &L2HAL_SSD1306_GetPixel, &L2HAL_SSD1306_PushFramebuffer);
+ *
+ *
+ * 3) Draw something (at this step changes aren't displayed).
+ * Sample code:
+ *
+ * FMGL_API_RenderXBM(&fmglContext, &sprite, spriteX, spriteY, 1, 1, OnColor, OffColor, FMGL_XBMTransparencyModeTransparentInactive);
+ *
+ * 4) Push changes into display.
+ * Sample code:
+ *
+ * FMGL_API_PushFramebuffer(&fmglContext);
+ */
 
 #ifndef FMGL_INCLUDE_FMGL_H_
 #define FMGL_INCLUDE_FMGL_H_

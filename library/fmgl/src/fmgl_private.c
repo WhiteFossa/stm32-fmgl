@@ -1,3 +1,39 @@
+/*
+	This file is part of Fossa's MCU Graphics Library (FMGL).
+
+	FMGL is free software:
+	you can redistribute it and/or modify it under the terms of the
+	GNU General Public License as published by the Free Software
+	Foundation, either version 3 of the License, or (at your option)
+	any later version.
+
+	FMGL is distributed in the hope
+	that it will be useful, but WITHOUT ANY WARRANTY; without even
+	the implied warranty of MERCHANTABILITY or FITNESS FOR A
+	PARTICULAR PURPOSE.  See the GNU General Public License for more
+	details.
+
+	You should have received a copy of the GNU General Public License
+	along with FMGL.
+
+	If not, see <http://www.gnu.org/licenses/>.
+
+	-------------------------------------------------------------------------
+
+	Created by White Fossa, also known as Artyom Vetrov.
+
+	Feel free to contact: whitefossa@gmail.com
+
+	Repository: https://github.com/WhiteFossa/stm32-l2hal
+
+	If repository above is not available, try my LiveJournal:
+	fossa-white.livejournal.com
+
+	or as last measure try to search for #WhiteFossa hashtag.
+
+	-------------------------------------------------------------------------
+ */
+
 #include <fmgl_private.h>
 
 bool FMGL_Priv_IsActiveXBMPixel(FMGL_API_XBMImage* image, uint16_t x, uint16_t y)
@@ -32,7 +68,7 @@ void FMGL_Priv_RenderCharacter(FMGL_API_DriverContext* context, FMGL_API_FontSet
 	FMGL_API_XBMImage characterImage;
 	characterImage.Height = fontSettings->Font->Height;
 	characterImage.Width = fontSettings->Font->GetCharacterWidth((uint8_t)character);
-	characterImage.Raster = fontSettings->Font->Characters[(uint8_t)character];
+	characterImage.Raster = fontSettings->Font->GetCharacterRaster((uint8_t)character);
 
 	FMGL_API_RenderXBM(context, &characterImage, x, y, fontSettings->Scale, fontSettings->Scale, *fontSettings->FontColor, *fontSettings->BackgroundColor, *fontSettings->Transparency);
 }
