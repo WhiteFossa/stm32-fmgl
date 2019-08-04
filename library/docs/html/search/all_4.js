@@ -1,7 +1,8 @@
 var searchData=
 [
   ['fmgl_2eh',['fmgl.h',['../fmgl_8h.html',1,'']]],
-  ['fmgl_5fapi_5fattachtodriver',['FMGL_API_AttachToDriver',['../fmgl_8h.html#a6a6e32023780d668a3fd343ed3db53bc',1,'fmgl.c']]],
+  ['fmgl_5fapi_5fattachtodriver',['FMGL_API_AttachToDriver',['../fmgl_8h.html#a441f7765c33e0dbe5ac2e82e903bfee3',1,'fmgl.c']]],
+  ['fmgl_5fapi_5fclearscreen',['FMGL_API_ClearScreen',['../fmgl_8h.html#a8be3c060f0216859380506042720038c',1,'fmgl.c']]],
   ['fmgl_5fapi_5fcolorstruct',['FMGL_API_ColorStruct',['../struct_f_m_g_l___a_p_i___color_struct.html',1,'']]],
   ['fmgl_5fapi_5fdrawlinehorizontal',['FMGL_API_DrawLineHorizontal',['../fmgl_8h.html#a6aef9e609519fdf87626bf3a5bdb474b',1,'fmgl.c']]],
   ['fmgl_5fapi_5fdrawlinevertical',['FMGL_API_DrawLineVertical',['../fmgl_8h.html#ab537d28e45d9a1aab36faca7d1aa1b24',1,'fmgl.c']]],
@@ -9,6 +10,7 @@ var searchData=
   ['fmgl_5fapi_5fdrawrectangle',['FMGL_API_DrawRectangle',['../fmgl_8h.html#a1e86a50dd050df06c4d4c5a0b0bce43f',1,'fmgl.c']]],
   ['fmgl_5fapi_5fdrawrectanglefilled',['FMGL_API_DrawRectangleFilled',['../fmgl_8h.html#abd4a1a0491be03e765678ed70ebcd9ae',1,'fmgl.c']]],
   ['fmgl_5fapi_5fdrivercontext',['FMGL_API_DriverContext',['../struct_f_m_g_l___a_p_i___driver_context.html',1,'']]],
+  ['fmgl_5fapi_5ffillscreen',['FMGL_API_FillScreen',['../fmgl_8h.html#a5ed577a2210c8cefba0d4c19a6c53d82',1,'fmgl.c']]],
   ['fmgl_5fapi_5ffont',['FMGL_API_Font',['../struct_f_m_g_l___a_p_i___font.html',1,'']]],
   ['fmgl_5fapi_5ffont_5fcharacters_5fcount',['FMGL_API_FONT_CHARACTERS_COUNT',['../fmgl_8h.html#a92c5d4a9b7c8d91dbc991316954a44dd',1,'fmgl.h']]],
   ['fmgl_5fapi_5ffontsettings',['FMGL_API_FontSettings',['../struct_f_m_g_l___a_p_i___font_settings.html',1,'']]],
@@ -22,6 +24,7 @@ var searchData=
   ['fmgl_5fapi_5frendertextwithlinebreaks',['FMGL_API_RenderTextWithLineBreaks',['../fmgl_8h.html#a38afe0f854425b698d6f73966a8da219',1,'fmgl.c']]],
   ['fmgl_5fapi_5frenderxbm',['FMGL_API_RenderXBM',['../fmgl_8h.html#af97cf9eee62945a612e0a187c276bb58',1,'fmgl.c']]],
   ['fmgl_5fapi_5fsetactivecolor',['FMGL_API_SetActiveColor',['../fmgl_8h.html#ace85463e60b76ce1269fc8da8f93a9ef',1,'fmgl.c']]],
+  ['fmgl_5fapi_5fsetblankingcolor',['FMGL_API_SetBlankingColor',['../fmgl_8h.html#ad0d20854bebc45d6ff6f69ff9406c6bc',1,'fmgl.c']]],
   ['fmgl_5fapi_5fxbmimage',['FMGL_API_XBMImage',['../struct_f_m_g_l___a_p_i___x_b_m_image.html',1,'']]],
   ['fmgl_5fapi_5fxbmtransparencymode',['FMGL_API_XBMTransparencyMode',['../fmgl_8h.html#a108df91478d16d814fd84799dbbebb89',1,'fmgl.h']]],
   ['fmgl_5ffont_5fterminus_5fregular_5f12_5fcharacter_5fheight',['FMGL_FONT_TERMINUS_REGULAR_12_CHARACTER_HEIGHT',['../terminus_regular12_8h.html#a27300d2714e7ff7722fb12e4fc559d11',1,'terminusRegular12.h']]],

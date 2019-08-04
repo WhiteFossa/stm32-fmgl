@@ -44,7 +44,8 @@ FMGL_API_DriverContext FMGL_API_AttachToDriver
 	void (*setActiveColor) (void* deviceContext, FMGL_API_ColorStruct color),
 	void (*drawPixel) (void* deviceContext, uint16_t x, uint16_t y),
 	FMGL_API_ColorStruct (*getPixel) (void* deviceContext, uint16_t x, uint16_t y),
-	void (*pushFramebuffer) (void* deviceContext)
+	void (*pushFramebuffer) (void* deviceContext),
+	FMGL_API_ColorStruct blankingColor
 )
 {
 	FMGL_API_DriverContext context;
@@ -61,6 +62,9 @@ FMGL_API_DriverContext FMGL_API_AttachToDriver
 	context.MaxX = context.GetWidth() - 1;
 	context.MaxY = context.GetHeight() - 1;
 
+	/* Blanking color */
+	context.BlankingColor = blankingColor;
+
 	return context;
 }
 
@@ -68,6 +72,11 @@ void FMGL_API_SetActiveColor(FMGL_API_DriverContext* context, FMGL_API_ColorStru
 {
 	context->ActiveColor = color;
 	context->SetActiveColor(context->DeviceContext, context->ActiveColor);
+}
+
+void FMGL_API_SetBlankingColor(FMGL_API_DriverContext* context, FMGL_API_ColorStruct color)
+{
+	context->BlankingColor = color;
 }
 
 FMGL_API_ColorStruct FMGL_API_GetActiveColor(FMGL_API_DriverContext* context)
@@ -335,7 +344,18 @@ void FMGL_API_DrawRectangleFilled(FMGL_API_DriverContext* context, uint16_t x1, 
 	FMGL_API_SetActiveColor(context, activeColor);
 }
 
+void FMGL_API_FillScreen(FMGL_API_DriverContext* context, FMGL_API_ColorStruct color)
+{
+	uint16_t maxX = FMGL_API_GetDisplayWidth(context) - 1;
+	uint16_t maxY = FMGL_API_GetDisplayHeight(context) - 1;
 
+	FMGL_API_DrawRectangleFilled(context, 0, 0, maxX, maxY, color, color);
+}
+
+void FMGL_API_ClearScreen(FMGL_API_DriverContext* context)
+{
+	FMGL_API_FillScreen(context, context->BlankingColor);
+}
 
 void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSettings* fontSettings, uint16_t x, uint16_t y, uint16_t* width,
 		bool isDryRun, char* string)

@@ -1,6 +1,7 @@
 var struct_f_m_g_l___a_p_i___driver_context =
 [
     [ "ActiveColor", "struct_f_m_g_l___a_p_i___driver_context.html#a411a3efe3f0e312ad813764610dfea1b", null ],
+    [ "BlankingColor", "struct_f_m_g_l___a_p_i___driver_context.html#af47a41ed9a1a62805b01d0c884c68253", null ],
     [ "DeviceContext", "struct_f_m_g_l___a_p_i___driver_context.html#ab3309fbb7fa3dee77b4a193b3c84d45e", null ],
     [ "DrawPixel", "struct_f_m_g_l___a_p_i___driver_context.html#a2d463f1ab447d7fce03dc9f6b4ac1312", null ],
     [ "GetHeight", "struct_f_m_g_l___a_p_i___driver_context.html#a63786eb8397d145c3306d0ad3a0a0ace", null ],

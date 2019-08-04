@@ -6,16 +6,19 @@
 C_SRCS += \
 ../src/l2hal/src/l2hal.c \
 ../src/l2hal/src/l2hal_aux.c \
+../src/l2hal/src/l2hal_custom.c \
 ../src/l2hal/src/l2hal_errors.c 
 
 OBJS += \
 ./src/l2hal/src/l2hal.o \
 ./src/l2hal/src/l2hal_aux.o \
+./src/l2hal/src/l2hal_custom.o \
 ./src/l2hal/src/l2hal_errors.o 
 
 C_DEPS += \
 ./src/l2hal/src/l2hal.d \
 ./src/l2hal/src/l2hal_aux.d \
+./src/l2hal/src/l2hal_custom.d \
 ./src/l2hal/src/l2hal_errors.d 
 
 

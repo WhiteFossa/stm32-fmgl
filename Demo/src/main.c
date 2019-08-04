@@ -56,13 +56,6 @@ int main(int argc, char* argv[])
 	L2HAL_SSD1306_DetectDisplay(&L2HAL_SSD1306_Context);
 	L2HAL_SSD1306_TurnDisplayOn(&L2HAL_SSD1306_Context);
 
-	/* Attaching FMGL to display */
-	fmglContext = FMGL_API_AttachToDriver(&L2HAL_SSD1306_Context, &L2HAL_SSD1306_GetWidth, &L2HAL_SSD1306_GetHeight, &L2HAL_SSD1306_SetActiveColor,
-			&L2HAL_SSD1306_DrawPixel, &L2HAL_SSD1306_GetPixel, &L2HAL_SSD1306_PushFramebuffer);
-
-	/* Initializing font */
-	FMGL_API_Font font= FMGL_FontTerminusRegular12Init();
-
 	FMGL_API_ColorStruct OffColor;
 	OffColor.R = 0;
 	OffColor.G = 0;
@@ -73,6 +66,12 @@ int main(int argc, char* argv[])
 	OnColor.G = FMGL_API_MAX_CHANNEL_BRIGHTNESS;
 	OnColor.B = FMGL_API_MAX_CHANNEL_BRIGHTNESS;
 
+	/* Attaching FMGL to display */
+	fmglContext = FMGL_API_AttachToDriver(&L2HAL_SSD1306_Context, &L2HAL_SSD1306_GetWidth, &L2HAL_SSD1306_GetHeight, &L2HAL_SSD1306_SetActiveColor,
+			&L2HAL_SSD1306_DrawPixel, &L2HAL_SSD1306_GetPixel, &L2HAL_SSD1306_PushFramebuffer, OffColor);
+
+	/* Initializing font */
+	FMGL_API_Font font= FMGL_FontTerminusRegular12Init();
 	FMGL_API_XBMTransparencyMode transparencyMode = FMGL_XBMTransparencyModeNormal;
 
 	/* Font settings (normal and inverted) */
@@ -162,7 +161,7 @@ int main(int argc, char* argv[])
 		}
 
 		/* Clearing screen */
-		FMGL_API_DrawRectangleFilled(&fmglContext, 0, 0, maxX, maxY, OffColor, OffColor);
+		FMGL_API_ClearScreen(&fmglContext);
 
 		/* Drawing background text */
 		DrawBackgroundText(currentFont);
