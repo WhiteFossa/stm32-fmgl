@@ -194,6 +194,11 @@ typedef struct
 	 */
 	FMGL_API_ColorStruct ActiveColor;
 
+	/**
+	 * When FMGL_API_ClearScreen() is called framebuffer will be filled with this color.
+	 */
+	FMGL_API_ColorStruct BlankingColor;
+
 } FMGL_API_DriverContext;
 
 
@@ -287,6 +292,7 @@ typedef struct
  * @param drawPixel Pointer to function drawing pixels.
  * @param getPixel Pointer to function returning pixels color.
  * @param pushFramebuffer Pointer to function pushing framebuffer to device.
+ * @param blankingColor When FMGL_API_ClearScreen() is called framebuffer will be filled with this color.
  * @return FMGL driver context, pass it to other API functions.
  */
 FMGL_API_DriverContext FMGL_API_AttachToDriver
@@ -297,7 +303,8 @@ FMGL_API_DriverContext FMGL_API_AttachToDriver
 	void (*setActiveColor) (void* deviceContext, FMGL_API_ColorStruct color),
 	void (*drawPixel) (void* deviceContext, uint16_t x, uint16_t y),
 	FMGL_API_ColorStruct (*getPixel) (void* deviceContext, uint16_t x, uint16_t y),
-	void (*pushFramebuffer) (void* deviceContext)
+	void (*pushFramebuffer) (void* deviceContext),
+	FMGL_API_ColorStruct blankingColor
 );
 
 /***************************
@@ -348,6 +355,26 @@ void FMGL_API_DrawPixel(FMGL_API_DriverContext* context, uint16_t x, uint16_t y)
  * @return Pixel color at given coordinates.
  */
 FMGL_API_ColorStruct FMGL_API_GetPixel(FMGL_API_DriverContext* context, uint16_t x, uint16_t y);
+
+/**
+ * Sets color for screen clearing.
+ * @param context Driver context.
+ * @param color This color will be used for screen cleaning.
+ */
+void FMGL_API_SetBlankingColor(FMGL_API_DriverContext* context, FMGL_API_ColorStruct color);
+
+/**
+ * Fills framebuffer with given color.
+ * @param context Driver context.
+ * @param color Fill framebuffer with this color.
+ */
+void FMGL_API_FillScreen(FMGL_API_DriverContext* context, FMGL_API_ColorStruct color);
+
+/**
+ * Clears screen (i.e. fills framebuffer with current blanking color).
+ * @param context Driver context.
+ */
+void FMGL_API_ClearScreen(FMGL_API_DriverContext* context);
 
 /**
  * Pushes framebuffer to device.

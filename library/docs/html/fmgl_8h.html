@@ -143,8 +143,8 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a6a6e32023780d668a3fd343ed3db53bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#a6a6e32023780d668a3fd343ed3db53bc">FMGL_API_AttachToDriver</a> (void *deviceContext, uint16_t(*getWidth)(void), uint16_t(*getHeight)(void), void(*setActiveColor)(void *deviceContext, <a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a> color), void(*drawPixel)(void *deviceContext, uint16_t x, uint16_t y), <a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a>(*getPixel)(void *deviceContext, uint16_t x, uint16_t y), void(*pushFramebuffer)(void *deviceContext))</td></tr>
-<tr class="separator:a6a6e32023780d668a3fd343ed3db53bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a441f7765c33e0dbe5ac2e82e903bfee3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#a441f7765c33e0dbe5ac2e82e903bfee3">FMGL_API_AttachToDriver</a> (void *deviceContext, uint16_t(*getWidth)(void), uint16_t(*getHeight)(void), void(*setActiveColor)(void *deviceContext, <a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a> color), void(*drawPixel)(void *deviceContext, uint16_t x, uint16_t y), <a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a>(*getPixel)(void *deviceContext, uint16_t x, uint16_t y), void(*pushFramebuffer)(void *deviceContext), <a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a> blankingColor)</td></tr>
+<tr class="separator:a441f7765c33e0dbe5ac2e82e903bfee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9161970bb710575595e1740b34ffbc5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#aa9161970bb710575595e1740b34ffbc5">FMGL_API_GetDisplayWidth</a> (<a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *context)</td></tr>
 <tr class="separator:aa9161970bb710575595e1740b34ffbc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc3c55c215ef444d7ae4fda1bb297dff"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#abc3c55c215ef444d7ae4fda1bb297dff">FMGL_API_GetDisplayHeight</a> (<a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *context)</td></tr>
@@ -157,6 +157,12 @@ Functions</h2></td></tr>
 <tr class="separator:a30aa35b36c75f01f35d3af112decfc4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab62e4baccc7af2331c901f923bd60f3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#ab62e4baccc7af2331c901f923bd60f3f">FMGL_API_GetPixel</a> (<a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *context, uint16_t x, uint16_t y)</td></tr>
 <tr class="separator:ab62e4baccc7af2331c901f923bd60f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0d20854bebc45d6ff6f69ff9406c6bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#ad0d20854bebc45d6ff6f69ff9406c6bc">FMGL_API_SetBlankingColor</a> (<a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *context, <a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a> color)</td></tr>
+<tr class="separator:ad0d20854bebc45d6ff6f69ff9406c6bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ed577a2210c8cefba0d4c19a6c53d82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#a5ed577a2210c8cefba0d4c19a6c53d82">FMGL_API_FillScreen</a> (<a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *context, <a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a> color)</td></tr>
+<tr class="separator:a5ed577a2210c8cefba0d4c19a6c53d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8be3c060f0216859380506042720038c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#a8be3c060f0216859380506042720038c">FMGL_API_ClearScreen</a> (<a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *context)</td></tr>
+<tr class="separator:a8be3c060f0216859380506042720038c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01c78e363c6b49699237a0e129119fac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#a01c78e363c6b49699237a0e129119fac">FMGL_API_PushFramebuffer</a> (<a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *context)</td></tr>
 <tr class="separator:a01c78e363c6b49699237a0e129119fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6aef9e609519fdf87626bf3a5bdb474b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fmgl_8h.html#a6aef9e609519fdf87626bf3a5bdb474b">FMGL_API_DrawLineHorizontal</a> (<a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *context, uint16_t x1, uint16_t x2, uint16_t y)</td></tr>
@@ -239,8 +245,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a6a6e32023780d668a3fd343ed3db53bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a6e32023780d668a3fd343ed3db53bc">&#9670;&nbsp;</a></span>FMGL_API_AttachToDriver()</h2>
+<a id="a441f7765c33e0dbe5ac2e82e903bfee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a441f7765c33e0dbe5ac2e82e903bfee3">&#9670;&nbsp;</a></span>FMGL_API_AttachToDriver()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -285,7 +291,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void(*)(void *deviceContext)&#160;</td>
-          <td class="paramname"><em>pushFramebuffer</em>&#160;</td>
+          <td class="paramname"><em>pushFramebuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a>&#160;</td>
+          <td class="paramname"><em>blankingColor</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -303,10 +315,35 @@ Functions</h2></td></tr>
     <tr><td class="paramname">drawPixel</td><td>Pointer to function drawing pixels. </td></tr>
     <tr><td class="paramname">getPixel</td><td>Pointer to function returning pixels color. </td></tr>
     <tr><td class="paramname">pushFramebuffer</td><td>Pointer to function pushing framebuffer to device. </td></tr>
+    <tr><td class="paramname">blankingColor</td><td>When <a class="el" href="fmgl_8h.html#a8be3c060f0216859380506042720038c">FMGL_API_ClearScreen()</a> is called framebuffer will be filled with this color. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>FMGL driver context, pass it to other API functions. </dd></dl>
+
+</div>
+</div>
+<a id="a8be3c060f0216859380506042720038c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8be3c060f0216859380506042720038c">&#9670;&nbsp;</a></span>FMGL_API_ClearScreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FMGL_API_ClearScreen </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *&#160;</td>
+          <td class="paramname"><em>context</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clears screen (i.e. fills framebuffer with current blanking color). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Driver context. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -571,6 +608,41 @@ Functions</h2></td></tr>
     <tr><td class="paramname">y2</td><td>Opposite corner X coordinate. </td></tr>
     <tr><td class="paramname">borderColor</td><td>Border color. </td></tr>
     <tr><td class="paramname">fillColor</td><td>Fill color. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5ed577a2210c8cefba0d4c19a6c53d82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ed577a2210c8cefba0d4c19a6c53d82">&#9670;&nbsp;</a></span>FMGL_API_FillScreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FMGL_API_FillScreen </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a>&#160;</td>
+          <td class="paramname"><em>color</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fills framebuffer with given color. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Driver context. </td></tr>
+    <tr><td class="paramname">color</td><td>Fill framebuffer with this color. </td></tr>
   </table>
   </dd>
 </dl>
@@ -976,6 +1048,41 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">context</td><td>Driver context. </td></tr>
     <tr><td class="paramname">color</td><td>New active color. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad0d20854bebc45d6ff6f69ff9406c6bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0d20854bebc45d6ff6f69ff9406c6bc">&#9670;&nbsp;</a></span>FMGL_API_SetBlankingColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FMGL_API_SetBlankingColor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_f_m_g_l___a_p_i___driver_context.html">FMGL_API_DriverContext</a> *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_f_m_g_l___a_p_i___color_struct.html">FMGL_API_ColorStruct</a>&#160;</td>
+          <td class="paramname"><em>color</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets color for screen clearing. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Driver context. </td></tr>
+    <tr><td class="paramname">color</td><td>This color will be used for screen cleaning. </td></tr>
   </table>
   </dd>
 </dl>
