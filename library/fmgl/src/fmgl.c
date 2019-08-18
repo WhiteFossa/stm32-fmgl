@@ -375,7 +375,7 @@ void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSe
 		else if ('\n' == *currentChar)
 		{
 			/* Newline is not allowed */
-			L2HAL_Error(OK);
+			L2HAL_Error(WrongArgument);
 		}
 
 		/* Could we draw current pixel? */
@@ -391,7 +391,7 @@ void FMGL_API_RenderOneLineDumb(FMGL_API_DriverContext* context, FMGL_API_FontSe
 			FMGL_Priv_RenderCharacter(context, fontSettings, currentX, y, *currentChar);
 		}
 
-		currentX += fontSettings->Font->GetCharacterWidth(*currentChar);
+		currentX += fontSettings->Font->GetCharacterWidth(*currentChar) * fontSettings->Scale;
 		*width = currentX - x - 1;
 
 		/* Adding intercharacter spacing */
