@@ -50,6 +50,17 @@ endif
 
 -include ../makefile.defs
 
+OPTIONAL_TOOL_DEPS := \
+$(wildcard ../makefile.defs) \
+$(wildcard ../makefile.init) \
+$(wildcard ../makefile.targets) \
+
+
+BUILD_ARTIFACT_NAME := FMGL + SSD1306 Driver Demo
+BUILD_ARTIFACT_EXTENSION := elf
+BUILD_ARTIFACT_PREFIX :=
+BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
+
 # Add inputs and outputs from these tool invocations to the build variables 
 SECONDARY_FLASH += \
 FMGL\ +\ SSD1306\ Driver\ Demo.hex \
@@ -62,20 +73,20 @@ FMGL\ +\ SSD1306\ Driver\ Demo.siz \
 all: FMGL\ +\ SSD1306\ Driver\ Demo.elf secondary-outputs
 
 # Tool invocations
-FMGL\ +\ SSD1306\ Driver\ Demo.elf: $(OBJS) $(USER_OBJS)
+FMGL\ +\ SSD1306\ Driver\ Demo.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU ARM Cross C++ Linker'
 	arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -flto -fno-move-loop-invariants -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wpadded -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal  -g3 -T mem.ld -T libs.ld -T sections.ld -Xlinker --gc-sections -L"../ldscripts" -Wl,-Map,"FMGL + SSD1306 Driver Demo.map" --specs=nano.specs -o "FMGL + SSD1306 Driver Demo.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-FMGL\ +\ SSD1306\ Driver\ Demo.hex: FMGL\ +\ SSD1306\ Driver\ Demo.elf
+FMGL\ +\ SSD1306\ Driver\ Demo.hex: FMGL\ +\ SSD1306\ Driver\ Demo.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: GNU ARM Cross Create Flash Image'
 	arm-none-eabi-objcopy -O ihex "FMGL + SSD1306 Driver Demo.elf"  "FMGL + SSD1306 Driver Demo.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-FMGL\ +\ SSD1306\ Driver\ Demo.siz: FMGL\ +\ SSD1306\ Driver\ Demo.elf
+FMGL\ +\ SSD1306\ Driver\ Demo.siz: FMGL\ +\ SSD1306\ Driver\ Demo.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: GNU ARM Cross Print Size'
 	arm-none-eabi-size --format=berkeley "FMGL + SSD1306 Driver Demo.elf"
 	@echo 'Finished building: $@'
